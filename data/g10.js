@@ -1,48 +1,70 @@
-/* الصف الأول الثانوي — مبني على مستوى الصف (بانتظار الكتاب للمطابقة) */
-GRADE({ id:"g10", n:10, stage:"s", ar:"الأول الثانوي", book:"", units:[
-{ id:"u1", num:"1", en:"People Who Inspire", ar:"أشخاص ملهمون", pic:"💡",
-  words:["inspire|يُلهم","colleague|زميل عمل","neighbor|جار","mentor|مرشد","generous|كريم","ambitious|طموح","creative|مبدع","reliable|يُعتمد عليه","patient|صبور","confident|واثق من نفسه","curious|فضولي / محب للمعرفة","humble|متواضع"],
+/* الصف الأول الثانوي (مسارات) — من كتاب Mega Goal 1، الجزء الأول (الوحدات 1–6، الفصل الأول 1448): جدول المنهج وقائمة المفردات */
+GRADE({ id:"g10", n:10, stage:"s", ar:"الأول الثانوي", book:"Mega Goal 1", units:[
+{ id:"u1", num:"1", en:"Big Changes", ar:"تغيّرات كبرى", pic:"🌍",
+  words:["global warming|الاحتباس الحراري","pollution|التلوث","poverty|الفقر","unemployment|البطالة","overpopulation|الاكتظاظ السكاني","natural disaster|كارثة طبيعية","endangered species|الأنواع المهددة بالانقراض","fresh water|المياه العذبة","globalization|العولمة","economy|الاقتصاد","government|الحكومة","satellite|قمر صناعي","exploration|الاستكشاف","establish|يؤسس","launch|يُطلق","affect|يؤثر في"],
   grammar:[
-    { t:"جمل الصلة: المحددة وغير المحددة",
-      p:"<b>المحددة</b> تحدد من نقصد ولا تُفصل بفواصل، ويجوز فيها <span class='en'>that</span>. <b>غير المحددة</b> تضيف معلومة إضافية بين فاصلتين، ولا نستخدم فيها <span class='en'>that</span> أبداً.",
-      table:{head:["الأداة","الاستخدام"], rows:[["who","للأشخاص"],["which","للأشياء"],["whose","للملكية"],["where","للأماكن"],["when","للأوقات"]], en:[0]},
-      ex:[["The man who lives next door is a pilot.","الرجل الذي يسكن بجوارنا طيار."],["Riyadh, which is the capital, is very big.","الرياض، وهي العاصمة، كبيرة جداً."],["I met a girl whose father is a famous poet.","قابلت فتاة والدها شاعر مشهور."]] }
+    { t:"مراجعة: المضارع البسيط والمستمر",
+      p:"البسيط للحقائق والعادات، والمستمر لما يحدث الآن أو لتغيّر جارٍ: <span class='en'>The climate is changing.</span>",
+      ex:[["Pollution affects millions of people.","يؤثر التلوث في ملايين الناس."],["The world's population is growing quickly.","عدد سكان العالم يزداد بسرعة."]] },
+    { t:"الماضي البسيط والمضارع التام والماضي المستمر",
+      p:"الماضي البسيط لحدث في وقت محدد، والمضارع التام لحدث أثره مستمر للآن، والماضي المستمر + <span class='en'>when</span> + الماضي البسيط لحدث قطع حدثاً آخر.",
+      ex:[["The first satellite was launched in 1957.","أُطلق أول قمر صناعي عام 1957."],["Technology has changed our lives.","غيّرت التقنية حياتنا."],["People were watching TV when the news came.","كان الناس يشاهدون التلفاز عندما جاء الخبر."]] }
   ],
-  quiz:["The man ___ lives next door is a pilot.|who|which|whose","This is the book ___ changed my life.|that|who|where","Riyadh, ___ is the capital, is very big.|which|that|who","I met a girl ___ father is a famous poet.|whose|who's|which","That's the café ___ we first met.|where|which|when","Do you remember the day ___ we graduated?|when|where|which","My brother, ___ is a doctor, lives in Dammam.|who|that|which","He is a very ___ person. He always helps others.|generous|curious|confident"]},
-{ id:"u2", num:"2", en:"Hard Work", ar:"الاجتهاد", pic:"⏱️",
-  words:["lately|مؤخراً","exhausted|منهك","research|بحث","project|مشروع","deadline|الموعد النهائي","progress|تقدّم","effort|جهد","patience|صبر","improve|يتحسن / يحسّن","train|يتدرب","concentrate|يركّز","achieve|يحقق"],
+  quiz:["The climate ___ changing these days.|is|are|does","Pollution ___ our health.|affects|affect|is affect","The first satellite ___ launched in 1957.|was|has been|is","Technology ___ changed our lives.|has|have|is","They ___ sleeping when the storm hit.|were|was|are","I ___ to London in 2022.|went|have gone|go","An earthquake is a ___ .|natural disaster|globalization|government","Many people can't find jobs. ___ is a big problem.|Unemployment|Exploration|Satellite"]},
+{ id:"u2", num:"2", en:"Careers", ar:"المسارات المهنية", pic:"💼",
+  words:["qualification|مؤهل","staff|الموظفون","teamwork skills|مهارات العمل الجماعي","flexibility|المرونة","honesty|الأمانة","initiative|المبادرة","motivation|الدافعية","work ethic|أخلاقيات العمل","creative|مبدع","reliable|يُعتمد عليه","hardworking|مجتهد","sociable|اجتماعي","challenging|صعب ومحفّز","efficient|فعّال","experiment|يجرّب","design|يصمم"],
   grammar:[
-    { t:"المضارع التام المستمر",
-      p:"<span class='en'>have / has been +</span> الفعل <span class='en'>+ ing</span>: لنشاط بدأ في الماضي وما زال مستمراً أو انتهى للتو وأثره ظاهر. نؤكد فيه على <b>مدة</b> النشاط.",
-      table:{head:["المضارع التام","المضارع التام المستمر"], rows:[["I have finished my project.","I have been working on it all week."],["She has written three emails.","She has been writing emails for two hours."]], en:[0,1]},
-      ex:[["How long have you been learning English?","منذ متى وأنت تتعلم الإنجليزية؟"],["I'm exhausted. I've been running.","أنا منهك، كنت أركض."]] }
+    { t:"المضارع التام المستمر والمضارع التام",
+      p:"<span class='en'>have / has been + ing</span> يركز على مدة النشاط المستمر، و <span class='en'>have / has +</span> التصريف الثالث يركز على النتيجة أو العدد.",
+      table:{head:["المضارع التام المستمر","المضارع التام"], rows:[["I've been working here for five years.","I've worked on ten projects."],["She has been studying all morning.","She has finished her report."]], en:[0,1]},
+      ex:[["How long have you been designing websites?","منذ متى وأنت تصمم المواقع؟"]] },
+    { t:"صفة + حرف جر + فعل مع ing",
+      p:"بعد حروف الجر يأتي الفعل مع <span class='en'>ing</span>: <span class='en'>good at, interested in, tired of, excited about</span>.",
+      ex:[["She's good at solving problems.","هي ماهرة في حل المشكلات."],["I'm interested in working with people.","أنا مهتم بالعمل مع الناس."]] }
   ],
-  quiz:["I ___ studying for three hours.|have been|has been|am","She has been ___ all morning.|working|worked|work","How long have you been ___ English?|learning|learned|learn","They ___ been waiting since 9.|have|has|are","I'm exhausted. I've been ___ .|running|run|ran","He has ___ his project. It's done.|finished|been finishing|finish","My English has ___ a lot.|improved|improving|improve","We need to meet the ___ on Sunday.|deadline|effort|research"]},
-{ id:"u3", num:"3", en:"Big Events", ar:"فعاليات كبرى", pic:"🏟️",
-  words:["construct|يشيّد","renovate|يرمّم","launch|يطلق / يدشّن","establish|يؤسس","organize|ينظّم","host|يستضيف","announce|يعلن","cancel|يلغي","postpone|يؤجل","publish|ينشر","broadcast|يبث","stadium|ملعب"],
+  quiz:["I ___ been working here for five years.|have|has|am","She has been ___ all morning.|studying|studied|study","He has ___ three reports today.|written|been writing|wrote","How long have you been ___ English?|learning|learned|learn","She's good at ___ problems.|solving|solve|to solve","I'm interested ___ working with children.|in|on|at","He always finishes his work on time. He's very ___ .|reliable|sociable|creative","Working well with others is called ___ .|teamwork skills|work ethic|honesty"]},
+{ id:"u3", num:"3", en:"What Will Be, Will Be", ar:"ما سيكون سيكون", pic:"🔮",
+  words:["prediction|توقّع","robot|روبوت","rocket|صاروخ","skyscraper|ناطحة سحاب","submarine|غواصة","vision|رؤية","visionary|صاحب رؤية","novel|رواية","steel|فولاذ","shipwreck|حطام سفينة","appliance|جهاز منزلي","monitor|يراقب","activate|يشغّل","high-speed|فائق السرعة","exploration|استكشاف","character|شخصية"],
   grammar:[
-    { t:"المبني للمجهول في كل الأزمنة",
-      p:"القاعدة دائماً: <span class='en'>be</span> بالزمن المناسب + التصريف الثالث. ومع أفعال مثل <span class='en'>can, must, will</span> نقول: <span class='en'>will be + </span>التصريف الثالث.",
-      table:{head:["الزمن","المبني للمجهول"], rows:[["present","is built"],["present continuous","is being built"],["past","was built"],["present perfect","has been built"],["future","will be built"],["modal","must be built"]], en:[0,1]},
-      ex:[["A new stadium is being built in Riyadh.","يُبنى الآن ملعب جديد في الرياض."],["Expo 2030 will be hosted by Riyadh.","ستستضيف الرياض إكسبو 2030."],["The match has been postponed.","تم تأجيل المباراة."]] }
+    { t:"will أو be going to",
+      p:"<span class='en'>will</span> للتوقع حسب الرأي وللقرار اللحظي، و <span class='en'>be going to</span> للخطة أو للتوقع بدليل واضح الآن.",
+      ex:[["I think robots will do most housework.","أظن أن الروبوتات ستقوم بمعظم أعمال المنزل."],["Look at those clouds! It's going to rain.","انظر لتلك الغيوم! ستمطر."]] },
+    { t:"المستقبل المستمر والمضارع المستمر للمستقبل",
+      p:"<span class='en'>will be + ing</span> لحدث سيكون جارياً في وقت محدد في المستقبل. والمضارع المستمر لموعد مرتب.",
+      ex:[["This time next year, I'll be studying at university.","في مثل هذا الوقت من العام القادم سأكون أدرس في الجامعة."],["We're meeting the engineers tomorrow.","سنلتقي بالمهندسين غداً."]] }
   ],
-  quiz:["A new stadium ___ built in Riyadh now.|is being|is|was being","The match has ___ postponed.|been|be|being","The results will ___ announced tomorrow.|be|been|being","The museum ___ renovated last year.|was|is|has","The event must ___ organized carefully.|be|been|being","The news ___ broadcast every evening.|is|are|be","The book has been ___ in many languages.|published|publish|publishing","Expo 2030 ___ hosted by Riyadh.|will be|will|is been"]},
-{ id:"u4", num:"4", en:"What Did They Say?", ar:"الكلام المنقول", pic:"💬",
-  words:["explain|يشرح","reply|يرد","mention|يذكر","admit|يعترف","deny|ينكر","claim|يدّعي","warn|يحذّر","advise|ينصح","complain|يشتكي","whisper|يهمس","announce|يعلن","report|يبلّغ / ينقل"],
+  quiz:["I think people ___ live on the moon one day.|will|are going|be","Look at the sky! It's ___ to rain.|going|will|go","This time tomorrow, I'll ___ my exam.|be taking|take|taken","Will you be using the car tonight? Yes, I ___ .|will|am|do","We're ___ the engineers tomorrow. (موعد مرتب)|meeting|meet|met","It will be hot, ___ it?|won't|will|isn't","A ___ travels under the sea.|submarine|skyscraper|rocket","A very tall building is a ___ .|skyscraper|submarine|shipwreck"]},
+{ id:"u4", num:"4", en:"The Art of Advertising", ar:"فن الإعلان", pic:"📢",
+  words:["advertisement|إعلان","product|منتج","provider|مزوّد","option|خيار","fuel|وقود","frame|إطار","compact car|سيارة صغيرة","classic|كلاسيكي","legend|أسطورة","portable|محمول","wireless|لاسلكي","renewable|متجدد","smooth|ناعم","bulky|ضخم","customize|يخصّص","combination|مزيج"],
   grammar:[
-    { t:"الكلام المنقول (Reported Speech)",
-      p:"عند نقل كلام شخص نرجع الزمن خطوة للماضي: <span class='en'>am/is → was</span>، <span class='en'>will → would</span>، <span class='en'>can → could</span>. <span class='en'>say</span> بدون مفعول، و <span class='en'>tell</span> يحتاج مفعولاً: <span class='en'>told me</span>. والأوامر تُنقل بـ <span class='en'>to +</span> الفعل.",
-      table:{head:["الكلام المباشر","الكلام المنقول"], rows:[["\"I'm tired.\"","She said (that) she was tired."],["\"I will call you.\"","He told me he would call me."],["\"Where do you live?\"","They asked me where I lived."],["\"Be quiet!\"","The teacher told us to be quiet."]], en:[0,1]},
-      ex:[["He said that he was busy.","قال إنه مشغول."],["My mom advised me to study hard.","نصحتني أمي أن أذاكر بجد."]] }
+    { t:"المبني للمجهول",
+      p:"<span class='en'>be +</span> التصريف الثالث. يُستخدم كثيراً في الإعلانات وتاريخ المنتجات.",
+      ex:[["This phone is made in Korea.","هذا الهاتف مصنوع في كوريا."],["The first ad was printed in a newspaper.","طُبع أول إعلان في صحيفة."]] },
+    { t:"المقارنة و as … as وأفعال الحواس",
+      p:"<span class='en'>-er / more … than</span> و <span class='en'>as … as</span>. وأفعال الحواس <span class='en'>look, smell, sound, taste</span> يأتي بعدها صفة، أو <span class='en'>like +</span> اسم.",
+      ex:[["This laptop is lighter than that one.","هذا الحاسوب أخف من ذاك."],["It's as fast as the expensive model.","إنه سريع مثل الطراز الغالي."],["It smells like roses. It tastes delicious.","رائحته كالورد، وطعمه لذيذ."]] }
   ],
-  quiz:["She said that she ___ tired.|was|is|be","He told me he ___ go to Jeddah the next day.|would|will|wills","They asked me where I ___ .|lived|live|do live","She ___ me that she liked the gift.|told|said|say","He ___ that he was busy.|said|told|talked","\"I'm happy.\" → She said she ___ happy.|was|is|were","The teacher asked us ___ quiet.|to be|be|being","My mom ___ me to study hard.|advised|said|explained"]},
-{ id:"u5", num:"5", en:"Imagine!", ar:"تخيّل!", pic:"🌠",
-  words:["imagine|يتخيل","superpower|قوة خارقة","invisible|غير مرئي","fluent|طليق اللسان","abroad|في الخارج","donate|يتبرع","charity|جمعية خيرية","opportunity|فرصة","million|مليون","island|جزيرة","choose|يختار","dream|حلم"],
+  quiz:["This product ___ made in Saudi Arabia.|is|are|has","The first ads ___ printed in newspapers.|were|was|are","This model is ___ than the old one.|lighter|lightest|more light","It's as cheap ___ the other one.|as|than|like","This perfume smells ___ flowers.|like|as|of","The music sounds ___ .|great|greatly|like great","Solar power is ___ energy.|renewable|bulky|smooth","Headphones without cables are ___ .|wireless|portable|classic"]},
+{ id:"u5", num:"5", en:"Did You Hurt Yourself?", ar:"هل أذيت نفسك؟", pic:"🩹",
+  words:["helmet|خوذة","knee pad|واقي الركبة","injury|إصابة","intersection|تقاطع","risk|خطر","equipment|معدات","injured|مصاب","unconscious|فاقد الوعي","cautious|حذر","distracted|مشتت الانتباه","drowsy|نعسان","prevent|يمنع","obey|يطيع","slip|ينزلق","sprain|يلتوي (المفصل)","fracture|كسر"],
   grammar:[
-    { t:"الشرط الثاني (Second Conditional)",
-      p:"لموقف خيالي أو غير محتمل الآن: <span class='en'>If +</span> الماضي البسيط، <span class='en'>would +</span> الفعل. ونستخدم <span class='en'>were</span> مع كل الضمائر: <span class='en'>If I were you…</span>",
-      table:{head:["الشرط الأول (محتمل)","الشرط الثاني (خيالي)"], rows:[["If I have time, I will help you.","If I had time, I would help you."],["If it rains, we'll stay home.","If I were rich, I would travel the world."]], en:[0,1]},
-      ex:[["What would you do if you were invisible?","ماذا ستفعل لو كنت غير مرئي؟"],["If I were you, I'd study harder.","لو كنت مكانك لذاكرت أكثر."]] }
+    { t:"الضمائر الانعكاسية",
+      p:"عندما يكون الفاعل والمفعول نفس الشخص: <span class='en'>myself, yourself, himself, herself, itself, ourselves, yourselves, themselves</span>.",
+      ex:[["Did you hurt yourself?","هل أذيت نفسك؟"],["He cut himself while cooking.","جرح نفسه أثناء الطبخ."]] },
+    { t:"because أو so، و so / neither",
+      p:"<span class='en'>because</span> قبل السبب، و <span class='en'>so</span> قبل النتيجة. وللموافقة: <span class='en'>So do I</span> (في الإثبات)، <span class='en'>Neither do I</span> (في النفي).",
+      ex:[["He fell because the floor was wet.","سقط لأن الأرض كانت مبللة."],["The floor was wet, so he fell.","كانت الأرض مبللة فسقط."],["I always wear a helmet. So do I.","ألبس الخوذة دائماً. وأنا كذلك."]] }
   ],
-  quiz:["If I ___ a million riyals, I'd help the poor.|had|have|would have","If she were rich, she ___ travel the world.|would|will|is","What would you do if you ___ invisible?|were|are|will be","If I ___ you, I'd study harder.|were|am|be","I ___ buy a car if I had money.|would|will|did","If we lived abroad, we ___ speak another language.|would|will|can to","She would donate to ___ if she won.|charity|million|island","If I could choose a superpower, I ___ fly.|would|will|am"]}
+  quiz:["Did you hurt ___ ?|yourself|yourselves|you","She cut ___ with a knife.|herself|himself|itself","We enjoyed ___ at the park.|ourselves|ourself|us","He slipped ___ the floor was wet.|because|so|but","It was foggy, ___ we drove slowly.|so|because|or","I wear a seat belt. ___ do I.|So|Neither|Too","I don't drive fast. ___ do I.|Neither|So|Either","Wear a ___ when you ride a bike.|helmet|fracture|risk"]},
+{ id:"u6", num:"6", en:"Take My Advice", ar:"خذ بنصيحتي", pic:"💬",
+  words:["appetite|الشهية","counselor|مرشد","fitness|اللياقة","peer pressure|ضغط الأقران","well-being|الصحة النفسية والجسدية","nutritious|مغذٍّ","achievable|قابل للتحقيق","gain weight|يزداد وزنه","lose weight|يخسر وزنه","give up|يتوقف عن / يستسلم","put off|يؤجل","take up|يبدأ (هواية)","throw away|يرمي","turn down|يرفض","cut down on|يقلل من","get along with|يتفاهم مع"],
+  grammar:[
+    { t:"النصيحة: should, ought to, might, could, had better",
+      p:"<span class='en'>should / ought to</span> نصيحة، <span class='en'>might / could</span> اقتراح ألطف، <span class='en'>had better</span> نصيحة قوية فيها تحذير. وبعدها كلها الفعل بدون إضافة.",
+      ex:[["You should eat more nutritious food.","يُستحسن أن تأكل طعاماً مغذياً أكثر."],["You ought to talk to a counselor.","ينبغي أن تتحدث مع مرشد."],["You'd better not put off your homework.","الأفضل ألا تؤجل واجبك."]] },
+    { t:"الأفعال المركبة (Two- and Three-word Verbs)",
+      p:"فعل + حرف أو حرفين يعطي معنى جديداً: <span class='en'>give up, put off, take up, cut down on, get along with, put up with</span>.",
+      ex:[["I want to cut down on sugar.","أريد أن أقلل السكر."],["He took up swimming last year.","بدأ السباحة العام الماضي."]] }
+  ],
+  quiz:["You ___ drink more water.|should|ought|had","You ought ___ sleep earlier.|to|for|at","You'd better ___ late again!|not be|not to be|don't be","You ___ try a new hobby.|could|ought|had better to","I need to cut down ___ junk food.|on|off|up","Don't ___ up! Keep trying.|give|take|put","He took ___ running last month.|up|off|down","She gets along ___ all her classmates.|with|on|to"]}
 ]});
