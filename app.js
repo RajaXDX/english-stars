@@ -358,8 +358,10 @@ function startSpell(u, g){
 /* ===== boot ===== */
 $("#brandHome").onclick = renderHome;
 updateTotal();
-(function route(){
-  const h = (location.hash||"").slice(1);
+window.addEventListener("hashchange", route);
+route();
+function route(){
+  const h = decodeURIComponent((location.hash||"").slice(1));
   if(!store.gender) return renderGate();
   const m = h.match(/^(g\d+)(?:-(.+))?$/);
   if(m && gradeById(m[1])){
@@ -368,4 +370,4 @@ updateTotal();
     if(gradeById(m[1]).units.some(u=>u.id===m[2])) return openUnit(m[1], m[2], "words");
   }
   renderHome();
-})();
+}
