@@ -1,47 +1,69 @@
-/* الصف الثاني الثانوي — مبني على مستوى الصف (بانتظار الكتاب للمطابقة) */
-GRADE({ id:"g11", n:11, stage:"s", ar:"الثاني الثانوي", book:"", units:[
-{ id:"u1", num:"1", en:"Before That…", ar:"الماضي التام", pic:"⏮️",
-  words:["by the time|بحلول الوقت الذي","realize|يدرك","notice|يلاحظ","regret|يندم","forget|ينسى","arrive|يصل","leave|يغادر","miss|يفوته","already|بالفعل","previously|سابقاً","eventually|في النهاية","afterwards|بعد ذلك"],
+/* الصف الثاني الثانوي (مسارات) — من كتاب Mega Goal 2.1، الجزء الأول (الوحدات 1–6، الفصل الأول 1448): جدول المنهج وقائمة المفردات */
+GRADE({ id:"g11", n:11, stage:"s", ar:"الثاني الثانوي", book:"Mega Goal 2", units:[
+{ id:"u1", num:"1", en:"Connected by Technology", ar:"متصلون بالتقنية", pic:"📱",
+  words:["acronym|اختصار من الحروف الأولى","mobility|القدرة على التنقل","paramedic|مسعف","loner|شخص يحب الوحدة","network|شبكة / يتواصل مهنياً","post|ينشر","contribute|يساهم","perform|يؤدي","cyber|إلكتروني / سيبراني","virtual|افتراضي","obsessed|مهووس","inseparable|لا يفترقان","extraordinary|استثنائي","laid back|هادئ وغير متوتر","down to earth|متواضع وواقعي","spontaneous|عفوي","straightforward|صريح ومباشر"],
   grammar:[
-    { t:"الماضي التام (had + التصريف الثالث)",
-      p:"نستخدمه لحدث وقع <b>قبل</b> حدث آخر في الماضي. الحدث الأقدم بالماضي التام، والأحدث بالماضي البسيط.",
-      ex:[["When I arrived, the train had already left.","عندما وصلت كان القطار قد غادر."],["By the time we got there, the movie had started.","بحلول وصولنا كان الفيلم قد بدأ."],["She realized she had left her phone at home.","أدركت أنها نسيت هاتفها في البيت."]] }
+    { t:"الأفعال المساعدة (do, have, be)",
+      p:"<span class='en'>do</span> للنفي والسؤال في البسيط، <span class='en'>have</span> في الأزمنة التامة، <span class='en'>be</span> في المستمر والمبني للمجهول.",
+      ex:[["Do you post photos online? No, I don't.","هل تنشر صوراً على الإنترنت؟ لا."],["She has joined a new network.","انضمت إلى شبكة جديدة."],["Messages are sent in seconds.","تُرسل الرسائل في ثوانٍ."]] },
+    { t:"needs to be done و have / get something done",
+      p:"<span class='en'>needs to be +</span> التصريف الثالث لشيء يحتاج إلى عمل. <span class='en'>have / get +</span> الشيء + التصريف الثالث عندما يقوم به شخص آخر لنا. والتصريف الثالث قد يأتي صفة: <span class='en'>a broken screen</span>.",
+      ex:[["My phone needs to be repaired.","هاتفي يحتاج إلى إصلاح."],["I had my laptop fixed yesterday.","أصلحت حاسوبي أمس (عند فني)."]] }
   ],
-  quiz:["When I arrived, the train ___ left.|had already|has already|already","By the time we got there, the movie ___ started.|had|has|have","She realized she ___ her phone at home.|had left|has left|leaves","After he ___ dinner, he went to bed.|had eaten|has eaten|eats","I ___ never seen snow before that trip.|had|have|was","Had you ___ him before?|met|meet|meeting","I didn't know she ___ moved.|had|has|have","He ___ the bus, so he took a taxi.|had missed|has missed|misses"]},
-{ id:"u2", num:"2", en:"If Only…", ar:"الشرط الثالث", pic:"🔁",
-  words:["mistake|خطأ","consequence|عاقبة","decision|قرار","outcome|نتيجة","chance|فرصة","lucky|محظوظ","prevent|يمنع","avoid|يتجنب","helmet|خوذة","accident|حادث","hurry|يستعجل","on time|في الموعد"],
+  quiz:["___ you use social media every day?|Do|Are|Have","She ___ never used that app.|has|does|is","The video ___ watched by millions.|was|did|had","My screen needs to ___ repaired.|be|been|being","I had my phone ___ yesterday.|fixed|fix|fixing","This laptop is ___ than my old one.|faster|fastest|more fast","He's very relaxed and calm. He's ___ .|laid back|obsessed|spontaneous","A ___ gives first aid in an emergency.|paramedic|loner|acronym"]},
+{ id:"u2", num:"2", en:"Crime Doesn't Pay", ar:"الجريمة لا تفيد", pic:"🚔",
+  words:["burglar|لص منازل","pickpocket|نشّال","suspect|مشتبه به","victim|ضحية","fraud|احتيال","inmate|سجين","misdemeanor|جنحة","precaution|احتياط","coincidence|صدفة","getaway car|سيارة الهروب","break into|يقتحم","hijack|يختطف","charge|يتهم","sentence|يحكم على","install|يركّب","unauthorized|غير مصرّح به"],
   grammar:[
-    { t:"الشرط الثالث (Third Conditional)",
-      p:"لموقف في الماضي لم يحدث، ونتخيل نتيجة مختلفة: <span class='en'>If + had +</span> التصريف الثالث، <span class='en'>would have +</span> التصريف الثالث. يُستخدم كثيراً للندم.",
-      table:{head:["ما حدث فعلاً","الشرط الثالث"], rows:[["I didn't study, so I failed.","If I had studied, I would have passed."],["She missed the bus, so she was late.","If she hadn't missed the bus, she would have been on time."]], en:[0,1]},
-      ex:[["If you had told me, I would have helped you.","لو أخبرتني لساعدتك."],["We would have won if we had played harder.","كنا سنفوز لو لعبنا بجهد أكبر."]] }
+    { t:"المبني للمجهول",
+      p:"نستخدمه في أخبار الجرائم لأن الحدث أهم من الفاعل: <span class='en'>be +</span> التصريف الثالث.",
+      ex:[["The burglar was caught by the police.","قُبض على اللص من قبل الشرطة."],["The suspect has been charged with fraud.","وُجّهت للمشتبه به تهمة الاحتيال."]] },
+    { t:"الماضي التام والماضي التام المستمر",
+      p:"<span class='en'>had +</span> التصريف الثالث لحدث سبق حدثاً آخر في الماضي. و <span class='en'>had been + ing</span> لنشاط استمر مدة قبل حدث في الماضي.",
+      ex:[["When the police arrived, the thief had already escaped.","عندما وصلت الشرطة كان اللص قد هرب."],["They had been watching the house for days.","كانوا يراقبون البيت منذ أيام."]] }
   ],
-  quiz:["If I had studied, I ___ passed.|would have|would|will have","If she ___ the bus, she would have been on time.|hadn't missed|didn't miss|hasn't missed","We would have won if we ___ harder.|had played|played|have played","If you had told me, I ___ helped you.|would have|will have|would","He ___ have been hurt if he had worn a helmet.|wouldn't|won't|didn't","If they had left early, they ___ missed the traffic.|would have|had|will","I regret ___ my friend.|not calling|not call|to not call","It was a big ___ . I shouldn't have done it.|mistake|outcome|chance"]},
-{ id:"u3", num:"3", en:"It Must Have Been…", ar:"الاستنتاج في الماضي", pic:"🔍",
-  words:["assume|يفترض","deduce|يستنتج","likely|مرجّح","unlikely|غير مرجّح","certain|متأكد","possibility|احتمال","explanation|تفسير","reason|سبب","evidence|دليل","conclusion|استنتاج","mystery|لغز","witness|شاهد"],
+  quiz:["The burglar ___ caught last night.|was|had|did","The suspect has ___ charged.|been|be|being","When the police came, the thief ___ escaped.|had|has|was","They had ___ watching the bank for weeks.|been|be|being","Cameras ___ installed in every shop.|are|is|have","He ___ sentenced to two years.|was|had|did","A ___ steals from people's pockets.|pickpocket|victim|paramedic","Lock your doors as a ___ .|precaution|coincidence|fraud"]},
+{ id:"u3", num:"3", en:"Far and Away", ar:"بعيداً جداً", pic:"🏝️",
+  words:["conservation|المحافظة على البيئة","deforestation|إزالة الغابات","ecosystem|نظام بيئي","ranger|حارس محمية","trekking|المشي الطويل","toiletries|أدوات النظافة الشخصية","encounter|يصادف","preserve|يحافظ على","breathtaking|يخطف الأنفاس","remote|نائٍ","pristine|نقي لم يُمس","lush|كثيف الخضرة","stunning|مذهل","cozy|مريح ودافئ","absolutely|تماماً","apparently|على ما يبدو"],
   grammar:[
-    { t:"أفعال الاحتمال والندم في الماضي",
-      p:"<span class='en'>must have +</span> التصريف الثالث = متأكد أنه حدث. <span class='en'>can't have</span> = مستحيل أنه حدث. <span class='en'>might / could have</span> = ربما حدث. <span class='en'>should have</span> = كان يجب (ندم أو لوم).",
-      table:{head:["الصيغة","المعنى"], rows:[["must have done","لا بد أنه فعل"],["can't have done","مستحيل أنه فعل"],["might / could have done","ربما فعل"],["should have done","كان يجب أن يفعل"]], en:[0]},
-      ex:[["She must have been tired after the long trip.","لا بد أنها كانت متعبة بعد الرحلة الطويلة."],["He can't have stolen it. He was with me all day.","مستحيل أنه سرقه، كان معي طوال اليوم."],["I should have studied more.","كان يجب أن أذاكر أكثر."]] }
+    { t:"ظروف الدرجة",
+      p:"تقوّي الصفة أو تضعفها: <span class='en'>extremely, very, quite, rather, nearly, hardly</span>. وبعض الصفات القوية مثل <span class='en'>breathtaking</span> تأتي مع <span class='en'>absolutely</span> وليس <span class='en'>very</span>.",
+      ex:[["The view was absolutely breathtaking.","كان المنظر مذهلاً تماماً."],["The island is extremely remote.","الجزيرة نائية جداً."]] },
+    { t:"ظروف الجملة",
+      p:"تعبّر عن رأي المتكلم في الجملة كلها، وتأتي غالباً في أولها: <span class='en'>Fortunately, Honestly, Apparently, Obviously</span>.",
+      ex:[["Unfortunately, the hotel was full.","لسوء الحظ، كان الفندق ممتلئاً."],["Apparently, the forest is protected.","على ما يبدو، الغابة محمية."]] }
   ],
-  quiz:["You ___ have told me! I would have helped.|should|must|can","She ___ have been tired after the long trip.|must|should|can","He ___ have stolen it. He was with me all day.|can't|must|should","They ___ have missed the bus. I'm not sure.|might|must|can't","I ___ have studied more. I failed.|should|must|can't","We ___ have won, but we didn't try hard.|could|must|can't","It's very ___ that it will rain. The sky is clear.|unlikely|likely|certain","The police found new ___ .|evidence|conclusion|assume"]},
-{ id:"u4", num:"4", en:"Getting Things Done", ar:"أسلوب التكليف", pic:"🛠️",
-  words:["repair|يصلح","deliver|يوصّل","install|يركّب","decorate|يزيّن","service|صيانة","mechanic|ميكانيكي","tailor|خيّاط","plumber|سبّاك","appointment|موعد","haircut|قصة شعر","replace|يستبدل","technician|فنّي"],
+  quiz:["The view was ___ breathtaking.|absolutely|very|a bit","The village is ___ remote. Few people go there.|extremely|hardly|barely","I could ___ see anything in the fog.|hardly|nearly|absolutely","___ , the flight was delayed. (لسوء الحظ)|Unfortunately|Honestly|Clearly","___ , I didn't like the hotel. (بصراحة)|Honestly|Apparently|Officially","Do you think it would be ___ to change rooms?|possible|possibly|possibility","Cutting down forests is called ___ .|deforestation|conservation|ecosystem","A ___ protects animals in a national park.|ranger|trekking|toiletries"]},
+{ id:"u4", num:"4", en:"TV Around the World", ar:"التلفاز حول العالم", pic:"📺",
+  words:["contestant|متسابق","documentary|فيلم وثائقي","episode|حلقة","host|مقدم البرنامج","sitcom|مسلسل كوميدي","game show|برنامج مسابقات","quiz show|برنامج أسئلة","prototype|نموذج أولي","milestone|محطة مهمة","broadcast|يبث","transmit|ينقل","launch|يطلق","fictional|خيالي","factual|واقعي","innovative|مبتكر","mysterious|غامض"],
   grammar:[
-    { t:"التكليف (have / get something done)",
-      p:"عندما يقوم شخص آخر بالعمل لأجلنا: <span class='en'>have / get +</span> الشيء + التصريف الثالث. ويتغير زمن <span class='en'>have</span> حسب الجملة.",
-      table:{head:["أنا فعلته","شخص فعله لي"], rows:[["I repaired my car.","I had my car repaired."],["She is painting her house.","She is having her house painted."],["I will cut my hair.","I'm going to have my hair cut."]], en:[0,1]},
-      ex:[["We need to get the AC fixed.","نحتاج أن نُصلح المكيف."],["He got his phone screen replaced.","استبدل شاشة هاتفه (عند فني)."]] }
+    { t:"المفعول المباشر وغير المباشر (to / for)",
+      p:"<span class='en'>give someone something</span> أو <span class='en'>give something to someone</span>. نستخدم <span class='en'>to</span> مع <span class='en'>give, send, show, tell</span>، و <span class='en'>for</span> مع <span class='en'>buy, make, get, cook</span>.",
+      ex:[["The host gave the contestant a prize.","أعطى المقدم المتسابقَ جائزة."],["The host gave a prize to the contestant.","أعطى المقدم جائزة للمتسابق."],["My dad bought a new TV for us.","اشترى أبي تلفازاً جديداً لنا."]] },
+    { t:"جمل الصلة وأدوات التعريف",
+      p:"<span class='en'>who / that</span> للأشخاص، <span class='en'>which / that</span> للأشياء. وقد تكون الأداة فاعلاً أو مفعولاً.",
+      ex:[["A documentary is a program that shows real facts.","الفيلم الوثائقي برنامج يعرض حقائق واقعية."],["The contestant who won got a car.","المتسابق الذي فاز حصل على سيارة."]] }
   ],
-  quiz:["I had my car ___ yesterday.|repaired|repair|repairing","She is having her house ___ .|painted|paint|paints","We need to get the AC ___ .|fixed|fix|fixing","I'm going to have my hair ___ .|cut|cutted|cutting","He got his phone screen ___ .|replaced|replace|replacing","Where do you have your clothes ___ ?|cleaned|clean|cleaning","I called a ___ to fix the leaking pipe.|plumber|tailor|mechanic","Did you have the package ___ to your home?|delivered|deliver|delivering"]},
-{ id:"u5", num:"5", en:"Linking Ideas", ar:"أدوات الربط", pic:"🔗",
-  words:["although|بالرغم من أن","however|ومع ذلك","despite|بالرغم من","whereas|في حين أن","therefore|لذلك","moreover|علاوة على ذلك","furthermore|إضافة إلى ذلك","nevertheless|ومع ذلك كله","as a result|نتيجة لذلك","in addition|بالإضافة","on the other hand|من ناحية أخرى","consequently|وبالتالي"],
+  quiz:["The host gave a prize ___ the winner.|to|for|at","My mom made a cake ___ me.|for|to|at","She showed the photos ___ her friends.|to|for|with","The contestant ___ won was very happy.|who|which|where","A sitcom is a show ___ makes people laugh.|that|who|where","They ___ the show live every Friday.|broadcast|launch|transmits","A person who takes part in a game show is a ___ .|contestant|host|prototype","A program about real events is ___ .|factual|fictional|mysterious"]},
+{ id:"u5", num:"5", en:"Working 9 to 5", ar:"العمل من 9 إلى 5", pic:"💼",
+  words:["income|دخل","satisfaction|رضا","status|مكانة","trend|اتجاه سائد","flair|موهبة","air traffic controller|مراقب جوي","pediatrician|طبيب أطفال","surgeon|جرّاح","social worker|أخصائي اجتماعي","zoologist|عالم حيوان","analyze|يحلّل","cooperate|يتعاون","determine|يحدد","identify|يتعرف على","methodical|منظم ومنهجي","respectful|محترم"],
   grammar:[
-    { t:"أدوات الربط والتضاد",
-      p:"بعد <span class='en'>although</span> تأتي <b>جملة كاملة</b>، وبعد <span class='en'>despite / in spite of</span> يأتي <b>اسم</b> أو فعل مع <span class='en'>ing</span>. و <span class='en'>however, therefore, moreover</span> تأتي غالباً في بداية جملة جديدة وبعدها فاصلة.",
-      table:{head:["الأداة","بعدها","مثال"], rows:[["although","جملة","Although it was raining, we went out."],["despite","اسم / ing","Despite the rain, we went out."],["however","جملة جديدة","He studied. However, he failed."],["therefore","جملة جديدة","It was late; therefore, we left."]], en:[0,2]},
-      ex:[["She is tall, whereas her sister is short.","هي طويلة في حين أن أختها قصيرة."],["The hotel is cheap. Moreover, it is near the beach.","الفندق رخيص، وعلاوة على ذلك قريب من الشاطئ."]] }
+    { t:"صيغة الطلب (Subjunctive)",
+      p:"بعد أفعال مثل <span class='en'>suggest, recommend, insist</span> وعبارات مثل <span class='en'>It's essential that</span> نستخدم الفعل في أصله بدون <span class='en'>s</span> أو تصريف.",
+      ex:[["The manager insists that every employee be on time.","يصرّ المدير أن يحضر كل موظف في الموعد."],["It's essential that he finish the report today.","من الضروري أن ينهي التقرير اليوم."]] },
+    { t:"I'd like you to / I want you to والأسئلة الذيلية",
+      p:"<span class='en'>I'd like you to +</span> الفعل لطلب مهذب. والسؤال الذيلي يعكس الجملة: <span class='en'>You're a surgeon, aren't you?</span>",
+      ex:[["I'd like you to analyze these results.","أريدك أن تحلل هذه النتائج."],["You can help me, can't you?","تستطيع مساعدتي، أليس كذلك؟"]] }
   ],
-  quiz:["___ it was raining, we went out.|Although|Despite|However","___ the rain, we went out.|Despite|Although|Because","He studied hard. ___ , he failed.|However|Although|Despite","It was late; ___ , we went home.|therefore|although|despite","She is tall, ___ her sister is short.|whereas|despite|therefore","___ being tired, he finished the race.|In spite of|Although|However","The hotel is cheap. ___ , it is near the beach.|Moreover|Although|Despite","He missed the bus. As a ___ , he was late.|result|reason|cause"]}
+  quiz:["The doctor recommends that he ___ more.|rest|rests|rested","It's essential that she ___ on time.|be|is|was","I'd like you ___ this report.|to check|check|checking","I want you ___ me.|to help|help|helping","You're a nurse, ___ you?|aren't|isn't|don't","He works in a hospital, ___ he?|doesn't|isn't|don't","A ___ is a doctor for children.|pediatrician|surgeon|zoologist","Do you think you ___ help me with this?|could|would to|can to"]},
+{ id:"u6", num:"6", en:"Going Green", ar:"نحو بيئة خضراء", pic:"♻️",
+  words:["consumption|الاستهلاك","efficiency|الكفاءة","impact|أثر","landfill|مكب النفايات","pesticides|المبيدات","power outage|انقطاع الكهرباء","source|مصدر","thermostat|منظم الحرارة","waste|نفايات / هدر","wrapper|غلاف","conserve|يحافظ على","rely|يعتمد","organic|عضوي","reusable|قابل لإعادة الاستخدام","committed|ملتزم","harsh|قاسٍ"],
+  grammar:[
+    { t:"الفعل مع ing أو to بعد الأفعال",
+      p:"بعد <span class='en'>avoid, enjoy, consider, suggest, keep</span> يأتي الفعل مع <span class='en'>ing</span>. وبعد <span class='en'>decide, plan, want, try, hope</span> يأتي <span class='en'>to +</span> الفعل.",
+      ex:[["I avoid using plastic bags.","أتجنب استخدام الأكياس البلاستيكية."],["We decided to recycle more.","قررنا أن نعيد التدوير أكثر."]] },
+    { t:"I'd rather والشرط الأول",
+      p:"<span class='en'>I'd rather +</span> الفعل = أفضّل أن. والشرط الأول: <span class='en'>If +</span> مضارع، <span class='en'>will +</span> فعل.",
+      ex:[["I'd rather walk than drive.","أفضّل المشي على القيادة."],["If we waste water, we will have less in the future.","إذا أهدرنا الماء سيقل في المستقبل."]] }
+  ],
+  quiz:["Try to avoid ___ plastic bags.|using|to use|use","We decided ___ more.|to recycle|recycling|recycle","I enjoy ___ in the garden.|working|to work|work","I'd rather ___ than drive.|walk|to walk|walking","If we save energy, we ___ help the planet.|will|would|are","You might want to consider ___ a reusable bottle.|buying|to buy|buy","Food grown without chemicals is ___ .|organic|harsh|reusable","When the lights go off, it's a ___ .|power outage|landfill|thermostat"]}
 ]});
