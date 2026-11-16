@@ -1,7 +1,7 @@
 /* الصف الثالث الابتدائي — من كتاب We Can! 3 (الفصل الأول 1448): المنهج (Syllabus) وقائمة الكلمات */
 GRADE({ id:"g3", n:3, stage:"p", ar:"الثالث الابتدائي", book:"We Can! 3", units:[
 { id:"u1", num:"1", en:"It's Nice to Meet You!", ar:"سعيد بلقائك", pic:"👋",
-  words:["brothers|إخوة|👦👦","sisters|أخوات|👧👧","live|يسكن|🏠","dress|فستان|👗","hat|قبعة|👒","coat|معطف|🧥","shirt|قميص|👕","sandals|صندل|🩴","mine|لي|🙋","yours|لك|👉","his|له|👦","hers|لها|👧","ours|لنا|👨‍👩‍👧","theirs|لهم|👥"],
+  words:["brothers|إخوة|👦👦","sisters|أخوات|👧👧","live|يسكن|🏠","dress|فستان|👗","hat|قبعة|👒","coat|معطف|🧥","shirt|قميص|👕","sandals|صندل|🩴","mine|لي|🙋","yours|لك|👉","his|له|👦","hers|لها|👧","ours|لنا|👨‍👩‍👧","theirs|لهم|👥","cheese|جبن|🧀","day|يوم|📅","her|لها / ـها","it's nice to meet you|سعيد بلقائك|🤝","meat|لحم|🥩","pair|زوج (من شيء)|🧦","peach|خوخ|🍑","pie|فطيرة|🥧","pine|صنوبر|🌲","play|يلعب|⚽","sheep|خروف|🐑","smartphone|هاتف ذكي|📱","tie|ربطة عنق|👔"],
   grammar:[
     { t:"التعارف (What's your name? Where do you live?)",
       p:"نسأل عن الاسم والعمر والسكن: <span class='en'>What's your name? How old are you? Where do you live?</span>",
@@ -13,7 +13,7 @@ GRADE({ id:"g3", n:3, stage:"p", ar:"الثالث الابتدائي", book:"We 
   ],
   quiz:["What's ___ name? My name's Ali.|your|you|yours","How ___ are you? I'm nine.|old|many|much","Where do you ___ ? I live in Riyadh.|live|lives|living","___ hat is this? It's mine.|Whose|Who|What","This is my coat. It's ___ .|mine|my|me","She is my sister. ___ name is Reem.|Her|His|Hers","Is this your brother's shirt? Yes, it's ___ .|his|hers|him","We have a cat. ___ cat is white.|Our|Ours|Us"]},
 { id:"u2", num:"2", en:"Sea Animals", ar:"حيوانات البحر", pic:"🐳",
-  words:["whale|حوت|🐳","seal|فقمة|🦭","dolphin|دلفين|🐬","shark|قرش|🦈","octopus|أخطبوط|🐙","jellyfish|قنديل البحر|🪼","crab|سرطان البحر|🦀","starfish|نجم البحر|⭐","squid|حبار|🦑","seahorse|حصان البحر|🐴","seagull|نورس|🕊️","cute|لطيف|🥰","scary|مخيف|😱","noisy|مزعج|🔊"],
+  words:["whale|حوت|🐳","seal|فقمة|🦭","dolphin|دلفين|🐬","shark|قرش|🦈","octopus|أخطبوط|🐙","jellyfish|قنديل البحر|🪼","crab|سرطان البحر|🦀","starfish|نجم البحر|⭐","squid|حبار|🦑","seahorse|حصان البحر|🐴","seagull|نورس|🕊️","cute|لطيف|🥰","scary|مخيف|😱","noisy|مزعج|🔊","big|كبير|🐘","bigger|أكبر|📈","the biggest|الأكبر|🏔️","boat|قارب|⛵","catch|يمسك|🫴","chases|يطارد|🏃","crocodile|تمساح|🐊","cuter|ألطف|🐣","the cutest|الألطف|🥹","dolphins|دلافين|🐬🐬","eel|ثعبان البحر|🐍","fat|سمين|🐷","fast|سريع|⚡","faster|أسرع|💨","the fastest|الأسرع|🏎️","horse|حصان","lion|أسد|🦁","mouse|فأر|🐭","polar bear|دب قطبي|🐻‍❄️","scarier|أكثر رعباً|👻","the scariest|الأكثر رعباً|💀","slow|بطيء|🐢","snail|حلزون|🐌","snow|ثلج|❄️","tiger|نمر|🐯","tosses|يرمي|🤾","turtle|سلحفاة بحرية|🐢🌊","walrus|فظ (حيوان بحري)|🦭🦷","window|نافذة|🪟"],
   grammar:[
     { t:"ما رأيك؟ (What do you think about it?)",
       p:"نسأل عن الرأي بـ <span class='en'>What do you think about it / them?</span> ونجيب <span class='en'>I think it's… / I don't think they're…</span>",
@@ -25,7 +25,7 @@ GRADE({ id:"g3", n:3, stage:"p", ar:"الثالث الابتدائي", book:"We 
   ],
   quiz:["What ___ those? They're seals.|are|is|am","What do you think ___ it?|about|of the|on","I think a seahorse is ___ .|cute|cuter|cutest","A dolphin is ___ than a seal.|faster|fast|fastest","The whale is the ___ animal in the sea.|biggest|bigger|big","A shark is ___ than a crab.|scarier|scaryer|scariest","Seagulls are very ___ .|noisy|noise|noisily","An ___ has eight arms.|octopus|seal|whale"]},
 { id:"u3", num:"3", en:"Sports and Activities", ar:"الرياضات والأنشطة", pic:"⚽",
-  words:["football|كرة القدم|⚽","basketball|كرة السلة|🏀","volleyball|الكرة الطائرة|🏐","tennis|التنس|🎾","horse riding|ركوب الخيل|🏇","rock climbing|تسلق الصخور|🧗","hang gliding|الطيران الشراعي|🪂","scuba diving|الغوص|🤿","roller skating|التزلج بالعجلات|🛼","cycling|ركوب الدراجة|🚴","pottery|صناعة الفخار|🏺","painting|الرسم|🎨","computer games|ألعاب الحاسوب|🎮","exciting|مثير|🤩","dangerous|خطير|⚠️"],
+  words:["football|كرة القدم|⚽","basketball|كرة السلة|🏀","volleyball|الكرة الطائرة|🏐","tennis|التنس|🎾","horse riding|ركوب الخيل|🏇","rock climbing|تسلق الصخور|🧗","hang gliding|الطيران الشراعي|🪂","scuba diving|الغوص|🤿","roller skating|التزلج بالعجلات|🛼","cycling|ركوب الدراجة|🚴","pottery|صناعة الفخار|🏺","painting|الرسم|🎨","computer games|ألعاب الحاسوب|🎮","exciting|مثير|🤩","dangerous|خطير|⚠️","activities|أنشطة|🎯","coin|عملة معدنية|🪙","dive|يغوص","falcons|صقور|🦅","falconry|الصيد بالصقور|🦅🏜️","hunt|يصطاد|🏹","more|أكثر|➕","most|الأكثر|🏆","point|يشير|👉","sky diving|القفز المظلي","sports|رياضات|🏅","spot|يلمح|👀","tennis racket|مضرب تنس","toy|لعبة|🧸"],
   grammar:[
     { t:"ماذا تحب؟ وماذا تريد أن تجرب؟",
       p:"نسأل <span class='en'>What sport do you like?</span> و <span class='en'>What do you want to try?</span>. ومع <span class='en'>he / she</span> نستخدم <span class='en'>does</span>، والفعل يأخذ <span class='en'>s</span>: <span class='en'>He likes… He wants to try…</span>",
@@ -36,7 +36,7 @@ GRADE({ id:"g3", n:3, stage:"p", ar:"الثالث الابتدائي", book:"We 
   ],
   quiz:["What sport ___ you like?|do|does|are","What sport ___ your sister like?|does|do|is","He ___ to try scuba diving.|wants|want|wanting","Do they like tennis? Yes, they ___ .|do|does|are","Does he like golf? No, he ___ .|doesn't|don't|isn't","Horse riding is ___ exciting than cycling.|more|most|much","Rock climbing is ___ than jogging.|more dangerous|dangerouser|most dangerous","I want to ___ hang gliding.|try|tries|trying"]},
 { id:"u4", num:"4", en:"Chores", ar:"أعمال المنزل", pic:"🧹",
-  words:["feed the fish|يطعم السمك|🐠","take out the trash|يُخرج النفايات|🚮","set the table|يجهّز السفرة|🍽️","wash the dishes|يغسل الصحون|🧼","vacuum the floor|ينظف الأرض بالمكنسة|🧹","fold the laundry|يطوي الملابس|👕","clean up your room|رتّب غرفتك|🛏️","go shopping|يتسوّق|🛒","bake bread|يخبز الخبز|🍞","make a drink|يحضّر مشروباً|🥤","helper|مساعد|🤝","chores|أعمال المنزل|🏠"],
+  words:["feed the fish|يطعم السمك|🐠","take out the trash|يُخرج النفايات|🚮","set the table|يجهّز السفرة|🍽️","wash the dishes|يغسل الصحون|🧼","vacuum the floor|ينظف الأرض بالمكنسة|🧹","fold the laundry|يطوي الملابس|👕","clean up your room|رتّب غرفتك|🛏️","go shopping|يتسوّق|🛒","bake bread|يخبز الخبز|🍞","make a drink|يحضّر مشروباً|🥤","helper|مساعد|🤝","chores|أعمال المنزل|🏠","average|متوسط|📊","fork|شوكة|🍴","park|حديقة عامة|🏞️"],
   grammar:[
     { t:"المضارع البسيط مع he / she",
       p:"مع <span class='en'>he / she</span> نضيف <span class='en'>s</span> للفعل، أو <span class='en'>es</span> إذا انتهى بـ <span class='en'>sh, ch, o</span>. والسؤال بـ <span class='en'>Does…?</span>",
@@ -45,7 +45,7 @@ GRADE({ id:"g3", n:3, stage:"p", ar:"الثالث الابتدائي", book:"We 
   ],
   quiz:["What chores ___ you do?|do|does|are","My brother ___ the table.|sets|set|setting","She ___ the dishes every day.|washes|washs|wash","He ___ shopping with my mom.|goes|go|gos","Does she fold the laundry? Yes, she ___ .|does|do|is","___ he take out the trash?|Does|Do|Is","I ___ the fish every morning.|feed|feeds|feeding","Clean up your ___ , please!|room|fish|bread"]},
 { id:"u5", num:"5", en:"Yesterday and Today", ar:"الأمس واليوم", pic:"🕰️",
-  words:["get up|يستيقظ / ينهض|⏰","eat lunch|يتناول الغداء|🍱","come home|يعود للبيت|🏠","do my homework|أحلّ واجبي|📝","take a bath|يستحم|🛁","go to bed|يذهب للنوم|🛌","brush my teeth|أنظف أسناني|🪥","ride the bus home|يعود بالحافلة|🚌","jump out of bed|يقفز من السرير|🛏️","yesterday|أمس|📅","usually|عادةً|🔁","dream a lot|يحلم كثيراً|💭"],
+  words:["get up|يستيقظ / ينهض|⏰","eat lunch|يتناول الغداء|🍱","come home|يعود للبيت|🏠","do my homework|أحلّ واجبي|📝","take a bath|يستحم|🛁","go to bed|يذهب للنوم|🛌","brush my teeth|أنظف أسناني|🪥","ride the bus home|يعود بالحافلة|🚌","jump out of bed|يقفز من السرير|🛏️","yesterday|أمس|📅","usually|عادةً|🔁","dream a lot|يحلم كثيراً|💭","jump into bed|يقفز إلى السرير"],
   grammar:[
     { t:"عادةً (اليوم) وأمس (الماضي)",
       p:"مع <span class='en'>usually</span> نستخدم المضارع البسيط، ومع <span class='en'>yesterday</span> نستخدم الماضي. هذه أفعال يتغير شكلها في الماضي:",
@@ -54,7 +54,7 @@ GRADE({ id:"g3", n:3, stage:"p", ar:"الثالث الابتدائي", book:"We 
   ],
   quiz:["I usually ___ up at six.|get|got|gets","Yesterday, I ___ up at seven.|got|get|getted","What time ___ you go to bed yesterday?|did|do|does","Yesterday, I ___ to bed at nine.|went|go|goed","I usually ___ lunch at one o'clock.|eat|ate|eated","Yesterday, she ___ her homework.|did|do|does","He ___ home at two yesterday.|came|come|comed","We ___ a bath every evening.|take|took|takes"]},
 { id:"u6", num:"6", en:"Jobs", ar:"المهن", pic:"🧑‍🚀",
-  words:["pilot|طيار|🧑‍✈️","teacher|معلم|🧑‍🏫","doctor|طبيب|🧑‍⚕️","nurse|ممرض|💉","engineer|مهندس|👷","architect|مهندس معماري|📐","astronaut|رائد فضاء|🧑‍🚀","firefighter|رجل إطفاء|🧑‍🚒","scientist|عالِم|🔬","reporter|مراسل|🎤","baker|خبّاز|🥖","cook|طباخ|🧑‍🍳","lawyer|محامٍ|⚖️","computer technician|فني حاسوب|💻","diver|غوّاص|🤿","space station|محطة فضاء|🛰️"],
+  words:["pilot|طيار|🧑‍✈️","teacher|معلم|🧑‍🏫","doctor|طبيب|🧑‍⚕️","nurse|ممرض|💉","engineer|مهندس|👷","architect|مهندس معماري|📐","astronaut|رائد فضاء|🧑‍🚀","firefighter|رجل إطفاء|🧑‍🚒","scientist|عالِم|🔬","reporter|مراسل|🎤","baker|خبّاز|🥖","cook|طباخ|🧑‍🍳","lawyer|محامٍ|⚖️","computer technician|فني حاسوب|💻","diver|غوّاص|🤿","space station|محطة فضاء|🛰️","businessman|رجل أعمال|💼","countries|دول|🌍","country|دولة|🗺️","crew|طاقم|👥","designer|مصمم|✏️","help people|يساعد الناس|🤲","housewife|ربة منزل|🏠","knife|سكين|🔪","knob|مقبض الباب|🚪","knock|يطرق|✊","office|مكتب|🏢","one hundred|مئة|💯","two hundred|مئتان|2️⃣0️⃣0️⃣","three hundred|ثلاثمئة|3️⃣0️⃣0️⃣","four hundred|أربعمئة|4️⃣0️⃣0️⃣","five hundred|خمسمئة|5️⃣0️⃣0️⃣","six hundred|ستمئة|6️⃣0️⃣0️⃣","seven hundred|سبعمئة|7️⃣0️⃣0️⃣","eight hundred|ثمانمئة|8️⃣0️⃣0️⃣","nine hundred|تسعمئة|9️⃣0️⃣0️⃣","one thousand|ألف|🔢","presenter|مقدم برامج|🎙️","reads|يقرأ|📖","restaurant|مطعم|🍽️","right|صحيح / يمين|✔️","teaches|يدرّس","travel|يسافر|🧳","walks|يمشي|🚶","work|يعمل|🛠️","writer|كاتب|✍️"],
   grammar:[
     { t:"ماذا يعمل؟ وأين يعمل؟",
       p:"<span class='en'>What does he / she do?</span> للسؤال عن المهنة، و <span class='en'>Where does he / she work?</span> لمكان العمل. وللجمع: <span class='en'>What do they do? Where do they work?</span>",

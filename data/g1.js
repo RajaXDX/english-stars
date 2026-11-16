@@ -1,7 +1,7 @@
 /* الصف الأول الابتدائي — من كتاب We Can! 1 (الجزء الأول، الفصل الأول 1448): المنهج (Syllabus) وقائمة الكلمات */
 GRADE({ id:"g1", n:1, stage:"p", ar:"الأول الابتدائي", book:"We Can! 1", units:[
 { id:"in", num:"★", en:"Introduction", ar:"لغة الفصل", pic:"🏫",
-  words:["welcome|أهلاً وسهلاً|👋","bags|حقائب|🎒","pencils|أقلام رصاص|✏️","books|كتب|📚","window|نافذة|🪟","thank you|شكراً|🙏","okay|حسناً|👌","stand up|قف|🧍","sit down|اجلس|🪑","make a line|كوّنوا صفاً|🚶","make a circle|كوّنوا دائرة|⭕"],
+  words:["welcome|أهلاً وسهلاً|👋","bags|حقائب|🎒","pencils|أقلام رصاص|✏️","books|كتب|📚","window|نافذة|🪟","thank you|شكراً|🙏","okay|حسناً|👌","stand up|قف|🧍","sit down|اجلس|🪑","make a line|كوّنوا صفاً|🚶","make a circle|كوّنوا دائرة|⭕","open|افتح|📖","please open the window|افتح النافذة من فضلك","please take a seat|تفضّل بالجلوس","put your bags away|ضع حقيبتك جانباً","take out your books|أخرج كتبك","take out your pencils|أخرج أقلامك"],
   grammar:[
     { t:"جمل الفصل الدراسي",
       p:"جمل نسمعها من المعلم كل يوم. نرد عليها بـ <span class='en'>Okay.</span> أو <span class='en'>Thank you.</span>",
@@ -9,7 +9,7 @@ GRADE({ id:"g1", n:1, stage:"p", ar:"الأول الابتدائي", book:"We Ca
   ],
   quiz:["Take out your ___ . 📚|books|bags|window","Please ___ the window.|open|sit|take","Please take a ___ .|seat|book|window","Thank you. You're ___ .|welcome|okay|fine","Put your ___ away. 🎒|bags|pencils|seat","Stand ___ !|up|down|in","Sit ___ .|down|up|on","Take out your ___ . ✏️|pencils|bags|window"]},
 { id:"u1", num:"1", en:"My Friends", ar:"أصدقائي", pic:"👋",
-  words:["hello|مرحباً|👋","hi|أهلاً|🙋","goodbye|مع السلامة|👋🏽","fine|بخير|🙂","red|أحمر|🔴","blue|أزرق|🔵","green|أخضر|🟢","yellow|أصفر|🟡","orange|برتقالي|🟠","pink|وردي|🩷","purple|بنفسجي|🟣","brown|بني|🟤","white|أبيض|⚪","rainbow|قوس قزح|🌈"],
+  words:["hello|مرحباً|👋","hi|أهلاً|🙋","goodbye|مع السلامة|👋🏽","fine|بخير|🙂","red|أحمر|🔴","blue|أزرق|🔵","green|أخضر|🟢","yellow|أصفر|🟡","orange|برتقالي|🟠","pink|وردي|🩷","purple|بنفسجي|🟣","brown|بني|🟤","white|أبيض|⚪","rainbow|قوس قزح|🌈","again|مرة أخرى|🔁","color|لون|🎨","my name|اسمي|📛","see you again|أراك مرة أخرى","three|ثلاثة|3️⃣"],
   grammar:[
     { t:"التحية والتعارف",
       p:"نسأل عن الاسم بـ <span class='en'>What's your name?</span> ونجيب <span class='en'>My name's…</span>. ونسأل عن الحال بـ <span class='en'>How are you?</span>",
@@ -20,7 +20,7 @@ GRADE({ id:"g1", n:1, stage:"p", ar:"الأول الابتدائي", book:"We Ca
   ],
   quiz:["What's your ___ ?|name|fine|color","My ___ Labeeb.|name's|name|is","How ___ you?|are|is|am","I'm ___ , thank you.|fine|name|hello","Goodbye. See you ___ .|again|hello|fine","What ___ is it? It's red.|color|name|old","The sun is ___ . ☀️|yellow|purple|pink","Grass is ___ .|green|red|white"]},
 { id:"u2", num:"2", en:"My Body", ar:"جسمي", pic:"🙂",
-  words:["eyes|عينان|👀","ears|أذنان|👂","nose|أنف|👃","mouth|فم|👄","head|رأس|🗣️","hands|يدان|🙌","shoulders|كتفان|🤷","knees|ركبتان|🦵","toes|أصابع القدم|🦶","finger|إصبع|☝️","clap|يصفق|👏","open|افتح|📖","close|أغلق|📕"],
+  words:["eyes|عينان|👀","ears|أذنان|👂","nose|أنف|👃","mouth|فم|👄","head|رأس|🗣️","hands|يدان|🙌","shoulders|كتفان|🤷","knees|ركبتان|🦵","toes|أصابع القدم|🦶","finger|إصبع|☝️","clap|يصفق|👏","open|افتح|📖","close|أغلق|📕","circle|دائرة|⭕","come to the front|تعال إلى الأمام|⬆️","friend|صديق|🤝","make a circle|كوّنوا دائرة|🔵","make a line|كوّنوا صفاً|🚶","okay|حسناً|👌","one|واحد|1️⃣","please go back to your seat|ارجع إلى مقعدك من فضلك|🪑","raise your hands|ارفع يديك","sit down|اجلس|💺","stand up|قف|🧍","two|اثنان|2️⃣"],
   grammar:[
     { t:"أوامر الجسم",
       p:"الأمر يبدأ بالفعل مباشرة، ونرد بـ <span class='en'>Okay.</span>",
@@ -28,7 +28,7 @@ GRADE({ id:"g1", n:1, stage:"p", ar:"الأول الابتدائي", book:"We Ca
   ],
   quiz:["Close your ___ . 👀|eyes|ears|toes","Clap your ___ . 👏|hands|nose|knees","Raise your ___ !|hands|mouth|eyes","Open your ___ .|eyes|knees|toes","I hear with my ___ .|ears|eyes|nose","I see with my ___ .|eyes|ears|hands","I smell with my ___ .|nose|mouth|knees","I eat with my ___ .|mouth|ears|toes"]},
 { id:"u3", num:"3", en:"My Family", ar:"عائلتي", pic:"👨‍👩‍👧",
-  words:["family|عائلة|👨‍👩‍👧","mom|أمي|👩","dad|أبي|👨","brother|أخ|👦","sister|أخت|👧","grandma|جدتي|👵","grandpa|جدي|👴","friend|صديق|🤝","monkeys|قرود|🐒","bed|سرير|🛏️","doctor|طبيب|🧑‍⚕️","apple|تفاحة|🍎","bear|دب|🐻","cow|بقرة|🐮","duck|بطة|🦆","egg|بيضة|🥚"],
+  words:["family|عائلة|👨‍👩‍👧","mom|أمي|👩","dad|أبي|👨","brother|أخ|👦","sister|أخت|👧","grandma|جدتي|👵","grandpa|جدي|👴","friend|صديق|🤝","monkeys|قرود|🐒","bed|سرير|🛏️","doctor|طبيب|🧑‍⚕️","apple|تفاحة|🍎","bear|دب|🐻","cow|بقرة|🐮","duck|بطة|🦆","egg|بيضة|🥚","finger|إصبع|☝️","five|خمسة|5️⃣","jumping|يقفز|🤸","letter|حرف|🔤","little|صغير|🐣","nice to meet you|تشرفت بمعرفتك","this is my brother|هذا أخي"],
   grammar:[
     { t:"هذا أخي (This is my…)",
       p:"نعرّف بشخص بـ <span class='en'>This is my…</span> ونرد بـ <span class='en'>Nice to meet you.</span>",
@@ -36,7 +36,7 @@ GRADE({ id:"g1", n:1, stage:"p", ar:"الأول الابتدائي", book:"We Ca
   ],
   quiz:["This ___ my brother.|is|are|am","Nice to ___ you.|meet|see|eat","Nice to meet you, ___ .|too|two|to","This is my ___ . 👵|grandma|grandpa|dad","This is my ___ . 👨|dad|mom|sister","This is my ___ . 👧|sister|brother|grandpa","Five little ___ jumping on the bed.|monkeys|ducks|cows","A ___ says moo.|cow|duck|bear"]},
 { id:"u4", num:"4", en:"How Old Are You?", ar:"كم عمرك؟", pic:"🎂",
-  words:["one|واحد|1️⃣","two|اثنان|2️⃣","three|ثلاثة|3️⃣","four|أربعة|4️⃣","five|خمسة|5️⃣","six|ستة|6️⃣","seven|سبعة|7️⃣","eight|ثمانية|8️⃣","nine|تسعة|9️⃣","ten|عشرة|🔟","camels|جِمال|🐪","circle|دائرة|⭕","square|مربع|🟥","triangle|مثلث|🔺","star|نجمة|⭐","goat|ماعز|🐐"],
+  words:["one|واحد|1️⃣","two|اثنان|2️⃣","three|ثلاثة|3️⃣","four|أربعة|4️⃣","five|خمسة|5️⃣","six|ستة|6️⃣","seven|سبعة|7️⃣","eight|ثمانية|8️⃣","nine|تسعة|9️⃣","ten|عشرة|🔟","camels|جِمال|🐪","circle|دائرة|⭕","square|مربع|🟥","triangle|مثلث|🔺","star|نجمة|⭐","goat|ماعز|🐐","diamond|معيّن (شكل)|🔷","fish|سمكة|🐟","hat|قبعة|🎩","how old are you|كم عمرك|🎂","I know|أعرف|💡","ink|حبر|🖋️","jet|طائرة نفاثة|✈️","rectangle|مستطيل|▭","shape|شكل|🔶","that's right|هذا صحيح|✅"],
   grammar:[
     { t:"كم عمرك؟ (How old are you?)",
       p:"نسأل <span class='en'>How old are you?</span> ونجيب <span class='en'>I'm (nine) years old.</span>",
@@ -47,7 +47,7 @@ GRADE({ id:"g1", n:1, stage:"p", ar:"الأول الابتدائي", book:"We Ca
   ],
   quiz:["How ___ are you?|old|many|name","I'm seven years ___ .|old|name|fine","How old ___ you?|are|is|am","5 = ___|five|four|nine","9 = ___|nine|six|ten","2 + 1 = ___|three|two|four","A ___ has three sides. 🔺|triangle|circle|square","A ___ is round. ⭕|circle|star|square"]},
 { id:"u5", num:"5", en:"What's This? What's That?", ar:"ما هذا؟ ما ذاك؟", pic:"✏️",
-  words:["pencil|قلم رصاص|✏️","pen|قلم حبر|🖊️","notebook|دفتر|📓","eraser|ممحاة|🧽","book|كتاب|📕","apple|تفاحة|🍎","orange|برتقالة|🍊","black|أسود|⚫","parrots|ببغاوات|🦜","fish|سمكة|🐟","hat|قبعة|🎩","jet|طائرة نفاثة|✈️","lion|أسد|🦁"],
+  words:["pencil|قلم رصاص|✏️","pen|قلم حبر|🖊️","notebook|دفتر|📓","eraser|ممحاة|🧽","book|كتاب|📕","apple|تفاحة|🍎","orange|برتقالة|🍊","black|أسود|⚫","parrots|ببغاوات|🦜","fish|سمكة|🐟","hat|قبعة|🎩","jet|طائرة نفاثة|✈️","lion|أسد|🦁","you're right|أنت محق|👍"],
   grammar:[
     { t:"ما هذا؟ وما ذاك؟",
       p:"<span class='en'>this</span> للقريب، <span class='en'>that</span> للبعيد. ونستخدم <span class='en'>an</span> قبل الكلمة التي تبدأ بحرف علة: <span class='en'>an apple</span>.",

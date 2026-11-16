@@ -1,7 +1,7 @@
 /* الصف الخامس الابتدائي — من كتاب Top Goal 2 (الفصل الأول 1448): جدول المنهج (Scope and Sequence) */
 GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top Goal 2", units:[
 { id:"w", num:"W", part:1, en:"Welcome!", ar:"أهلاً بالعودة", pic:"📅",
-  words:["calendar|تقويم|📅","date|تاريخ|🗓️","month|شهر|🌙","early|مبكراً|🌅","late|متأخراً|🌃","ago|منذ (في الماضي)|⏪","how long|كم المدة|⏳","festival|مهرجان|🎪","January|يناير|❄️","May|مايو|🌷","August|أغسطس|☀️","one hundred|مئة|💯"],
+  words:["calendar|تقويم|📅","date|تاريخ|🗓️","month|شهر|🌙","early|مبكراً|🌅","late|متأخراً|🌃","ago|منذ (في الماضي)|⏪","how long|كم المدة|⏳","festival|مهرجان|🎪","January|يناير|❄️","May|مايو|🌷","August|أغسطس|☀️","one hundred|مئة|💯","February|فبراير|💨","March|مارس|🌱","April|أبريل|🌦️","June|يونيو|🌞","July|يوليو|🏖️","September|سبتمبر|🏫","November|نوفمبر|🍂","December|ديسمبر|⛄","time|وقت|⏰","year|سنة|📆"],
   grammar:[
     { t:"How many و How long",
       p:"<span class='en'>How many…?</span> للسؤال عن العدد، و <span class='en'>How long…?</span> للسؤال عن المدة. و <span class='en'>ago</span> تأتي بعد المدة للكلام عن الماضي.",
@@ -12,7 +12,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["How ___ months are there in a year?|many|much|long","How ___ was the trip? Two hours.|long|many|old","I visited my grandma two weeks ___ .|ago|before|later","There are twelve ___ in a year.|months|month|days","We get up ___ on school days. (مبكراً)|early|late|ago","Last week, we ___ to a festival.|went|go|goes","It was the ___ day of the year!|best|good|better","500 = five ___|hundred|hundreds|thousand"]},
 { id:"u1", num:"1", part:1, en:"Personal Interests", ar:"الاهتمامات الشخصية", pic:"🧩",
-  words:["amazing|مذهل|🤩","enormous|ضخم جداً|🐘","funny|مضحك|😂","interesting|مثير للاهتمام|🧐","lovely|جميل جداً|🌸","lucky|محظوظ|🍀","noisy|مزعج|📢","popular|مشهور|🔥","special|مميز|⭐","wonderful|رائع|🌈","tidy|مرتّب|🧺","messy|فوضوي|🌪️","unkind|غير لطيف|😠","unusual|غير عادي|🦄","excited|متحمس|🥳","hobby|هواية|🎯"],
+  words:["amazing|مذهل|🤩","enormous|ضخم جداً|🐘","funny|مضحك|😂","interesting|مثير للاهتمام|🧐","lovely|جميل جداً|🌸","lucky|محظوظ|🍀","noisy|مزعج|📢","popular|مشهور|🔥","special|مميز|⭐","wonderful|رائع|🌈","tidy|مرتّب|🧺","messy|فوضوي|🌪️","unkind|غير لطيف|😠","unusual|غير عادي|🦄","excited|متحمس|🥳","hobby|هواية|🎯","enjoy|يستمتع|😊","excellent|ممتاز|💯","friendly|ودود|🤗","horrible|فظيع|😖","important|مهم|❗","ride|يركب|🚲","unfriendly|غير ودود|😒","unlucky|سيئ الحظ|🐈‍⬛","untidy|غير مرتّب|🧦"],
   grammar:[
     { t:"المضارع البسيط والماضي البسيط",
       p:"المضارع للعادات (<span class='en'>every day, nearly every day</span>)، والماضي لما حدث وانتهى (<span class='en'>yesterday, last week</span>). والسابقة <span class='en'>un-</span> تعكس معنى الصفة: <span class='en'>tidy → untidy</span>.",
@@ -23,7 +23,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["I ___ to the park nearly every day.|go|went|going","Yesterday, I ___ go to the park.|didn't|don't|wasn't","My room is not tidy. It's ___ .|untidy|tidy|untidyly","I ___ to visit the museum. (أريد)|want|am wanting|wants","Look! My cousin ___ football right now.|is playing|plays|play","She ___ the answer. (تعرف)|knows|is knowing|know","That joke was so ___ !|funny|messy|lucky","It's an ___ hobby. Not many people do it.|unusual|usual|popular"]},
 { id:"u2", num:"2", part:1, en:"House Designs", ar:"تصاميم المنازل", pic:"🏡",
-  words:["architect|مهندس معماري|📐","basement|قبو|⬇️","entrance|مدخل|🚪","fridge|ثلاجة|🧊","gate|بوابة|⛩️","key|مفتاح|🔑","layout|مخطط|🗺️","oven|فرن|🔥","screen|شاشة|🖥️","Wi-Fi|شبكة لاسلكية|📶","corner|زاوية|📍","cushion|وسادة|🛋️","shelf|رف|📚","empty|فارغ|🫙","design|تصميم|✏️","materials|مواد|🧱"],
+  words:["architect|مهندس معماري|📐","basement|قبو|⬇️","entrance|مدخل|🚪","fridge|ثلاجة|🧊","gate|بوابة|⛩️","key|مفتاح|🔑","layout|مخطط|🗺️","oven|فرن|🔥","screen|شاشة|🖥️","Wi-Fi|شبكة لاسلكية|📶","corner|زاوية|📍","cushion|وسادة|🛋️","shelf|رف|📚","empty|فارغ|🫙","design|تصميم|✏️","materials|مواد|🧱","actually|في الواقع|💬","else|آخر / غير ذلك|➕","front|الأمام / الواجهة|⬆️","instead|بدلاً من ذلك|🔄","later|لاحقاً|⏩","measurements|القياسات|📏","phone|هاتف|📞","take|يستغرق|⏳"],
   grammar:[
     { t:"المستقبل بـ will",
       p:"<span class='en'>will +</span> الفعل لقرار نتخذه الآن أو وعد أو توقع. والنفي <span class='en'>won't</span>.",
@@ -35,7 +35,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["The phone is ringing. I ___ answer it.|will|am going|going","We're ___ to paint the gate tomorrow. (خطة)|going|will|go","I ___ forget your birthday. I promise!|won't|willn't|don't","The ___ designs houses.|architect|fridge|basement","Put the milk in the ___ .|fridge|oven|gate","I can't open the door. Where's the ___ ?|key|shelf|screen","The box is ___ . There's nothing in it.|empty|full|messy","Put the books on the ___ .|shelf|oven|key"]},
 { id:"u3", num:"3", part:1, en:"Job Paths", ar:"المسارات المهنية", pic:"💼",
-  words:["artist|فنان|🎨","businessman|رجل أعمال|💼","driver|سائق|🚗","engineer|مهندس|👷","fashion designer|مصمم أزياء|👗","flight attendant|مضيف طيران|✈️","journalist|صحفي|📰","manager|مدير|📋","mechanic|ميكانيكي|🔧","photographer|مصوّر|📷","pilot|طيار|🧑‍✈️","waiter|نادل|🍽️","airport|مطار|🛫","factory|مصنع|🏭","gallery|معرض فني|🖼️","office|مكتب|🏢"],
+  words:["artist|فنان|🎨","businessman|رجل أعمال|💼","driver|سائق|🚗","engineer|مهندس|👷","fashion designer|مصمم أزياء|👗","flight attendant|مضيف طيران|✈️","journalist|صحفي|📰","manager|مدير|📋","mechanic|ميكانيكي|🔧","photographer|مصوّر|📷","pilot|طيار|🧑‍✈️","waiter|نادل|🍽️","airport|مطار|🛫","factory|مصنع|🏭","gallery|معرض فني|🖼️","office|مكتب|🏢","actor|ممثل|🎭","actress|ممثلة|🎬","businesswoman|سيدة أعمال|👩‍💼","job|وظيفة","meeting|اجتماع|🤝","news|أخبار","singer|مغنٍّ|🎤","stage|خشبة المسرح|🎪","work|عمل|🛠️"],
   grammar:[
     { t:"may و might للاحتمال في المستقبل",
       p:"<span class='en'>be going to</span> لخطة أكيدة. <span class='en'>may / might +</span> الفعل لاحتمال غير مؤكد، والنفي <span class='en'>may not / might not</span>.",
@@ -46,7 +46,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["She ___ be a pilot. She isn't sure.|may|will|is","He ___ not be a doctor. He doesn't like hospitals.|might|is|will","I'm ___ to be an engineer. I've decided.|going|may|might","This is a factory, ___ it?|isn't|is|doesn't","You can drive, ___ you?|can't|can|don't","A ___ takes photos.|photographer|mechanic|waiter","A ___ fixes cars.|mechanic|journalist|manager","A ___ works on a plane and helps passengers.|flight attendant|fashion designer|driver"]},
 { id:"u4", num:"4", part:1, en:"Glorious Food", ar:"طعام لذيذ", pic:"🍪",
-  words:["bake|يخبز|🧁","butter|زبدة|🧈","cookies|بسكويت|🍪","flour|طحين|🌾","honey|عسل|🍯","ingredients|المكونات|🧺","recipe|وصفة|📜","snack|وجبة خفيفة|🥨","sugar|سكر|🍬","yogurt|زبادي|🥛","dough|عجينة|🫓","measure|يقيس|📏","mix|يخلط|🥣","pour|يسكب|🫗","stir|يحرّك|🥄","taste|يتذوق|😋"],
+  words:["bake|يخبز|🧁","butter|زبدة|🧈","cookies|بسكويت|🍪","flour|طحين|🌾","honey|عسل|🍯","ingredients|المكونات|🧺","recipe|وصفة|📜","snack|وجبة خفيفة|🥨","sugar|سكر|🍬","yogurt|زبادي|🥛","dough|عجينة|🫓","measure|يقيس|📏","mix|يخلط|🥣","pour|يسكب|🫗","stir|يحرّك|🥄","taste|يتذوق|😋","countertop|سطح المطبخ|🍽️","cut|يقطّع|🔪","enough|كافٍ|✅","fetch|يجلب|📦","roll|يفرد (العجين)|🌀","smell|يشم / رائحة|👃","topping|إضافات فوق الطعام|🍒"],
   grammar:[
     { t:"النصيحة (should) والتحذير (had better)",
       p:"<span class='en'>should</span> للنصيحة، و <span class='en'>had better</span> لتحذير أقوى (وإلا ستحدث مشكلة). النفي: <span class='en'>shouldn't / had better not</span>.",
@@ -57,7 +57,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["You ___ wash your hands before you cook.|should|shouldn't|had better not","You had better ___ touch the hot oven!|not|don't|no","If you heat butter, it ___ .|melts|melted|will melting","If it ___ too sweet, I add lemon.|tastes|taste|tasted","First, ___ the flour and the sugar.|mix|mixes|mixing","Bees make ___ .|honey|butter|flour","A ___ tells you how to cook something.|recipe|snack|dough","We need flour, eggs and sugar. These are the ___ .|ingredients|cookies|recipes"]},
 { id:"u5", num:"5", part:2, en:"Storylines", ar:"القصص والأفلام", pic:"🎬",
-  words:["adventure|مغامرة|🗺️","animation|رسوم متحركة|🎞️","cartoon|كرتون|📺","comedy|كوميديا|😂","documentary|فيلم وثائقي|🎥","drama|دراما|🎭","fairy tale|حكاية خيالية|🧚","mystery|غموض|🕵️","plot|حبكة القصة|📖","sci-fi|خيال علمي|👽","character|شخصية|🧑","storyboard|لوحة القصة المصوّرة|🖼️","whisper|يهمس|🤫","alone|وحيد|🧍","appear|يظهر|✨","decide|يقرر|✅"],
+  words:["adventure|مغامرة|🗺️","animation|رسوم متحركة|🎞️","cartoon|كرتون|📺","comedy|كوميديا|😂","documentary|فيلم وثائقي|🎥","drama|دراما|🎭","fairy tale|حكاية خيالية|🧚","mystery|غموض|🕵️","plot|حبكة القصة|📖","sci-fi|خيال علمي|👽","character|شخصية|🧑","storyboard|لوحة القصة المصوّرة|🖼️","whisper|يهمس|🤫","alone|وحيد|🧍","appear|يظهر|✨","decide|يقرر|✅","act|يمثّل","end|نهاية|🔚","feel|يشعر|💓","musical|عرض موسيقي|🎼","play|مسرحية|🎪","thriller|فيلم إثارة|😱","western|فيلم غربي (رعاة البقر)|🤠","wish|يتمنى|🌠"],
   grammar:[
     { t:"الماضي المستمر (was / were + ing)",
       p:"لحدث كان مستمراً في وقت معين في الماضي. السؤال: <span class='en'>Were you…?</span> والنفي: <span class='en'>wasn't / weren't</span>.",
@@ -68,7 +68,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["___ you studying last night?|Were|Was|Did","He ___ watching the movie.|wasn't|weren't|didn't","They ___ reading a fairy tale at 8 p.m.|were|was|are","Why don't we ___ a cartoon?|watch|watching|to watch","How about ___ a comedy?|making|make|to make","What about ___ a story?|writing|write|wrote","A film about real life and facts is a ___ .|documentary|cartoon|fairy tale","The main person in a story is a ___ .|character|plot|storyboard"]},
 { id:"u6", num:"6", part:2, en:"Outdoor Activities", ar:"الأنشطة الخارجية", pic:"⛺",
-  words:["camping|التخييم|🏕️","canoe|قارب الكانو|🛶","fishing rod|صنارة صيد|🎣","helmet|خوذة|⛑️","hiking|المشي في الطبيعة|🥾","sleeping bag|كيس النوم|🛌","surfing|ركوب الأمواج|🏄","tent|خيمة|⛺","backpack|حقيبة ظهر|🎒","campfire|نار المخيم|🔥","flashlight|مصباح يدوي|🔦","life jacket|سترة نجاة|🦺","mountain biking|ركوب الدراجة الجبلية|🚵","rafting|التجديف في الأنهار|🚣","horseback riding|ركوب الخيل|🏇","outdoors|في الهواء الطلق|🌲"],
+  words:["camping|التخييم|🏕️","canoe|قارب الكانو|🛶","fishing rod|صنارة صيد|🎣","helmet|خوذة|⛑️","hiking|المشي في الطبيعة|🥾","sleeping bag|كيس النوم|🛌","surfing|ركوب الأمواج|🏄","tent|خيمة|⛺","backpack|حقيبة ظهر|🎒","campfire|نار المخيم|🔥","flashlight|مصباح يدوي|🔦","life jacket|سترة نجاة|🦺","mountain biking|ركوب الدراجة الجبلية|🚵","rafting|التجديف في الأنهار|🚣","horseback riding|ركوب الخيل|🏇","outdoors|في الهواء الطلق|🌲","backpacking|الترحال بحقيبة الظهر","canoeing|التجديف بالكانو","climbing|التسلق|🧗","fishing|صيد السمك|🐟","hiking boots|حذاء المشي الجبلي","hot dog|نقانق|🌭","raft|طوف","surfboard|لوح ركوب الأمواج"],
   grammar:[
     { t:"الماضي البسيط والماضي المستمر (when / while)",
       p:"الحدث الطويل بالماضي المستمر، والحدث القصير الذي قطعه بالماضي البسيط. <span class='en'>while</span> غالباً مع المستمر، و <span class='en'>when</span> مع البسيط.",
@@ -76,7 +76,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["I ___ in my tent when I heard a noise.|was lying|lay|am lying","We were eating ___ we were rafting.|while|when|so","She was hiking ___ it started to rain.|when|while|during","They ___ fishing when the boat moved.|were|was|did","He ___ his helmet while he was biking.|lost|was losing|loses","Wear a ___ in the canoe. It keeps you safe.|life jacket|sleeping bag|tent","It's dark. Where's the ___ ?|flashlight|fishing rod|canoe","We sleep in a ___ when we go camping.|tent|helmet|backpack"]},
 { id:"u7", num:"7", part:2, en:"Trips", ar:"الرحلات", pic:"🧳",
-  words:["suitcase|حقيبة سفر|🧳","passenger|راكب|🧍","platform|رصيف المحطة|🚉","station|محطة|🚏","taxi|سيارة أجرة|🚕","traffic|زحام مروري|🚦","passport|جواز سفر|🛂","security|التفتيش الأمني|🛡️","subway|قطار الأنفاق|🚇","terminal|صالة المطار|🛫","arrive|يصل|🛬","check in|يسجّل الوصول|🛄","land|تهبط (الطائرة)|⬇️","take off|تقلع (الطائرة)|⬆️","tour|جولة|🗺️","hurry|يستعجل|🏃"],
+  words:["suitcase|حقيبة سفر|🧳","passenger|راكب|🧍","platform|رصيف المحطة|🚉","station|محطة|🚏","taxi|سيارة أجرة|🚕","traffic|زحام مروري|🚦","passport|جواز سفر|🛂","security|التفتيش الأمني|🛡️","subway|قطار الأنفاق|🚇","terminal|صالة المطار|🛫","arrive|يصل|🛬","check in|يسجّل الوصول|🛄","land|تهبط (الطائرة)|⬇️","take off|تقلع (الطائرة)|⬆️","tour|جولة|🗺️","hurry|يستعجل|🏃","check out|يغادر الفندق|🚪","depart|يغادر","directions|الاتجاهات|🧭","find out|يكتشف|🔎","get away|يبتعد / يقضي إجازة|🏝️","go out|يخرج|🚶","prepare|يستعد|📋","railroad|سكة حديد|🛤️"],
   grammar:[
     { t:"المضارع التام (have / has + التصريف الثالث)",
       p:"لتجربة أو حدث في وقت غير محدد حتى الآن. <span class='en'>already</span> (بالفعل) و <span class='en'>just</span> (للتو) في الإثبات، و <span class='en'>yet</span> في النفي والسؤال آخر الجملة.",
@@ -84,7 +84,7 @@ GRADE({ id:"g5", n:5, stage:"p", ar:"الخامس الابتدائي", book:"Top
   ],
   quiz:["The taxi has ___ arrived.|just|yet|ever","We haven't checked in ___ .|yet|already|just","Mom has ___ packed the suitcase.|already|yet|ever","She ___ traveled on a plane before.|has|have|is","I have ___ my passport. (وجدت)|found|find|finded","Have you ___ been to Abha?|ever|yet|already","The plane will ___ at 9 a.m. and land at noon.|take off|check in|hurry","Show your ___ at the airport.|passport|platform|traffic"]},
 { id:"u8", num:"8", part:2, en:"Outfits", ar:"الأزياء", pic:"👔",
-  words:["belt|حزام|🪢","bracelet|سوار|🔗","comb|مشط|🪮","costume|زي تنكري|🦸","crown|تاج|👑","earrings|أقراط|💎","necklace|قلادة|📿","purse|محفظة|👛","ring|خاتم|💍","striped|مخطط|🦓","umbrella|مظلة|☂️","uniform|زي موحد|👔","cotton|قطن|☁️","gold|ذهب|🥇","leather|جلد|👞","silver|فضة|🥈","wool|صوف|🧶","wood|خشب|🪵"],
+  words:["belt|حزام|🪢","bracelet|سوار|🔗","comb|مشط|🪮","costume|زي تنكري|🦸","crown|تاج|👑","earrings|أقراط|💎","necklace|قلادة|📿","purse|محفظة|👛","ring|خاتم|💍","striped|مخطط|🦓","umbrella|مظلة|☂️","uniform|زي موحد|👔","cotton|قطن|☁️","gold|ذهب|🥇","leather|جلد|👞","silver|فضة|🥈","wool|صوف|🧶","wood|خشب|🪵","brush|فرشاة|🖌️","metal|معدن|⚙️","plastic|بلاستيك|🧴","silk|حرير|🎀","spotted|منقّط|🐞","tie|ربطة عنق"],
   grammar:[
     { t:"السؤال بالمضارع التام",
       p:"<span class='en'>Have / Has +</span> الفاعل + التصريف الثالث؟ والجواب: <span class='en'>Yes, I have. / No, I haven't.</span>",
