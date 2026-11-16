@@ -79,8 +79,8 @@ npm run ios
 ثم انقل الملف `app-debug.apk` إلى جوال أندرويد وثبّته.
 
 **الرفع إلى TestFlight تلقائياً:** ملف `.github/workflows/testflight.yml` يبني تطبيق الآيفون ويوقّعه ويرفعه إلى TestFlight.
-يحتاج مرة واحدة إلى أربعة أسرار في إعدادات المستودع (*Settings ← Secrets and variables ← Actions*):
-`APPLE_TEAM_ID` و `ASC_KEY_ID` و `ASC_ISSUER_ID` و `ASC_KEY_P8` (الشرح في أول الملف)، وأن يكون التطبيق مُنشأً في App Store Connect بنفس الـ `appId`.
+يحتاج مرة واحدة إلى سرّ واحد في إعدادات المستودع (*Settings ← Secrets and variables ← Actions*) اسمه `ASC_KEY_P8` وفيه نص ملف المفتاح `.p8`،
+وإلى كتابة `Key ID` و `Issuer ID` في أول الملف، وأن يكون التطبيق مُنشأً في App Store Connect بنفس الـ `appId`.
 بعدها: تبويب **Actions** ← *TestFlight* ← **Run workflow**. لا تضع المفتاح في أي ملف داخل المستودع.
 
 **قبل النشر في المتاجر:**

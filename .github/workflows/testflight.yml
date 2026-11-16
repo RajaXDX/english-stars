@@ -1,18 +1,18 @@
 # Builds the iPhone app, signs it, and uploads it to TestFlight.
-# Runs only when started by hand (Actions → TestFlight → Run workflow) or when a tag named testflight-… is pushed.
+# Starts when the file ios/testflight-trigger changes, or by hand (Actions → TestFlight → Run workflow).
 #
-# One-time setup — add these four repository secrets (Settings → Secrets and variables → Actions):
-#   APPLE_TEAM_ID   the 10-character Team ID from developer.apple.com → Membership
-#   ASC_KEY_ID      Key ID of an App Store Connect API key (Users and Access → Integrations → App Store Connect API)
-#   ASC_ISSUER_ID   Issuer ID shown on the same page
-#   ASC_KEY_P8      the full text of the downloaded AuthKey_XXXX.p8 file
-# The app must also exist in App Store Connect with the same bundle ID as "appId" in capacitor.config.json.
+# One-time setup:
+#   1. Repository secret ASC_KEY_P8 = the full text of the AuthKey_XXXX.p8 file
+#      (Settings → Secrets and variables → Actions → New repository secret).
+#   2. The key's Key ID and Issuer ID in the two lines marked below. They are identifiers, not secrets.
+# The Team ID and the bundle ID registration are handled automatically (tools/apple-setup.py).
 name: TestFlight
 
 on:
   workflow_dispatch:
   push:
-    tags: ["testflight-*"]
+    branches: [main, "claude/**"]
+    paths: ["ios/testflight-trigger"]
 
 permissions:
   contents: read
@@ -26,15 +26,15 @@ jobs:
     name: Upload to TestFlight
     runs-on: macos-26
     env:
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_ID: ""        # ← Key ID
+      ASC_ISSUER_ID: ""     # ← Issuer ID
+      BUNDLE_ID: com.englishstars.app
       ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
     steps:
-      - name: Check that the Apple secrets are set
+      - name: Check that the Apple key is set
         run: |
-          for name in APPLE_TEAM_ID ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8; do
-            if [ -z "${!name}" ]; then echo "::error::Missing repository secret $name (see the top of .github/workflows/testflight.yml)"; missing=1; fi
+          for name in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8; do
+            if [ -z "${!name}" ]; then echo "::error::$name is not set (see the top of .github/workflows/testflight.yml)"; missing=1; fi
           done
           [ -z "$missing" ]
 
@@ -51,6 +51,12 @@ jobs:
           mkdir -p "$RUNNER_TEMP/keys"
           printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey_${ASC_KEY_ID}.p8"
           echo "ASC_KEY_PATH=$RUNNER_TEMP/keys/AuthKey_${ASC_KEY_ID}.p8" >> "$GITHUB_ENV"
+
+      - name: Register the bundle ID, find the Team ID, check the app exists
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet pyjwt cryptography
+          "$RUNNER_TEMP/venv/bin/python" tools/apple-setup.py
 
       - name: Archive (signed automatically with the API key)
         run: |
