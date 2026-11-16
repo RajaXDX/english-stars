@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>غير متصل · نجوم الإنجليزي</title>
+<style>
+  :root{--bg:#DFF3FF; --paper:#fff; --ink:#2A2152; --muted:#5E5889; --brand:#CF5600; --brand-d:#963E00; color-scheme:light}
+  @media (prefers-color-scheme: dark){:root{--bg:#141737; --paper:#22265A; --ink:#F3F1FF; --muted:#BDB9E2; --brand:#FF8A33; --brand-d:#B95200; color-scheme:dark}}
+  body{margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--ink); font-family:Tahoma, 'Segoe UI', sans-serif;
+    padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .card{background:var(--paper); border-radius:24px; padding:28px 22px; max-width:420px; text-align:center; display:flex; flex-direction:column; gap:12px}
+  h1{margin:0; font-size:1.5rem} p{margin:0; color:var(--muted); line-height:1.7}
+  button{font:inherit; font-weight:700; border:none; border-radius:16px; min-height:48px; padding:10px 20px; background:var(--brand); color:#fff; box-shadow:0 5px 0 var(--brand-d); cursor:pointer}
+  .star{font-size:3.5rem; line-height:1}
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="star" aria-hidden="true">⭐</div>
+    <h1>أنت غير متصل بالإنترنت</h1>
+    <p>لم يُحفظ التطبيق على هذا الجهاز بعد. افتحه مرة واحدة وأنت متصل، وبعدها تعمل كل الوحدات دون إنترنت.</p>
+    <button onclick="location.reload()">حاول مرة ثانية</button>
+  </main>
+</body>
+</html>
