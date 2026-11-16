@@ -53,6 +53,7 @@ jobs:
       - run: npm run sync:ios
       - name: Build for the simulator (no signing)
         run: |
+          set -o pipefail   # so a failed build is reported as failed
           xcodebuild -project ios/App/App.xcodeproj -scheme App \
             -sdk iphonesimulator -configuration Debug \
             -destination "generic/platform=iOS Simulator" \
