@@ -1,0 +1,4 @@
+Fonts in this folder are used under the SIL Open Font License, Version 1.1 (https://openfontlicense.org):
+
+- Readex Pro  — Copyright 2019 The Readex Pro Project Authors (https://github.com/ThomasJockin/readexpro)
+- Fredoka     — Copyright 2016 The Fredoka Project Authors (https://github.com/hafontia/Fredoka-One)
