@@ -1,0 +1,26 @@
+{
+  "name": "english-stars",
+  "version": "1.0.0",
+  "private": true,
+  "description": "نجوم الإنجليزي — web app plus iOS and Android shells (Capacitor)",
+  "scripts": {
+    "web": "node tools/build-web.js",
+    "sync": "node tools/build-web.js && cap sync",
+    "sync:android": "node tools/build-web.js && cap sync android",
+    "sync:ios": "node tools/build-web.js && cap sync ios",
+    "android": "npm run sync:android && cap open android",
+    "ios": "npm run sync:ios && cap open ios",
+    "icons": "capacitor-assets generate --ios --android --assetPath resources"
+  },
+  "dependencies": {
+    "@capacitor-community/text-to-speech": "^8.0.2",
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/ios": "^8.6.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^4.0.0",
+    "@capacitor/cli": "^8.6.2"
+  }
+}

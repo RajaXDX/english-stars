@@ -148,6 +148,10 @@ function applyTheme(){
 }
 
 /* ---------- speech ---------- */
+/* Inside the iPhone/Android app (Capacitor) we use the phone's own speech engine,
+   because Android's in-app browser has no speechSynthesis. On the website we use the browser's. */
+const NATIVE = !!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform());
+const nativeTTS = NATIVE && Capacitor.Plugins ? Capacitor.Plugins.TextToSpeech : null;
 const canSpeak = "speechSynthesis" in window;
 let voice = null;
 function pickVoice(){
@@ -157,13 +161,15 @@ function pickVoice(){
 }
 if(canSpeak){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
 function say(text){
+  const clean = String(text).replace(/___/g,"").replace(/\(.*?\)/g,"");
+  if(nativeTTS){ nativeTTS.speak({text:clean, lang:"en-US", rate: store.slow ? .6 : .95}).catch(()=>{}); return; }
   if(!canSpeak){ toast("الصوت غير متاح في هذا المتصفح"); return; }
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(String(text).replace(/___/g,"").replace(/\(.*?\)/g,""));
+  const u = new SpeechSynthesisUtterance(clean);
   u.lang = "en-US"; u.rate = store.slow ? .65 : .88; if(voice) u.voice = voice;
   speechSynthesis.speak(u);
 }
-const hush = () => { if(canSpeak) speechSynthesis.cancel(); };
+const hush = () => { if(nativeTTS) nativeTTS.stop().catch(()=>{}); else if(canSpeak) speechSynthesis.cancel(); };
 
 /* ---------- sound effects ---------- */
 let actx = null;

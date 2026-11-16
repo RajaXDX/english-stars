@@ -44,6 +44,48 @@ python3 -m http.server 8000
 
 **مهم:** بعد أي تعديل تنشره، غيّر رقم `VERSION` في أول `sw.js` حتى تصل النسخة الجديدة للأجهزة التي حفظت التطبيق.
 
+## تطبيق الآيفون والأندرويد
+
+نفس التطبيق يُغلَّف كتطبيق حقيقي للمتجرين باستخدام [Capacitor](https://capacitorjs.com). الكود واحد:
+أي تعديل في `index.html` أو `css/` أو `js/` أو `data/` يظهر في الموقع وفي التطبيقين.
+
+| المجلد | ماذا فيه |
+| --- | --- |
+| `android/` | مشروع Android Studio |
+| `ios/` | مشروع Xcode |
+| `resources/` | صورة الأيقونة وشاشة البداية الأصلية |
+| `tools/build-web.js` | ينسخ ملفات الموقع إلى `www/` ليحمّلها التطبيق |
+| `capacitor.config.json` | اسم التطبيق ومعرّفه (`appId`) |
+
+```bash
+npm install
+```
+
+```bash
+npm run android
+```
+
+```bash
+npm run ios
+```
+
+- `npm run android` يفتح المشروع في Android Studio (يعمل على ويندوز وماك ولينكس).
+- `npm run ios` يفتح المشروع في Xcode (يحتاج جهاز ماك).
+- بعد أي تعديل في ملفات الموقع شغّل `npm run sync` قبل البناء.
+- لتغيير الأيقونة: عدّل الصور في `resources/` ثم `npm run icons`.
+
+**نسخة أندرويد تجريبية بدون تثبيت أي برنامج:** كل `push` يبني ملف APK تلقائياً.
+افتح تبويب **Actions** في GitHub ← آخر تشغيل لـ *Build apps* ← **Artifacts** ← `english-stars-android-test`،
+ثم انقل الملف `app-debug.apk` إلى جوال أندرويد وثبّته.
+
+**قبل النشر في المتاجر:**
+
+1. اختر `appId` نهائياً في `capacitor.config.json` (الحالي `com.englishstars.app`)، لأنه لا يتغير بعد النشر.
+   غيّره أيضاً في `android/app/build.gradle` وفي إعدادات المشروع في Xcode.
+2. **Google Play:** حساب مطوّر (25 دولاراً مرة واحدة)، ثم من Android Studio: *Build ← Generate Signed App Bundle*.
+3. **App Store:** حساب Apple Developer (99 دولاراً سنوياً) وجهاز ماك، ثم من Xcode: *Product ← Archive*.
+4. المتجران يطلبان رابط «سياسة خصوصية». التطبيق لا يجمع أي بيانات، فتكفي صفحة قصيرة تقول ذلك.
+
 ## الخطوط
 
 Readex Pro و Fredoka برخصة SIL Open Font License (انظر `assets/fonts/LICENSE.txt`).

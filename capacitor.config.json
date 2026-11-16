@@ -1,0 +1,8 @@
+{
+  "appId": "com.englishstars.app",
+  "appName": "نجوم الإنجليزي",
+  "webDir": "www",
+  "backgroundColor": "#F5F4FB",
+  "ios": { "contentInset": "never" },
+  "android": { "allowMixedContent": false }
+}

@@ -22,6 +22,11 @@ window.addEventListener("hashchange", route);
 route();
 
 /* offline support (only when served from a website, not when opened as a file) */
-if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
+if(!NATIVE && "serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+
+/* Android's hardware back button inside the app: go back a screen, or leave the app from a top-level screen */
+if(NATIVE && Capacitor.Plugins && Capacitor.Plugins.App){
+  Capacitor.Plugins.App.addListener("backButton", () => { if(navIndex > 0) history.back(); else Capacitor.Plugins.App.exitApp(); });
 }
