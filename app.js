@@ -102,7 +102,7 @@ function setFoot(g){
 /* ===== GENDER GATE ===== */
 function renderGate(){
   hush(); setHash(""); setFoot(null);
-  app.innerHTML = `<section class="gate">
+  app.innerHTML = `<section class="gate">${typeof MASCOT!=="undefined"?MASCOT:""}
     <h2>أهلاً وسهلاً في نجوم الإنجليزي!</h2>
     <p>قبل ما نبدأ، من أنت؟</p>
     <div class="pick">
@@ -237,7 +237,7 @@ function runQuiz({key, act, qs, render, again, home}){
     setStars(key, act, st);
     const msg = st===3 ? T("ممتاز! أنت نجم","ممتاز! أنتِ نجمة") : st===2 ? T("رائع! أحسنت","رائع! أحسنتِ")
       : st===1 ? T("جيد! حاول مرة ثانية لتحصل على نجوم أكثر","جيد! حاولي مرة ثانية لتحصلي على نجوم أكثر") : T("لا بأس، راجع الكلمات وحاول من جديد","لا بأس، راجعي الكلمات وحاولي من جديد");
-    pane.innerHTML = `<div class="play result"><h2>${msg}${store.name? "، "+esc(store.name):""}</h2>
+    pane.innerHTML = `<div class="play result">${st>=2 && typeof MASCOT!=="undefined"?MASCOT:""}<h2>${msg}${store.name? "، "+esc(store.name):""}</h2>
       <div class="bigstars" aria-label="${st} من 3 نجمات">${starsHtml(st,3)}</div>
       <p style="margin:0;font-weight:700">إجابات صحيحة: ${score} من ${qs.length}</p>
       <div class="row"><button class="btn" id="again">${T("العب","العبي")} مرة ثانية</button><button class="btn ghost" id="toHome">رجوع للوحدات</button></div></div>`;
