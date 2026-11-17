@@ -208,11 +208,7 @@ const STAGE_HELLO = { p: "يلا نلعب ونتعلّم!", m: "جاهز للم�
 function applyStage(stage) {
   const r = document.documentElement;
   if (stage) r.dataset.stage = stage; else delete r.dataset.stage;
-  const old = document.querySelector("#brandHome svg");
-  if (old && old.dataset.stage !== (stage || "p")) {
-    const t = document.createElement("template"); t.innerHTML = STAGE_LOGO[stage || "p"];
-    const svg = t.content.firstChild; svg.dataset.stage = stage || "p"; old.replaceWith(svg);
-  }
+  /* شعار الموقع في الرأس ثابت لكل المراحل؛ شعارات المراحل تظهر في بطاقاتها فقط */
 }
 
 /* ============================================================
