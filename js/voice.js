@@ -17,7 +17,9 @@
     return h.toString(16).padStart(8, "0");
   }
   const fileId = t => { const k = norm(t).toLowerCase(); return fnv(k, 0x811c9dc5) + fnv(k, 0x050c5d1f); };
+  /* الصوت حسب «طالب/طالبة». أثناء شاشات البداية (قبل حفظ الملف) يمكن تمرير الاختيار في Speech.genderHint */
   const voiceDir = () => {
+    if (Speech.genderHint === "f" || Speech.genderHint === "m") return Speech.genderHint;
     try { const p = Store.profile(); return p && p.gender === "f" ? "f" : "m"; } catch (e) { return "m"; }
   };
   const BASE_RATE = 0.85;           /* سرعة الإعداد الافتراضية تقابل سرعة التسجيل الطبيعية */
