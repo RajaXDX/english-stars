@@ -847,7 +847,7 @@ function renderProfile() {
     </form>
     <section class="card"><h2 class="h3">🔊 الصوت</h2>
       <div class="seg" role="group" aria-label="سرعة النطق"><button data-rate="0.85" aria-pressed="${Store.rate >= 0.8}">سرعة عادية</button><button data-rate="0.65" aria-pressed="${Store.rate < 0.8}">أبطأ</button></div>
-      <p class="small muted">${Speech.supported ? "يُستخدم صوت جهازك للنطق، ويعمل غالباً دون اتصال." : "الصوت غير متاح في هذا المتصفح. جرّب Chrome أو Safari."}</p>
+      <p class="small muted">${Speech.recorded ? "النطق بصوت بشري مسجّل: رجالي للطلاب ونسائي للطالبات. كل مقطع يُحفظ بعد أول استماع ويعمل بعدها دون اتصال." : Speech.supported ? "يُستخدم صوت جهازك للنطق، ويعمل غالباً دون اتصال." : "الصوت غير متاح في هذا المتصفح. جرّب Chrome أو Safari."}</p>
       <button class="btn ghost sm" data-say="Hello! Welcome to English Stars.">جرّب الصوت</button></section>
     <section class="card"><h2 class="h3">👨‍👩‍👧 طلاب هذا الجهاز</h2>
       <ul class="list">${Store.profiles().map(x => `<li class="row-between"><span>${x.gender === "f" ? "👧" : "👦"} ${esc(x.name || (x.gender === "f" ? "طالبة" : "طالب"))} · <span class="small muted">${(gradeById(x.grade) || {}).ar || ""} · ★ ${countStars(x)}</span></span>

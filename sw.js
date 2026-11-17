@@ -2,11 +2,12 @@
    - كل ملفات التطبيق وبيانات الصفوف الـ12 تُحفظ عند التثبيت، فتعمل كل الوحدات دون إنترنت.
    - الملفات تُعرض من الحفظ فوراً وتُحدَّث في الخلفية عند توفر الاتصال.
    - عند نشر نسخة جديدة: غيّر VERSION، فيظهر للطالب زر «تحديث الآن». */
-const VERSION = "v3-2026-11-17";
+const VERSION = "v4-2026-11-17";
 const CACHE = "nujoom-" + VERSION;
 const FONTS = "nujoom-fonts";
+const AUDIO = "nujoom-audio";   /* ملفات النطق: تُحفظ عند أول تشغيل ولا تُحذف مع التحديثات */
 const CORE = [
-  "./", "index.html", "offline.html", "css/app.css", "js/store.js", "js/app.js", "manifest.webmanifest",
+  "./", "index.html", "offline.html", "css/app.css", "js/store.js", "js/app.js", "js/voice.js", "manifest.webmanifest",
   "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/apple-touch-icon.png",
   ...Array.from({ length: 12 }, (_, i) => `data/g${i + 1}.js`)
 ];
@@ -16,7 +17,7 @@ self.addEventListener("install", e => {
 });
 self.addEventListener("activate", e => {
   e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith("nujoom-") && k !== CACHE && k !== FONTS).map(k => caches.delete(k))))
+    caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith("nujoom-") && k !== CACHE && k !== FONTS && k !== AUDIO).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -38,6 +39,17 @@ self.addEventListener("fetch", e => {
     return;
   }
   if (url.origin !== location.origin) return;
+
+  /* ملفات النطق: من الحفظ أولاً، وتُحفظ بعد أول تشغيل لتعمل دون اتصال */
+  if (url.pathname.includes("/audio/")) {
+    e.respondWith(caches.open(AUDIO).then(async c => {
+      const hit = await c.match(req);
+      if (hit) return hit;
+      try { const res = await fetch(req); if (res.ok) c.put(req, res.clone()); return res; }
+      catch (err) { return new Response("", { status: 504 }); }
+    }));
+    return;
+  }
 
   /* فتح الصفحة: الشبكة أولاً ثم النسخة المحفوظة ثم صفحة عدم الاتصال */
   if (req.mode === "navigate") {
