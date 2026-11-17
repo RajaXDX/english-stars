@@ -170,6 +170,8 @@ function route() {
   const p = Store.profile();
   if (!p || !p.gender || !p.grade) { if (h !== "welcome") { history.replaceState(null, "", "#welcome"); } return renderWelcome(); }
   const parts = h.split("/");
+  const vg = ["learn", "u", "big"].includes(parts[0]) ? gradeById(parts[1]) : null;
+  applyStage((vg || gradeById(p.grade) || {}).stage || "p");
   try {
     switch (parts[0]) {
       case "learn": return renderLearn(parts[1] || p.grade);
@@ -193,54 +195,86 @@ function route() {
 const alive = token => token === renderToken;
 
 /* ============================================================
-   البداية: شاشة واحدة (طالب/طالبة + اسم اختياري + الصف)
+   واجهة لكل مرحلة: شعار وألوان وخط يناسب العمر
+   ============================================================ */
+const STAGE_LOGO = {
+  p: MASCOT,
+  m: '<svg viewBox="0 0 100 100" class="mascot" aria-hidden="true"><path d="M50 8c14 10 20 28 18 50H32C30 36 36 18 50 8z" fill="#EEF7FA" stroke="#0E2A3B" stroke-width="4" stroke-linejoin="round"/><circle cx="50" cy="36" r="9" fill="#22C3D8" stroke="#0E2A3B" stroke-width="4"/><path d="M32 46l-12 16v10l13-6zM68 46l12 16v10l-13-6z" fill="#FF6B8E" stroke="#0E2A3B" stroke-width="4" stroke-linejoin="round"/><path d="M38 66h24l-4 8H42z" fill="#0E2A3B"/><path d="M42 76q8 18 16 0q-4 6-8 14q-4-8-8-14z" fill="#FFC21A" stroke="#E09A00" stroke-width="3" stroke-linejoin="round"/></svg>',
+  s: '<svg viewBox="0 0 100 100" class="mascot" aria-hidden="true"><rect x="8" y="8" width="84" height="84" rx="24" fill="#4F4FCC"/><rect x="8" y="8" width="84" height="84" rx="24" fill="url(#sg)" opacity=".35"/><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><text x="50" y="64" text-anchor="middle" font-family="Readex Pro, Fredoka, sans-serif" font-weight="700" font-size="40" fill="#fff">Aa</text><path d="M72 22l3 6 6 1-4.5 4 1 6-5.5-3-5.5 3 1-6-4.5-4 6-1z" fill="#FFCB3D"/></svg>'
+};
+const STAGE_TAG = { p: "ألعاب وصور وأصوات", m: "مغامرات وتحديات", s: "تعلّم بأسلوب عصري" };
+const STAGE_HELLO = { p: "يلا نلعب ونتعلّم!", m: "جاهز للمغامرة؟", s: "مرحباً بك" };
+function applyStage(stage) {
+  const r = document.documentElement;
+  if (stage) r.dataset.stage = stage; else delete r.dataset.stage;
+  const old = document.querySelector("#brandHome svg");
+  if (old && old.dataset.stage !== (stage || "p")) {
+    const t = document.createElement("template"); t.innerHTML = STAGE_LOGO[stage || "p"];
+    const svg = t.content.firstChild; svg.dataset.stage = stage || "p"; old.replaceWith(svg);
+  }
+}
+
+/* ============================================================
+   البداية: خطوتان — (1) اختيار الصف، (2) طالب/طالبة + اسم
    ============================================================ */
 function renderWelcome(editing) {
   chrome({ title: "", hideNav: true });
   const p = Store.profile();
-  const st = { gender: (p && p.gender) || "", grade: (p && p.grade) || "", name: (p && p.name) || "", stage: p && p.grade ? gradeById(p.grade).stage : "p" };
-  app.innerHTML = `<section class="welcome">
-    <div class="hero">
-      ${MASCOT}
-      <h1>أهلاً في نجوم الإنجليزي</h1>
-      <p>تعلّم كلمات وقواعد منهجك بالصوت والصورة، واجمع النجوم. بدون حساب وبدون بيانات شخصية.</p>
-    </div>
-    <form id="wForm" class="card form" novalidate>
-      <fieldset><legend>أنا…</legend>
-        <div class="choice2">
-          <button type="button" data-g="m" aria-pressed="false"><span aria-hidden="true">👦</span>طالب</button>
-          <button type="button" data-g="f" aria-pressed="false"><span aria-hidden="true">👧</span>طالبة</button>
-        </div>
-      </fieldset>
-      <label class="field" for="wName">الاسم <small>(اختياري، يظهر لك فقط)</small>
-        <input id="wName" maxlength="20" autocomplete="off" value="${esc(st.name)}" placeholder="مثلاً: سارة">
-      </label>
-      <fieldset><legend>صفي</legend>
-        <div class="seg" role="group" aria-label="المرحلة" id="wStages"></div>
-        <div class="chips" id="wGrades"></div>
-      </fieldset>
-      <button class="btn primary block" id="wGo" type="submit" disabled>ابدأ التعلّم</button>
-      <p class="muted small" id="wHint" aria-live="polite">${T("اختر", "اختاري")} «طالب» أو «طالبة» و${T("صفك", "صفك")} للمتابعة.</p>
-    </form></section>`;
-  const paint = () => {
-    app.querySelectorAll("[data-g]").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === st.gender));
-    $("#wStages").innerHTML = STAGES.map(s => `<button type="button" data-stage="${s.id}" aria-pressed="${s.id === st.stage}">${s.ar}</button>`).join("");
-    $("#wGrades").innerHTML = GRADES.filter(g => g.stage === st.stage).map(g => `<button type="button" class="chip" data-grade="${g.id}" aria-pressed="${g.id === st.grade}">${g.ar}</button>`).join("");
-    $("#wGo").disabled = !(st.gender && st.grade);
-    $("#wHint").hidden = !$("#wGo").disabled;
-    app.querySelectorAll("[data-stage]").forEach(b => b.onclick = () => { st.stage = b.dataset.stage; paint(); });
-    app.querySelectorAll("[data-grade]").forEach(b => b.onclick = () => { st.grade = b.dataset.grade; paint(); });
-  };
-  app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { st.gender = b.dataset.g; paint(); });
-  paint();
-  $("#wForm").onsubmit = e => {
-    e.preventDefault();
-    if (!(st.gender && st.grade)) return;
-    const fields = { gender: st.gender, grade: st.grade, name: $("#wName").value.trim() };
-    if (p && editing !== "new") Store.updateProfile(fields); else Store.createProfile(fields);
-    go("home");
-  };
-  focusMain();
+  const st = { gender: (p && p.gender) || "", grade: (p && p.grade) || "", name: (p && p.name) || "", step: (p && p.grade && editing === true) ? 2 : 1 };
+  const draw = () => (st.step === 1 ? stepGrade() : stepMe());
+
+  function stepGrade() {
+    applyStage(null);
+    app.innerHTML = `<section class="pick-grade">
+      <div class="hero">${MASCOT}<h1>أهلاً! في أي صف أنت؟</h1><p>اختر صفك لتبدأ، ولكل مرحلة واجهة تناسبها.</p></div>
+      ${STAGES.map(s => `<section class="stage-block" data-look="${s.id}" aria-labelledby="sb-${s.id}">
+        <header><span class="logo">${STAGE_LOGO[s.id]}</span><div><h2 id="sb-${s.id}">${s.ar}</h2><p>${STAGE_TAG[s.id]}</p></div></header>
+        <div class="gtiles">${GRADES.filter(g => g.stage === s.id).map((g, i) => `<button type="button" class="gtile" data-grade="${g.id}" aria-pressed="${g.id === st.grade}" style="--c:var(--c${(i % 5) + 1});--t:var(--t${(i % 5) + 1})"><b>${gradeShortNum(g)}</b><span>${g.ar}</span>${g.book ? `<small>${esc(g.book)}</small>` : ""}</button>`).join("")}</div>
+      </section>`).join("")}
+    </section>`;
+    app.querySelectorAll("[data-grade]").forEach(b => b.onclick = () => { st.grade = b.dataset.grade; st.step = 2; draw(); });
+    focusMain();
+  }
+
+  function stepMe() {
+    const g = gradeById(st.grade);
+    applyStage(g.stage);
+    app.innerHTML = `<section class="welcome">
+      <div class="hero">${STAGE_LOGO[g.stage]}<h1>${STAGE_HELLO[g.stage]}</h1><p>تعلّم كلمات وقواعد منهجك بالصوت والصورة، واجمع النجوم. بدون حساب وبدون بيانات شخصية.</p></div>
+      <form id="wForm" class="card form" novalidate>
+        <div class="chosen"><div><span class="logo">${STAGE_LOGO[g.stage].replace('class="mascot"', 'class="mini"')}</span><div><small class="muted">صفّي</small><br><b>${g.ar}</b></div></div>
+          <button type="button" class="btn ghost sm" id="wChange">تغيير الصف</button></div>
+        <fieldset><legend>أنا…</legend>
+          <div class="choice2">
+            <button type="button" data-g="m" aria-pressed="false"><span aria-hidden="true">👦</span>طالب</button>
+            <button type="button" data-g="f" aria-pressed="false"><span aria-hidden="true">👧</span>طالبة</button>
+          </div>
+        </fieldset>
+        <label class="field" for="wName">الاسم <small>(اختياري، يظهر لك فقط)</small>
+          <input id="wName" maxlength="20" autocomplete="off" value="${esc(st.name)}" placeholder="مثلاً: سارة">
+        </label>
+        <button class="btn primary block" id="wGo" type="submit" disabled>ابدأ التعلّم</button>
+        <p class="muted small" id="wHint" aria-live="polite">اختر «طالب» أو «طالبة» للمتابعة.</p>
+      </form></section>`;
+    const paint = () => {
+      app.querySelectorAll("[data-g]").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === st.gender));
+      $("#wGo").disabled = !(st.gender && st.grade);
+      $("#wHint").hidden = !$("#wGo").disabled;
+    };
+    app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { st.gender = b.dataset.g; paint(); });
+    $("#wName").oninput = e => { st.name = e.target.value; };
+    $("#wChange").onclick = () => { st.step = 1; draw(); };
+    paint();
+    $("#wForm").onsubmit = e => {
+      e.preventDefault();
+      if (!(st.gender && st.grade)) return;
+      const fields = { gender: st.gender, grade: st.grade, name: $("#wName").value.trim() };
+      if (p && editing !== "new") Store.updateProfile(fields); else Store.createProfile(fields);
+      go("home");
+    };
+    focusMain();
+  }
+  draw();
 }
 
 /* ============================================================
@@ -589,7 +623,7 @@ function runQuiz(pane, token, cfg) {
       ? `<li><span class="en" lang="en" dir="ltr">${esc(q.s.replace("___", "[" + q.right + "]"))}</span></li>`
       : `<li>${sayButtons(q.it.w[0])}${en(q.it.w[0])}<span class="tr">${q.it.w[1]}</span></li>`).join("");
     const { g, u } = cfg.unit || {};
-    pane.innerHTML = `<section class="card result center">${st >= 2 ? MASCOT : ""}
+    pane.innerHTML = `<section class="card result center">${st >= 2 ? STAGE_LOGO[document.documentElement.dataset.stage || "p"] : ""}
       <h1 class="h2">${msg}${name ? "، " + esc(name) : ""}</h1>
       ${cfg.starKey ? `<div class="bigstars">${starsHtml(st, 3)}</div>` : ""}
       <p><b>${score}</b> من <b>${qs.length}</b> إجابات صحيحة</p>
