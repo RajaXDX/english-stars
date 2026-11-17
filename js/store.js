@@ -206,7 +206,13 @@ const Store = (() => {
     return fresh;
   }
 
+  /* المظهر: auto (حسب الجهاز) | light | dark */
+  function applyTheme() {
+    const t = data.settings.theme || "auto", r = document.documentElement;
+    if (t === "auto") delete r.dataset.theme; else r.dataset.theme = t;
+  }
   load();
+  applyTheme();
   return {
     SCORED, STEPS, BADGES,
     get data() { return data; }, get healthy() { return healthy; },
@@ -217,6 +223,7 @@ const Store = (() => {
     addMistake, reviewResult, dueReviews, allReviews, recordAnswer,
     daily, weekly, checkBadges,
     get rate() { return data.settings.rate; }, setRate(r) { data.settings.rate = r; save(); },
+    get theme() { return data.settings.theme || "auto"; }, setTheme(t) { data.settings.theme = t; applyTheme(); save(); },
     on(fn) { listeners.add(fn); }, save, dayKey
   };
 })();
