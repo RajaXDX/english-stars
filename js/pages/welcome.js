@@ -123,13 +123,13 @@ function renderWelcome(editing) {
       Store.setTheme(b.dataset.themeSet); app.querySelectorAll("[data-theme-set]").forEach(x => x.setAttribute("aria-pressed", x === b));
     });
     $("#obTry").onclick = () => {
-      const prev = Store.profile();                 /* الصوت حسب طالب/طالبة المختار قبل الحفظ */
-      if (prev) { const old = prev.gender; prev.gender = st.gender; Speech.say("Hello! Welcome to English Stars."); prev.gender = old; }
-      else Speech.say("Hello! Welcome to English Stars.");
+      Speech.genderHint = st.gender;                 /* الصوت حسب طالب/طالبة المختار قبل الحفظ */
+      Speech.say("Hello! Welcome to English Stars.");
     };
     $("#obStart").onclick = () => {
       const fields = { gender: st.gender, grade: st.grade, name: st.name, lang: st.lang };
       if (p && editing !== "new") Store.updateProfile(fields); else Store.createProfile(fields);
+      delete Speech.genderHint;
       go("home");
     };
     focusMain();
