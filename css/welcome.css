@@ -1,0 +1,24 @@
+/* صفحات أول دخول: مؤشر الخطوات واختيار اللغة */
+.ob-progress{display:flex; align-items:center; gap:12px; max-width:560px; width:100%; margin:0 auto}
+.ob-progress ol{list-style:none; margin:0; padding:0; display:flex; gap:6px; flex:1}
+.ob-progress li{flex:1; height:10px; border-radius:999px; background:var(--line)}
+.ob-progress li.done{background:var(--good)}
+.ob-progress li.now{background:var(--brand)}
+.ob-progress .small{white-space:nowrap; font-weight:700}
+.ob-back svg{width:24px; height:24px}
+
+.ob-langs{display:flex; flex-direction:column; gap:12px; max-width:560px; width:100%; margin:0 auto}
+.ob-lang{display:flex; align-items:center; gap:14px; width:100%; min-height:72px; padding:12px 16px; text-align:start;
+  background:var(--paper); color:var(--ink); border:3px solid var(--line); border-radius:22px; box-shadow:0 5px 0 var(--line);
+  transition:transform .12s, box-shadow .12s}
+.ob-lang .mark{width:48px; height:48px; flex:none; border-radius:14px; display:grid; place-items:center;
+  font-family:var(--font-en); font-weight:700; font-size:1.3rem; background:var(--t5); color:var(--c5)}
+.ob-lang .txt{flex:1; min-width:0; display:flex; flex-direction:column; line-height:1.3}
+.ob-lang .txt b{font-size:1.15rem}
+.ob-lang .txt small{color:var(--muted); font-weight:700}
+.ob-lang[aria-checked="true"]{border-color:var(--brand); box-shadow:0 5px 0 var(--brand-d); background:var(--brand-soft)}
+.ob-lang[aria-checked="true"] .mark{background:var(--brand); color:#fff}
+.ob-lang:not([disabled]):active{transform:translateY(4px); box-shadow:none}
+.ob-lang[disabled]{cursor:not-allowed; opacity:.7; box-shadow:none; border-style:dashed}
+.ob-lang[disabled] .mark{background:var(--line); color:var(--muted)}
+.pill.soon{background:var(--muted); color:#fff}

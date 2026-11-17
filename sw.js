@@ -2,12 +2,12 @@
    - كل ملفات التطبيق وبيانات الصفوف الـ12 تُحفظ عند التثبيت، فتعمل كل الوحدات دون إنترنت.
    - الملفات تُعرض من الحفظ فوراً وتُحدَّث في الخلفية عند توفر الاتصال.
    - عند نشر نسخة جديدة: غيّر VERSION، فيظهر للطالب زر «تحديث الآن». */
-const VERSION = "v6-2026-11-17";
+const VERSION = "v7-2026-11-17";
 const CACHE = "nujoom-" + VERSION;
 const FONTS = "nujoom-fonts";
 const AUDIO = "nujoom-audio";   /* ملفات النطق: تُحفظ عند أول تشغيل ولا تُحذف مع التحديثات */
 const CORE = [
-  "./", "index.html", "offline.html", "css/app.css", "js/icons.js", "js/store.js", "js/core.js", "js/shell.js", "js/pages/welcome.js", "js/pages/home.js", "js/pages/learn.js", "js/pages/unit.js", "js/quiz.js", "js/pages/practice.js", "js/pages/profile.js", "js/main.js", "js/voice.js", "manifest.webmanifest",
+  "./", "index.html", "offline.html", "css/app.css", "css/welcome.css", "js/icons.js", "js/store.js", "js/core.js", "js/shell.js", "js/pages/welcome.js", "js/pages/home.js", "js/pages/learn.js", "js/pages/unit.js", "js/quiz.js", "js/pages/practice.js", "js/pages/profile.js", "js/main.js", "js/voice.js", "manifest.webmanifest",
   "icons/logo.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/apple-touch-icon.png",
   ...Array.from({ length: 12 }, (_, i) => `data/g${i + 1}.js`)
 ];

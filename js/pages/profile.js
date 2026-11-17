@@ -20,6 +20,8 @@ function renderProfile() {
       <div class="seg" role="group" aria-label="سرعة النطق"><button data-rate="0.85" aria-pressed="${Store.rate >= 0.8}">سرعة عادية</button><button data-rate="0.65" aria-pressed="${Store.rate < 0.8}">أبطأ</button></div>
       <p class="small muted">${Speech.recorded ? "النطق بصوت بشري مسجّل: رجالي للطلاب ونسائي للطالبات. كل مقطع يُحفظ بعد أول استماع ويعمل بعدها دون اتصال." : Speech.supported ? "يُستخدم صوت جهازك للنطق، ويعمل غالباً دون اتصال." : "الصوت غير متاح في هذا المتصفح. جرّب Chrome أو Safari."}</p>
       <button class="btn ghost sm" data-say="Hello! Welcome to English Stars.">جرّب الصوت</button></section>
+    <section class="card"><h2 class="h3">المظهر</h2>
+      <div class="seg wide" role="group" aria-label="المظهر">${[["light", "فاتح"], ["dark", "ليلي"], ["auto", "حسب الجهاز"]].map(([v, l]) => `<button data-theme-set="${v}" aria-pressed="${Store.theme === v}">${l}</button>`).join("")}</div></section>
     <section class="card"><h2 class="h3">${icon("account-group")} طلاب هذا الجهاز</h2>
       <ul class="list">${Store.profiles().map(x => `<li class="row-between"><span>${icon(x.gender === "f" ? "human-female" : "human-male")} ${esc(x.name || (x.gender === "f" ? "طالبة" : "طالب"))} · <span class="small muted">${(gradeById(x.grade) || {}).ar || ""} · ★ ${countStars(x)}</span></span>
         ${x.id === p.id ? `<span class="pill">الحالي</span>` : `<button class="btn ghost sm" data-switch="${x.id}">تبديل</button>`}</li>`).join("")}</ul>
@@ -38,6 +40,7 @@ function renderProfile() {
   app.querySelectorAll("#pForm [data-g]").forEach(b => b.onclick = () => { gender = b.dataset.g; app.querySelectorAll("#pForm [data-g]").forEach(x => x.setAttribute("aria-pressed", x === b)); });
   $("#pForm").onsubmit = e => { e.preventDefault(); Store.updateProfile({ name: $("#pName").value.trim(), gender, grade: $("#pGrade").value }); toast("تم الحفظ"); renderProfile(); };
   app.querySelectorAll("[data-rate]").forEach(b => b.onclick = () => { Store.setRate(+b.dataset.rate); renderProfile(); });
+  app.querySelectorAll("[data-theme-set]").forEach(b => b.onclick = () => { Store.setTheme(b.dataset.themeSet); renderProfile(); });
   wireSay(app);
   app.querySelectorAll("[data-switch]").forEach(b => b.onclick = () => { Store.switchProfile(b.dataset.switch); toast("تم التبديل"); go("home"); });
   $("#addStudent").onclick = e => { e.preventDefault(); history.pushState(null, "", "#welcome"); renderWelcome("new"); };
