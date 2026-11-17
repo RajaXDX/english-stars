@@ -279,7 +279,11 @@
     if ($("#show").hidden || e.altKey || e.ctrlKey || e.metaKey) return;
     if (e.key === "ArrowLeft" || e.key === "PageDown") { e.preventDefault(); go(1); }          /* الاتجاه من اليمين لليسار: اليسار = التالي */
     else if (e.key === "ArrowRight" || e.key === "PageUp") { e.preventDefault(); go(-1); }
-    else if (e.key === " " || e.key === "Enter") { if (e.target.closest("button, a") && e.key === "Enter") return; e.preventDefault(); if (!reveal()) go(1); }
+    else if (e.key === " " || e.key === "Enter") {
+      const t = e.target;
+      if (e.key === "Enter" && t && t.closest && t.closest("button, a")) return;   /* Enter على زر = ضغطه */
+      e.preventDefault(); if (!reveal()) go(1);
+    }
     else if (e.key === "f" || e.key === "F") toggleFull();
     else if (e.key === "Escape" && !document.fullscreenElement) closeShow();
   });

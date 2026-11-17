@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>صفحة المعلمين · نجوم الإنجليزي</title>
+<meta name="description" content="أدوات المعلم لمنهج الإنجليزي السعودي: عرض الوحدة في الفصل، ودليل الكلمات والقواعد مع الإجابات، من الأول الابتدائي إلى الثالث الثانوي.">
+<meta name="theme-color" content="#FFC21A">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Lalezar&family=Changa:wght@500;700&family=Readex+Pro:wght@400;500;700&family=Fredoka:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/teacher.css">
+</head>
+<body class="no-nav teacher">
+<a class="sr" href="#t-app">تخطَّ إلى المحتوى</a>
+<header class="appbar">
+  <div class="appbar-in">
+    <button class="iconbtn" id="tBack" hidden aria-label="رجوع"></button>
+    <a class="brand" href="#" id="tHome" aria-label="صفحة المعلمين، الرئيسية"><span class="tlogo" id="tLogo" aria-hidden="true"></span><b>نجوم الإنجليزي</b></a>
+    <span id="tTitle">صفحة المعلمين</span>
+    <a class="btn ghost sm" href="index.html" id="toStudents">صفحة الطلاب</a>
+  </div>
+</header>
+<main id="t-app" tabindex="-1"></main>
+<footer class="t-foot"><p class="small muted">الأيقونات: Material Design Icons، و Game Icons (game-icons.net) برخصة CC BY 3.0.</p></footer>
+
+<div id="show" class="show" hidden role="dialog" aria-modal="true" aria-label="العرض في الفصل">
+  <div class="show-top">
+    <span id="showTitle" class="show-title"></span>
+    <span id="showCount" class="show-count" aria-live="polite"></span>
+    <button class="iconbtn" id="showFull" aria-label="ملء الشاشة"></button>
+    <button class="iconbtn" id="showClose" aria-label="إغلاق العرض"></button>
+  </div>
+  <div class="show-bar" aria-hidden="true"><i id="showProg"></i></div>
+  <section id="slide" class="slide" aria-live="polite"></section>
+  <div class="show-nav">
+    <button class="btn ghost" id="showPrev"></button>
+    <button class="btn" id="showReveal"></button>
+    <button class="btn ghost" id="showNext"></button>
+  </div>
+</div>
+
+<script>
+const GRADES = [];
+function GRADE(g) { GRADES.push(g); }
+</script>
+<script src="data/g1.js"></script>
+<script src="data/g2.js"></script>
+<script src="data/g3.js"></script>
+<script src="data/g4.js"></script>
+<script src="data/g5.js"></script>
+<script src="data/g6.js"></script>
+<script src="data/g7.js"></script>
+<script src="data/g8.js"></script>
+<script src="data/g9.js"></script>
+<script src="data/g10.js"></script>
+<script src="data/g11.js"></script>
+<script src="data/g12.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/teacher.js"></script>
+</body>
+</html>
