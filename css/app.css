@@ -574,3 +574,9 @@ body.no-nav::before{bottom:0!important}
 .lessons button[aria-current="step"]{background:var(--c, var(--brand)); border-color:var(--c, var(--brand)); color:#fff; box-shadow:0 3px 0 rgba(0,0,0,.25)}
 .lessons button[aria-current="step"] small{color:#fff; opacity:.9}
 .lessons button:focus-visible{outline:3px solid var(--ink); outline-offset:2px}
+
+/* ---------- تنظيم الشكل ---------- */
+/* شمس/قمر الابتدائي: في الطرف البعيد عن بداية السطر (العناوين) وأصغر وأخف، فلا تظهر خلف النص */
+:root:not([data-stage="m"]):not([data-stage="s"]) body::after{inset-inline-start:auto; inset-inline-end:12px; width:64px; height:64px; opacity:.6}
+/* روابط نصية صغيرة بجانب العناوين (مثل «عرض الكل»): مساحة لمس 44px على الأقل */
+.row-between > a.small{display:inline-flex; align-items:center; min-height:44px; padding-inline:8px}
