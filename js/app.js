@@ -299,6 +299,7 @@ function renderHome() {
   const p = Store.profile();
   chrome({ title: "الرئيسية", tab: "home" });
   const { g, u, step } = continueTarget(p);
+  applyStage(g.stage);
   const started = !!p.last;
   const d = Store.daily(), w = Store.weekly(), gp = gradeProgress(g);
   const due = Store.dueReviews().length;
@@ -434,7 +435,7 @@ function renderStep(g, u, step, token) {
   chrome({ title: STEP_META[step].t, back: `u/${g.id}/${u.id}`, tab: "learn" });
   if (step !== "summary") Store.setLast({ grade: g.id, unit: u.id, step });
   const shell = inner => `<div class="stack" style="--c:var(--c${u.c});--t:var(--t${u.c})">
-    <p class="crumb small muted">${en(u.en)} · ${STEP_META[step].n} من 5</p>${inner}</div>`;
+    <p class="crumb small muted">الخطوة ${STEP_META[step].n} من 5 · ${en(u.en)}</p>${inner}</div>`;
   if (step === "words") return stepWords(g, u, shell);
   if (step === "grammar") return stepGrammar(g, u, shell);
   if (step === "summary") return stepSummary(g, u, shell);

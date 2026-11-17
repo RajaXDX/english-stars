@@ -461,6 +461,73 @@ body.no-nav .toast{bottom:calc(20px + env(safe-area-inset-bottom, 0px))}
 :root[data-stage="s"] .week li.on > span[aria-hidden]{background:var(--brand); border-color:var(--brand)}
 :root[data-stage="s"] .stars b{text-shadow:none}
 
+/* =====================================================================
+   عالم كل مرحلة (مشهد خلفي ثابت خلف المحتوى) + تحسينات التباين والتفاصيل
+   ===================================================================== */
+body::before, body::after{content:""; position:fixed; pointer-events:none; z-index:0}
+main, #banners{position:relative; z-index:1}
+
+/* ---- الابتدائي (وشاشة اختيار الصف): حديقة — شمس وغيوم وتلال ---- */
+:root:not([data-stage="m"]):not([data-stage="s"]) body::before{
+  inset:auto 0 calc(var(--nav-h) + env(safe-area-inset-bottom, 0px)) 0; height:150px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 190' preserveAspectRatio='none'%3E%3Cpath d='M0 120 C150 60 300 60 450 110 S750 170 900 100 S1100 60 1200 90 V190 H0Z' fill='%23B8E5A6'/%3E%3Cpath d='M0 150 C200 100 350 120 520 150 S850 190 1000 140 S1150 120 1200 135 V190 H0Z' fill='%2392D38A'/%3E%3C/svg%3E") center bottom/100% 100% no-repeat}
+:root:not([data-stage="m"]):not([data-stage="s"]) body::after{
+  top:calc(var(--bar-h) + 18px); inset-inline-start:18px; width:86px; height:86px; border-radius:50%;
+  background:radial-gradient(circle, #FFD54A 0 42%, rgba(255,213,74,.35) 43% 62%, transparent 63%); animation:sunspin 18s linear infinite}
+@keyframes sunspin{to{transform:rotate(360deg)}}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):not([data-stage="m"]):not([data-stage="s"]) body::before{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 190' preserveAspectRatio='none'%3E%3Cpath d='M0 120 C150 60 300 60 450 110 S750 170 900 100 S1100 60 1200 90 V190 H0Z' fill='%23233A6E'/%3E%3Cpath d='M0 150 C200 100 350 120 520 150 S850 190 1000 140 S1150 120 1200 135 V190 H0Z' fill='%231B2D58'/%3E%3C/svg%3E")}
+  :root:not([data-theme="light"]):not([data-stage="m"]):not([data-stage="s"]) body::after{
+    background:radial-gradient(circle at 60% 40%, transparent 0 34%, #FFE59A 35% 46%, transparent 47%), radial-gradient(circle, rgba(255,229,154,.25) 0 60%, transparent 61%); animation:none}}
+:root[data-theme="dark"]:not([data-stage="m"]):not([data-stage="s"]) body::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 190' preserveAspectRatio='none'%3E%3Cpath d='M0 120 C150 60 300 60 450 110 S750 170 900 100 S1100 60 1200 90 V190 H0Z' fill='%23233A6E'/%3E%3Cpath d='M0 150 C200 100 350 120 520 150 S850 190 1000 140 S1150 120 1200 135 V190 H0Z' fill='%231B2D58'/%3E%3C/svg%3E")}
+:root[data-theme="dark"]:not([data-stage="m"]):not([data-stage="s"]) body::after{
+  background:radial-gradient(circle at 60% 40%, transparent 0 34%, #FFE59A 35% 46%, transparent 47%), radial-gradient(circle, rgba(255,229,154,.25) 0 60%, transparent 61%); animation:none}
+
+/* ---- المتوسط: فضاء — كوكب بحلقة وقمر ونجوم تلمع ---- */
+:root[data-stage="m"] body::before{
+  bottom:calc(var(--nav-h) + 10px + env(safe-area-inset-bottom, 0px)); inset-inline-end:-50px; width:200px; height:200px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cellipse cx='100' cy='108' rx='96' ry='26' fill='none' stroke='%2322C3D8' stroke-width='7' opacity='.55' transform='rotate(-18 100 108)'/%3E%3Ccircle cx='100' cy='100' r='52' fill='%238F7CFF'/%3E%3Ccircle cx='82' cy='84' r='12' fill='%23ffffff' opacity='.18'/%3E%3Ccircle cx='118' cy='120' r='8' fill='%23000' opacity='.12'/%3E%3Cpath d='M8 118 A96 26 -18 0 0 192 98' fill='none' stroke='%2322C3D8' stroke-width='7' opacity='.9' transform='rotate(-18 100 108)'/%3E%3C/svg%3E") center/contain no-repeat;
+  opacity:.8; animation:drift 14s ease-in-out infinite}
+:root[data-stage="m"] body::after{
+  inset:0;
+  background-image:
+    radial-gradient(2px 2px at 12% 20%, var(--brand) 50%, transparent 51%),
+    radial-gradient(2px 2px at 78% 12%, var(--c3) 50%, transparent 51%),
+    radial-gradient(3px 3px at 64% 42%, var(--brand) 50%, transparent 51%),
+    radial-gradient(2px 2px at 30% 66%, var(--c3) 50%, transparent 51%),
+    radial-gradient(3px 3px at 88% 74%, var(--brand) 50%, transparent 51%),
+    radial-gradient(2px 2px at 46% 88%, var(--c3) 50%, transparent 51%),
+    radial-gradient(circle at 92% 92%, color-mix(in srgb, var(--c1) 55%, transparent) 0 46px, transparent 47px);
+  animation:twinkle 4s ease-in-out infinite alternate}
+@keyframes drift{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(10px,8px) rotate(6deg)}}
+@keyframes twinkle{from{opacity:.45}to{opacity:1}}
+
+/* ---- الثانوي: هالات ضوء ناعمة هادئة ---- */
+:root[data-stage="s"] body::before{
+  top:-120px; inset-inline-end:-120px; width:420px; height:420px; border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb, var(--brand) 22%, transparent), transparent 70%)}
+:root[data-stage="s"] body::after{
+  bottom:-140px; inset-inline-start:-140px; width:460px; height:460px; border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb, var(--c4) 16%, transparent), transparent 70%)}
+
+/* ---- تفاصيل ---- */
+.umini .unum{align-self:flex-start}
+.brand b{white-space:nowrap}
+@media (max-width:380px){ .brand b{display:inline!important; font-size:1.05rem} }
+@media (max-width:330px){ .brand b{display:none!important} }
+
+/* تباين النص على الأزرار والإجابات الملونة في الوضع الليلي (الألوان فاتحة ليلاً) */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) :is(.btn:not(.ghost), .opt.right, .opt.wrong, .pill, .seg button[aria-pressed="true"], .chip[aria-pressed="true"], .chip[aria-current="true"], .tile, .toast){color:#141629}
+  :root:not([data-theme="light"]) .slots.ok .slot{color:#141629}}
+:root[data-theme="dark"] :is(.btn:not(.ghost), .opt.right, .opt.wrong, .pill, .seg button[aria-pressed="true"], .chip[aria-pressed="true"], .chip[aria-current="true"], .tile, .toast){color:#141629}
+:root[data-theme="dark"] .slots.ok .slot{color:#141629}
+
+@media (prefers-reduced-motion: reduce){ body::before, body::after{animation:none!important} }
+
 @media (max-width:380px){
   .brand b{display:none}
   .slot{width:32px; height:42px; font-size:1.25rem}
@@ -468,3 +535,5 @@ body.no-nav .toast{bottom:calc(20px + env(safe-area-inset-bottom, 0px))}
   .bottomnav a{font-size:.7rem}
 }
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important; scroll-behavior:auto!important} }
+
+body.no-nav::before{bottom:0!important}

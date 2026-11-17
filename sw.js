@@ -2,7 +2,7 @@
    - كل ملفات التطبيق وبيانات الصفوف الـ12 تُحفظ عند التثبيت، فتعمل كل الوحدات دون إنترنت.
    - الملفات تُعرض من الحفظ فوراً وتُحدَّث في الخلفية عند توفر الاتصال.
    - عند نشر نسخة جديدة: غيّر VERSION، فيظهر للطالب زر «تحديث الآن». */
-const VERSION = "v2-2026-11-17";
+const VERSION = "v3-2026-11-17";
 const CACHE = "nujoom-" + VERSION;
 const FONTS = "nujoom-fonts";
 const CORE = [
@@ -12,7 +12,7 @@ const CORE = [
 ];
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE.map(u => new Request(u, { cache: "reload" })))));
 });
 self.addEventListener("activate", e => {
   e.waitUntil(
