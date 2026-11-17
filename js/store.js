@@ -187,16 +187,16 @@ const Store = (() => {
 
   /* ---------------- الشارات ---------------- */
   const BADGES = [
-    { id: "first",   icon: "🌱", name: "البداية",         how: "أكمل أول نشاط",                test: p => Object.keys(p.done).length > 0 },
-    { id: "perfect", icon: "🎯", name: "ثلاث نجوم",        how: "احصل على 3 نجوم في تحدٍ",      test: p => Object.values(p.stars).some(u => Object.values(u).some(n => n >= 3)) },
-    { id: "words25", icon: "📚", name: "جامع الكلمات",     how: "تعلّم 25 كلمة",                test: p => Object.keys(p.learned).length >= 25 },
-    { id: "words100",icon: "🧠", name: "قاموس صغير",       how: "تعلّم 100 كلمة",               test: p => Object.keys(p.learned).length >= 100 },
-    { id: "unit",    icon: "🏁", name: "وحدة كاملة",       how: "أكمل كل خطوات وحدة",           test: p => Object.keys(p.done).some(k => STEPS.every(s => p.done[k][s])) },
-    { id: "stars25", icon: "⭐", name: "25 نجمة",          how: "اجمع 25 نجمة",                 test: () => totalStars() >= 25 },
-    { id: "stars100",icon: "🌟", name: "100 نجمة",         how: "اجمع 100 نجمة",                test: () => totalStars() >= 100 },
-    { id: "review",  icon: "🔁", name: "المراجِع",         how: "أجب صح على 10 كلمات في المراجعة", test: p => p.stats.reviewed >= 10 },
-    { id: "days3",   icon: "📅", name: "ثلاثة أيام",       how: "تعلّم في 3 أيام مختلفة",        test: p => Object.values(p.days).filter(d => d.w || d.a.length).length >= 3 },
-    { id: "week",    icon: "🏆", name: "هدف الأسبوع",      how: "حقق الهدف الأسبوعي مرة",        test: p => p.stats.weeksMet >= 1 }
+    { id: "first",   icon: "sprout", name: "البداية",         how: "أكمل أول نشاط",                test: p => Object.keys(p.done).length > 0 },
+    { id: "perfect", icon: "bullseye-arrow", name: "ثلاث نجوم",        how: "احصل على 3 نجوم في تحدٍ",      test: p => Object.values(p.stars).some(u => Object.values(u).some(n => n >= 3)) },
+    { id: "words25", icon: "bookshelf", name: "جامع الكلمات",     how: "تعلّم 25 كلمة",                test: p => Object.keys(p.learned).length >= 25 },
+    { id: "words100",icon: "brain", name: "قاموس صغير",       how: "تعلّم 100 كلمة",               test: p => Object.keys(p.learned).length >= 100 },
+    { id: "unit",    icon: "flag-checkered", name: "وحدة كاملة",       how: "أكمل كل خطوات وحدة",           test: p => Object.keys(p.done).some(k => STEPS.every(s => p.done[k][s])) },
+    { id: "stars25", icon: "star", name: "25 نجمة",          how: "اجمع 25 نجمة",                 test: () => totalStars() >= 25 },
+    { id: "stars100",icon: "star-shooting", name: "100 نجمة",         how: "اجمع 100 نجمة",                test: () => totalStars() >= 100 },
+    { id: "review",  icon: "repeat", name: "المراجِع",         how: "أجب صح على 10 كلمات في المراجعة", test: p => p.stats.reviewed >= 10 },
+    { id: "days3",   icon: "calendar-check", name: "ثلاثة أيام",       how: "تعلّم في 3 أيام مختلفة",        test: p => Object.values(p.days).filter(d => d.w || d.a.length).length >= 3 },
+    { id: "week",    icon: "trophy", name: "هدف الأسبوع",      how: "حقق الهدف الأسبوعي مرة",        test: p => p.stats.weeksMet >= 1 }
   ];
   /* تُرجع الشارات الجديدة فقط */
   function checkBadges() {

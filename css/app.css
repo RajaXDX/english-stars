@@ -537,3 +537,27 @@ main, #banners{position:relative; z-index:1}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important; scroll-behavior:auto!important} }
 
 body.no-nav::before{bottom:0!important}
+
+/* ---------- الأيقونات (بدل الإيموجي) ---------- */
+.i{width:1em; height:1em; display:inline-block; vertical-align:-.16em; flex:none; overflow:visible}
+.pic{display:inline-grid; place-items:center; color:var(--c, var(--brand)); line-height:1}
+.pic .i{width:1em; height:1em; vertical-align:0}
+.wcard .pic{font-size:2.8rem}
+.qpic .pic{filter:drop-shadow(0 4px 0 color-mix(in srgb, var(--c, var(--brand)) 25%, transparent))}
+.opt .pic.opt-pic{font-size:2.6rem}
+.ic .i{width:28px; height:28px; color:var(--c, var(--brand))}
+.step .ic .i{width:26px; height:26px}
+.step.is-done .ic .i{color:#fff}
+.next > span .i{width:1.6rem; height:1.6rem; color:var(--c)}
+.bottomnav a span[aria-hidden] .i{width:1.55rem; height:1.55rem}
+.bottomnav a[aria-current="page"] span[aria-hidden] .i{color:var(--brand)}
+.choice2 button span .i{width:2.6rem; height:2.6rem}
+.badge .bi .i{width:2.4rem; height:2.4rem; color:var(--sun-d)}
+.badge.got .bi .i{color:var(--brand)}
+:is(.h2, .h3, h1, h2) > .i:first-child{color:var(--c, var(--brand)); margin-inline-end:4px}
+.hello h1 .wave{color:var(--sun-d); transform-origin:70% 80%; animation:wave 2.4s ease-in-out 1}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-8deg)}}
+.feedback .i{width:1.1em; height:1.1em}
+.ilabel{display:inline-flex; align-items:center; gap:6px}
+.toast .i, .banner .i{width:1.2em; height:1.2em; vertical-align:-.25em}
+.pill .i, .small .i{width:1.1em; height:1.1em}

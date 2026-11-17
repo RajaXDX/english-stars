@@ -15,7 +15,7 @@ GRADES.forEach(g => {
   g.units.forEach((u, i) => {
     u.c = (i % 5) + 1;
     u.key = g.id + "-" + u.id;
-    u.words = u.words.map(w => typeof w === "string" ? w.split("|") : w).map(w => [w[0], w[1], w[2] || ""]);
+    u.words = u.words.map(w => typeof w === "string" ? w.split("|") : w).map(w => [w[0], w[1], (w[2] && EMOJI_ICON[w[2]]) || ""]);
     u.quiz = u.quiz.map(q => typeof q === "string" ? q.split("|") : q);
     u.words.forEach(w => { WORD_INDEX[wordId(g, u, w)] = { g, u, w }; });
   });
@@ -27,13 +27,13 @@ const stageOf = g => STAGES.find(s => s.id === g.stage);
 const gradeShortNum = g => g.n <= 6 ? g.n : g.n <= 9 ? g.n - 6 : g.n - 9;
 
 const STEP_META = {
-  words:   { n: 1, t: "تعلّم الكلمات",       icon: "📖", d: "بطاقات الكلمات ومعانيها مع النطق" },
-  listen:  { n: 2, t: "استمع وراجع النطق",   icon: "🎧", d: "اسمع الكلمة واختر الصحيحة" },
-  grammar: { n: 3, t: "القاعدة",             icon: "✏️", d: "شرح القاعدة وأمثلة مسموعة" },
-  wquiz:   { n: 4, t: "تحدي الكلمات",        icon: "🎯", d: "صور ومعانٍ واستماع" },
-  spell:   { n: 4, t: "التهجئة",             icon: "🔤", d: "رتّب الحروف لتكتب الكلمة" },
-  gquiz:   { n: 4, t: "تحدي القواعد",        icon: "🧩", d: "اختر الكلمة المناسبة للفراغ" },
-  summary: { n: 5, t: "النتيجة والمراجعة",   icon: "🏁", d: "نجومك وما يحتاج مراجعة" }
+  words:   { n: 1, t: "تعلّم الكلمات",       icon: "cards-outline", d: "بطاقات الكلمات ومعانيها مع النطق" },
+  listen:  { n: 2, t: "استمع وراجع النطق",   icon: "headphones", d: "اسمع الكلمة واختر الصحيحة" },
+  grammar: { n: 3, t: "القاعدة",             icon: "pencil-ruler", d: "شرح القاعدة وأمثلة مسموعة" },
+  wquiz:   { n: 4, t: "تحدي الكلمات",        icon: "bullseye-arrow", d: "صور ومعانٍ واستماع" },
+  spell:   { n: 4, t: "التهجئة",             icon: "alphabetical-variant", d: "رتّب الحروف لتكتب الكلمة" },
+  gquiz:   { n: 4, t: "تحدي القواعد",        icon: "puzzle", d: "اختر الكلمة المناسبة للفراغ" },
+  summary: { n: 5, t: "النتيجة والمراجعة",   icon: "flag-checkered", d: "نجومك وما يحتاج مراجعة" }
 };
 
 /* ---------------- أدوات ---------------- */
@@ -52,11 +52,11 @@ const ICON = {
 };
 
 /* الألوان تُعرض كبطاقة لون واضحة بدل الإيموجي */
-const SWATCH = { "🔴": "#E53935", "🔵": "#1E66D0", "🟢": "#2E9E48", "🟡": "#F6C915", "🟠": "#F08A24", "🟣": "#8E44AD", "⚫": "#1B1B1B", "⚪": "#FFFFFF", "🟤": "#8B5A2B", "🩷": "#F48FB1" };
+/* صور الكلمات: أيقونة مرسومة، والألوان بطاقة لون (القيمة تبدأ بـ #) */
 function picHtml(w, cls = "") {
   if (!w[2]) return "";
-  if (SWATCH[w[2]]) return `<span class="swatch ${cls}" role="img" aria-label="${esc("بطاقة لون: " + w[1])}" style="--sw:${SWATCH[w[2]]}"></span>`;
-  return `<span class="pic ${cls}" role="img" aria-label="${esc("صورة: " + w[1])}">${w[2]}</span>`;
+  if (w[2][0] === "#") return `<span class="swatch ${cls}" role="img" aria-label="${esc("بطاقة لون: " + w[1])}" style="--sw:${w[2]}"></span>`;
+  return `<span class="pic ${cls}" role="img" aria-label="${esc("صورة: " + w[1])}">${icon(w[2])}</span>`;
 }
 
 let toastT;
@@ -132,7 +132,7 @@ function confetti() {
 }
 function celebrateBadges() {
   const fresh = Store.checkBadges();
-  if (fresh.length) { toast(`🏅 شارة جديدة: ${fresh.map(b => b.name).join("، ")}`, 3500); confetti(); }
+  if (fresh.length) { toast(`${icon("medal")} شارة جديدة: ${fresh.map(b => b.name).join("، ")}`, 3500); confetti(); }
   updateStars();
 }
 function updateStars() { $("#totalStars").textContent = Store.profile() ? Store.totalStars() : 0; }
@@ -193,6 +193,7 @@ function route() {
   } finally { celebrateBadges(); }
 }
 const alive = token => token === renderToken;
+document.querySelectorAll("[data-ic]").forEach(el => { el.innerHTML = icon(el.dataset.ic); });
 
 /* ============================================================
    واجهة لكل مرحلة: شعار وألوان وخط يناسب العمر
@@ -246,8 +247,8 @@ function renderWelcome(editing) {
           <button type="button" class="btn ghost sm" id="wChange">تغيير الصف</button></div>
         <fieldset><legend>أنا…</legend>
           <div class="choice2">
-            <button type="button" data-g="m" aria-pressed="false"><span aria-hidden="true">👦</span>طالب</button>
-            <button type="button" data-g="f" aria-pressed="false"><span aria-hidden="true">👧</span>طالبة</button>
+            <button type="button" data-g="m" aria-pressed="false"><span aria-hidden="true">${icon("human-male")}</span>طالب</button>
+            <button type="button" data-g="f" aria-pressed="false"><span aria-hidden="true">${icon("human-female")}</span>طالبة</button>
           </div>
         </fieldset>
         <label class="field" for="wName">الاسم <small>(اختياري، يظهر لك فقط)</small>
@@ -307,7 +308,7 @@ function renderHome() {
   const hello = p.name ? `أهلاً يا ${esc(p.name)}` : T("أهلاً يا بطل", "أهلاً يا بطلة");
   app.innerHTML = `<div class="stack">
     <header class="hello">
-      <div><h1>${hello} 👋</h1><p class="muted">${g.ar}${g.book ? ` · ${en(g.book)}` : ""}</p></div>
+      <div><h1>${hello} ${icon("hand-wave", "wave")}</h1><p class="muted">${g.ar}${g.book ? ` · ${en(g.book)}` : ""}</p></div>
       <a class="btn ghost sm" href="#learn/${g.id}">تغيير الصف</a>
     </header>
 
@@ -315,31 +316,31 @@ function renderHome() {
       <p class="eyebrow">${started ? T("أكمل من حيث توقفت", "أكملي من حيث توقفتِ") : T("ابدأ رحلتك", "ابدئي رحلتك")}</p>
       <h2 id="contTitle"><span class="unum">${esc(u.num)}</span> ${en(u.en)}</h2>
       <p class="muted">${u.ar}</p>
-      <div class="next"><span aria-hidden="true">${STEP_META[step].icon}</span><div><b>${step === "summary" ? "الوحدة مكتملة" : "الخطوة التالية"}:</b> ${STEP_META[step].t}</div></div>
+      <div class="next"><span aria-hidden="true">${icon(STEP_META[step].icon)}</span><div><b>${step === "summary" ? "الوحدة مكتملة" : "الخطوة التالية"}:</b> ${STEP_META[step].t}</div></div>
       <div class="bar" role="progressbar" aria-label="تقدم الوحدة" aria-valuemin="0" aria-valuemax="6" aria-valuenow="${stepsDone}"><i style="width:${stepsDone / 6 * 100}%"></i></div>
       <a class="btn primary block" href="#${stepRoute(g, u, step)}">${started ? T("أكمل", "أكملي") : T("ابدأ", "ابدئي")} ←</a>
     </section>
 
     <div class="grid2">
       <section class="card goal" aria-labelledby="goalT">
-        <h2 id="goalT" class="h3">🎯 هدف اليوم</h2>
+        <h2 id="goalT" class="h3">${icon("bullseye-arrow")} هدف اليوم</h2>
         <p>${T("تعلّم", "تعلّمي")} ${d.goalWords} كلمات أو ${T("أكمل", "أكملي")} نشاطاً واحداً</p>
         <div class="bar" role="progressbar" aria-label="كلمات اليوم" aria-valuemin="0" aria-valuemax="${d.goalWords}" aria-valuenow="${Math.min(d.words, d.goalWords)}"><i style="width:${Math.min(100, d.words / d.goalWords * 100)}%"></i></div>
-        <p class="small">${d.met ? "✅ " + T("أحسنت! حققت هدف اليوم", "أحسنتِ! حققتِ هدف اليوم") : `${d.words} من ${d.goalWords} كلمات · ${d.acts} ${d.acts === 1 ? "نشاط" : "أنشطة"}`}</p>
+        <p class="small">${d.met ? icon("check-circle") + " " + T("أحسنت! حققت هدف اليوم", "أحسنتِ! حققتِ هدف اليوم") : `${d.words} من ${d.goalWords} كلمات · ${d.acts} ${d.acts === 1 ? "نشاط" : "أنشطة"}`}</p>
       </section>
       <section class="card" aria-labelledby="progT">
-        <h2 id="progT" class="h3">⭐ تقدّمك في ${g.ar}</h2>
+        <h2 id="progT" class="h3">${icon("star")} تقدّمك في ${g.ar}</h2>
         <p class="big-num">${gp.stars}<small> / ${gp.max} نجمة</small></p>
         <p class="small muted">${gp.done} من ${gp.total} وحدات مكتملة</p>
       </section>
     </div>
 
-    ${due ? `<a class="card link review-card" href="#review"><span class="ic" aria-hidden="true">🔁</span><div><b>${due} ${due === 1 ? "كلمة" : "كلمات"} للمراجعة اليوم</b><p class="small muted">كلمات أخطأت فيها سابقاً. المراجعة تثبّتها.</p></div><span aria-hidden="true">←</span></a>` : ""}
+    ${due ? `<a class="card link review-card" href="#review"><span class="ic" aria-hidden="true">${icon("repeat")}</span><div><b>${due} ${due === 1 ? "كلمة" : "كلمات"} للمراجعة اليوم</b><p class="small muted">كلمات أخطأت فيها سابقاً. المراجعة تثبّتها.</p></div><span aria-hidden="true">←</span></a>` : ""}
 
     <section class="card" aria-labelledby="weekT">
-      <h2 id="weekT" class="h3">📅 هذا الأسبوع</h2>
+      <h2 id="weekT" class="h3">${icon("calendar-week")} هذا الأسبوع</h2>
       ${weekDots(w)}
-      <p class="small">${w.met ? "🏆 حققت هدف الأسبوع!" : `${w.acts} من ${w.goal} أنشطة نحو هدف الأسبوع`}</p>
+      <p class="small">${w.met ? icon("trophy") + " حققت هدف الأسبوع!" : `${w.acts} من ${w.goal} أنشطة نحو هدف الأسبوع`}</p>
     </section>
 
     <section aria-labelledby="unitsT">
@@ -380,7 +381,7 @@ function renderLearn(gid) {
     </section>
     ${parts.map(x => `${partName(x) ? `<h3 class="part">${partName(x)}</h3>` : ""}
       <ul class="units">${g.units.filter(u => (u.part || 0) === x).map(u => unitRow(g, u)).join("")}</ul>`).join("")}
-    <a class="card link" href="#big/${g.id}" style="--c:var(--brand)"><span class="ic" aria-hidden="true">🏆</span><div><b>التحدي الكبير</b><p class="small muted">كلمات من كل وحدات ${g.ar}</p></div>${starsHtml(Store.getStars(g.id + "-all", "wquiz"), 3)}</a>
+    <a class="card link" href="#big/${g.id}" style="--c:var(--brand)"><span class="ic" aria-hidden="true">${icon("trophy")}</span><div><b>التحدي الكبير</b><p class="small muted">كلمات من كل وحدات ${g.ar}</p></div>${starsHtml(Store.getStars(g.id + "-all", "wquiz"), 3)}</a>
   </div>`;
   app.querySelectorAll("[data-stage]").forEach(b => b.onclick = () => go("learn/" + GRADES.find(x => x.stage === b.dataset.stage).id));
   const sm = $("#setMine"); if (sm) sm.onclick = () => { Store.updateProfile({ grade: g.id }); toast(`صار صفّك: ${g.ar}`); renderLearn(g.id); };
@@ -406,7 +407,7 @@ function renderUnit(g, u) {
     const m = STEP_META[step], done = step === "summary" ? Store.unitComplete(u.key) : Store.isDone(u.key, step);
     const scored = Store.SCORED.includes(step);
     return `<li><a class="step ${done ? "is-done" : ""} ${step === next ? "is-next" : ""}" href="#${stepRoute(g, u, step)}">
-      <span class="ic" aria-hidden="true">${done ? ICON.check : m.icon}</span>
+      <span class="ic" aria-hidden="true">${done ? ICON.check : icon(m.icon)}</span>
       <span class="body"><b>${m.t}</b><span class="small muted">${m.d}</span></span>
       <span class="end">${scored ? starsHtml(Store.getStars(u.key, step), 3) : ""}${step === next ? `<span class="pill">${T("التالي", "التالي")}</span>` : done ? '<span class="sr">منجزة</span>' : ""}</span></a></li>`;
   };
@@ -462,7 +463,7 @@ function renderStep(g, u, step, token) {
 /* ---- الخطوة 1: الكلمات ---- */
 function stepWords(g, u, shell) {
   app.innerHTML = shell(`
-    <h1 class="h2">📖 تعلّم الكلمات</h1>
+    <h1 class="h2">${icon("cards-outline")} تعلّم الكلمات</h1>
     <p class="muted">${T("اضغط", "اضغطي")} على البطاقة ${T("لتسمع", "لتسمعي")} الكلمة، وزر السلحفاة للنطق البطيء.</p>
     <div class="toolbar"><button class="btn ghost sm" id="toggleAr" aria-pressed="false">إخفاء المعنى</button><button class="btn sm" id="playAll">${T("اسمع", "اسمعي")} الكل</button>
       <span class="small muted" id="heard" aria-live="polite"></span></div>
@@ -475,7 +476,7 @@ function stepWords(g, u, shell) {
   const mark = i => {
     heard.add(i); Store.learnWord(wordId(g, u, u.words[i]));
     $("#heard").textContent = `${T("سمعت", "سمعتِ")} ${heard.size} من ${u.words.length}`;
-    if (heard.size === u.words.length && Store.markDone(u.key, "words")) toast("✅ أنهيت خطوة الكلمات");
+    if (heard.size === u.words.length && Store.markDone(u.key, "words")) toast(icon("check-circle") + " أنهيت خطوة الكلمات");
   };
   cards.querySelectorAll(".wbtn").forEach(b => b.onclick = () => {
     cards.querySelectorAll(".playing").forEach(x => x.classList.remove("playing"));
@@ -503,7 +504,7 @@ function stepWords(g, u, shell) {
 
 /* ---- الخطوة 3: القاعدة ---- */
 function stepGrammar(g, u, shell) {
-  app.innerHTML = shell(`<h1 class="h2">✏️ القاعدة</h1>${u.grammar.map(gr => {
+  app.innerHTML = shell(`<h1 class="h2">${icon("pencil-ruler")} القاعدة</h1>${u.grammar.map(gr => {
     let table = "";
     if (gr.table) {
       const encols = gr.table.en || [];
@@ -524,10 +525,10 @@ function stepSummary(g, u, shell) {
   const weak = Store.allReviews(prefix).map(id => WORD_INDEX[id]).filter(Boolean);
   const total = Store.unitStars(u.key);
   const nextU = g.units[g.units.indexOf(u) + 1];
-  const rows = Store.SCORED.map(s => `<li><a href="#${stepRoute(g, u, s)}"><span>${STEP_META[s].icon} ${STEP_META[s].t}</span>${Store.isDone(u.key, s) ? starsHtml(Store.getStars(u.key, s), 3) : `<span class="small muted">لم ${T("تبدأه", "تبدئيه")} بعد</span>`}</a></li>`).join("");
-  app.innerHTML = shell(`<h1 class="h2">🏁 النتيجة والمراجعة</h1>
+  const rows = Store.SCORED.map(s => `<li><a href="#${stepRoute(g, u, s)}"><span class="ilabel">${icon(STEP_META[s].icon)} ${STEP_META[s].t}</span>${Store.isDone(u.key, s) ? starsHtml(Store.getStars(u.key, s), 3) : `<span class="small muted">لم ${T("تبدأه", "تبدئيه")} بعد</span>`}</a></li>`).join("");
+  app.innerHTML = shell(`<h1 class="h2">${icon("flag-checkered")} النتيجة والمراجعة</h1>
     <section class="card center"><p class="big-num">${total}<small> / 9 نجوم</small></p>${starsHtml(total, 9)}
-      <p>${Store.unitComplete(u.key) ? "🎉 " + T("أكملت كل خطوات الوحدة!", "أكملتِ كل خطوات الوحدة!") : `${T("أنجزت", "أنجزتِ")} ${Store.STEPS.filter(s => Store.isDone(u.key, s)).length} من 6 خطوات`}</p></section>
+      <p>${Store.unitComplete(u.key) ? icon("party-popper") + " " + T("أكملت كل خطوات الوحدة!", "أكملتِ كل خطوات الوحدة!") : `${T("أنجزت", "أنجزتِ")} ${Store.STEPS.filter(s => Store.isDone(u.key, s)).length} من 6 خطوات`}</p></section>
     <section class="card"><h2 class="h3">نتائج التحديات</h2><ul class="list">${rows}</ul></section>
     <section class="card"><h2 class="h3">كلمات تحتاج مراجعة</h2>
       ${weak.length ? `<ul class="weak">${weak.map(x => `<li>${sayButtons(x.w[0])}${en(x.w[0])}<span class="tr">${x.w[1]}</span></li>`).join("")}</ul>
@@ -604,8 +605,8 @@ function runQuiz(pane, token, cfg) {
       beep(ok);
       const fb = $("#fb");
       fb.className = "feedback " + (ok ? "ok" : "no");
-      fb.innerHTML = ok ? "✔ " + shuffle([T("أحسنت!", "أحسنتِ!"), "إجابة صحيحة!", "ممتاز!", "رائع!"])[0]
-                        : `✘ الإجابة الصحيحة: ${en(rightText)}`;
+      fb.innerHTML = ok ? icon("check-bold") + " " + shuffle([T("أحسنت!", "أحسنتِ!"), "إجابة صحيحة!", "ممتاز!", "رائع!"])[0]
+                        : `${icon("close-thick")} الإجابة الصحيحة: ${en(rightText)}`;
       const nb = $("#qNext"); nb.hidden = false; nb.focus({ preventScroll: true });
       nb.onclick = () => { i++; play(); };
     };
@@ -749,7 +750,7 @@ function renderBig(g, token) {
   app.innerHTML = `<div class="stack"><div id="pane"></div></div>`;
   const items = g.units.flatMap(u => u.words.map(w => ({ g, u, w })));
   runQuiz($("#pane"), token, {
-    title: `🏆 التحدي الكبير: ${g.ar}`, intro: `15 سؤالاً من كلمات كل الوحدات.`,
+    title: `التحدي الكبير: ${g.ar}`, intro: `15 سؤالاً من كلمات كل الوحدات.`,
     qs: makeWordQs(g, items, 15), kind: "word", step: "big", starKey: g.id + "-all", back: "challenges"
   });
 }
@@ -762,7 +763,7 @@ function renderReview(filter, token) {
   const items = ids.map(id => WORD_INDEX[id]).filter(Boolean);
   app.innerHTML = `<div class="stack"><div id="pane"></div></div>`;
   if (!items.length) {
-    $("#pane").innerHTML = `<section class="card center"><h1 class="h2">🔁 المراجعة</h1>
+    $("#pane").innerHTML = `<section class="card center"><h1 class="h2">${icon("repeat")} المراجعة</h1>
       <p>${Store.allReviews().length ? "لا توجد كلمات مستحقة للمراجعة اليوم. عُد غداً!" : "لا توجد كلمات للمراجعة بعد. الكلمات التي تخطئ فيها في التحديات تظهر هنا."}</p>
       <a class="btn primary" href="#home">الرئيسية</a></section>`;
     return focusMain();
@@ -775,7 +776,7 @@ function renderReview(filter, token) {
     return { type, it, id: wordId(it.g, it.u, it.w), opts: shuffle([it, ...shuffle(cands).slice(0, 3)]), picListen: false };
   });
   runQuiz($("#pane"), token, {
-    title: "🔁 مراجعة الكلمات", intro: `كلمات أخطأت فيها سابقاً. كل إجابة صحيحة تؤجّل الكلمة لموعد مراجعة لاحق، وبعد عدة مرات صحيحة تخرج من القائمة.`,
+    title: "مراجعة الكلمات", intro: `كلمات أخطأت فيها سابقاً. كل إجابة صحيحة تؤجّل الكلمة لموعد مراجعة لاحق، وبعد عدة مرات صحيحة تخرج من القائمة.`,
     qs, kind: "word", review: true, back: filter ? `u/${filter.replace("|", "/")}/summary` : "challenges"
   });
 }
@@ -791,10 +792,10 @@ function renderChallenges() {
   g.units.forEach(u => Store.SCORED.forEach(s => { if (Store.getStars(u.key, s) < 3) pending.push({ u, s }); }));
   app.innerHTML = `<div class="stack">
     <h1 class="h2">التحديات</h1>
-    <a class="card link review-card" href="#review"><span class="ic" aria-hidden="true">🔁</span><div><b>مراجعة الكلمات</b><p class="small muted">${due ? `${due} ${due === 1 ? "كلمة مستحقة" : "كلمات مستحقة"} اليوم` : allR ? "لا شيء مستحق اليوم" : "تظهر هنا الكلمات التي تخطئ فيها"}</p></div><span aria-hidden="true">←</span></a>
-    <a class="card link" href="#big/${g.id}"><span class="ic" aria-hidden="true">🏆</span><div><b>التحدي الكبير: ${g.ar}</b><p class="small muted">15 سؤالاً من كل الوحدات</p></div>${starsHtml(Store.getStars(g.id + "-all", "wquiz"), 3)}</a>
+    <a class="card link review-card" href="#review"><span class="ic" aria-hidden="true">${icon("repeat")}</span><div><b>مراجعة الكلمات</b><p class="small muted">${due ? `${due} ${due === 1 ? "كلمة مستحقة" : "كلمات مستحقة"} اليوم` : allR ? "لا شيء مستحق اليوم" : "تظهر هنا الكلمات التي تخطئ فيها"}</p></div><span aria-hidden="true">←</span></a>
+    <a class="card link" href="#big/${g.id}"><span class="ic" aria-hidden="true">${icon("trophy")}</span><div><b>التحدي الكبير: ${g.ar}</b><p class="small muted">15 سؤالاً من كل الوحدات</p></div>${starsHtml(Store.getStars(g.id + "-all", "wquiz"), 3)}</a>
     <section><h2 class="h3">تحديات ${T("تنتظرك", "تنتظرك")} في ${g.ar}</h2>
-      <ul class="list cards-list">${pending.slice(0, 8).map(({ u, s }) => `<li><a class="card link" href="#${stepRoute(g, u, s)}" style="--c:var(--c${u.c});--t:var(--t${u.c})"><span class="unum">${esc(u.num)}</span><div><b>${STEP_META[s].t}</b><p class="small muted">${en(u.en)}</p></div>${starsHtml(Store.getStars(u.key, s), 3)}</a></li>`).join("") || `<li class="muted">🎉 ${T("حصلت", "حصلتِ")} على كل النجوم في ${g.ar}!</li>`}</ul></section>
+      <ul class="list cards-list">${pending.slice(0, 8).map(({ u, s }) => `<li><a class="card link" href="#${stepRoute(g, u, s)}" style="--c:var(--c${u.c});--t:var(--t${u.c})"><span class="unum">${esc(u.num)}</span><div><b>${STEP_META[s].t}</b><p class="small muted">${en(u.en)}</p></div>${starsHtml(Store.getStars(u.key, s), 3)}</a></li>`).join("") || `<li class="muted">${icon("party-popper")} ${T("حصلت", "حصلتِ")} على كل النجوم في ${g.ar}!</li>`}</ul></section>
   </div>`;
   focusMain();
 }
@@ -816,13 +817,13 @@ function renderAwards() {
       <div class="card stat"><b>${units}</b><span>وحدة مكتملة</span></div>
       <div class="card stat"><b>${acc}%</b><span>دقة الإجابات</span></div>
     </div>
-    <section class="card"><h2 class="h3">🏆 هدف الأسبوع</h2>
+    <section class="card"><h2 class="h3">${icon("trophy")} هدف الأسبوع</h2>
       <p>${T("أكمل", "أكملي")} ${w.goal} أنشطة هذا الأسبوع. يبدأ الهدف من جديد كل أحد.</p>
       <div class="bar" role="progressbar" aria-label="تقدم هدف الأسبوع" aria-valuemin="0" aria-valuemax="${w.goal}" aria-valuenow="${Math.min(w.acts, w.goal)}"><i style="width:${Math.min(100, w.acts / w.goal * 100)}%"></i></div>
-      <p class="small">${w.met ? "🎉 تحقق الهدف!" : `${w.acts} من ${w.goal}`} · ${w.stars} نجمة هذا الأسبوع</p>
+      <p class="small">${w.met ? icon("party-popper") + " تحقق الهدف!" : `${w.acts} من ${w.goal}`} · ${w.stars} نجمة هذا الأسبوع</p>
       ${weekDots(w)}</section>
     <section><h2 class="h3">الشارات</h2>
-      <ul class="badges">${Store.BADGES.map(b => { const got = p.badges[b.id]; return `<li class="badge ${got ? "got" : ""}"><span class="bi" aria-hidden="true">${b.icon}</span><b>${b.name}</b><span class="small">${got ? "✔ حصلت عليها" : b.how}</span></li>`; }).join("")}</ul></section>
+      <ul class="badges">${Store.BADGES.map(b => { const got = p.badges[b.id]; return `<li class="badge ${got ? "got" : ""}"><span class="bi" aria-hidden="true">${icon(b.icon)}</span><b>${b.name}</b><span class="small">${got ? icon("check-bold") + " حصلت عليها" : b.how}</span></li>`; }).join("")}</ul></section>
   </div>`;
   focusMain();
 }
@@ -845,21 +846,21 @@ function renderProfile() {
       <label class="field" for="pGrade">صفّي<select id="pGrade">${STAGES.map(s => `<optgroup label="${s.long}">${GRADES.filter(g => g.stage === s.id).map(g => `<option value="${g.id}" ${g.id === p.grade ? "selected" : ""}>${g.ar}</option>`).join("")}</optgroup>`).join("")}</select></label>
       <button class="btn primary" type="submit">حفظ</button>
     </form>
-    <section class="card"><h2 class="h3">🔊 الصوت</h2>
+    <section class="card"><h2 class="h3">${icon("volume-high")} الصوت</h2>
       <div class="seg" role="group" aria-label="سرعة النطق"><button data-rate="0.85" aria-pressed="${Store.rate >= 0.8}">سرعة عادية</button><button data-rate="0.65" aria-pressed="${Store.rate < 0.8}">أبطأ</button></div>
       <p class="small muted">${Speech.recorded ? "النطق بصوت بشري مسجّل: رجالي للطلاب ونسائي للطالبات. كل مقطع يُحفظ بعد أول استماع ويعمل بعدها دون اتصال." : Speech.supported ? "يُستخدم صوت جهازك للنطق، ويعمل غالباً دون اتصال." : "الصوت غير متاح في هذا المتصفح. جرّب Chrome أو Safari."}</p>
       <button class="btn ghost sm" data-say="Hello! Welcome to English Stars.">جرّب الصوت</button></section>
-    <section class="card"><h2 class="h3">👨‍👩‍👧 طلاب هذا الجهاز</h2>
-      <ul class="list">${Store.profiles().map(x => `<li class="row-between"><span>${x.gender === "f" ? "👧" : "👦"} ${esc(x.name || (x.gender === "f" ? "طالبة" : "طالب"))} · <span class="small muted">${(gradeById(x.grade) || {}).ar || ""} · ★ ${countStars(x)}</span></span>
+    <section class="card"><h2 class="h3">${icon("account-group")} طلاب هذا الجهاز</h2>
+      <ul class="list">${Store.profiles().map(x => `<li class="row-between"><span>${icon(x.gender === "f" ? "human-female" : "human-male")} ${esc(x.name || (x.gender === "f" ? "طالبة" : "طالب"))} · <span class="small muted">${(gradeById(x.grade) || {}).ar || ""} · ★ ${countStars(x)}</span></span>
         ${x.id === p.id ? `<span class="pill">الحالي</span>` : `<button class="btn ghost sm" data-switch="${x.id}">تبديل</button>`}</li>`).join("")}</ul>
       <a class="btn ghost block" href="#welcome" id="addStudent">+ إضافة طالب آخر</a></section>
-    <a class="card link" href="#report"><span class="ic" aria-hidden="true">📋</span><div><b>تقرير ولي الأمر والمعلم</b><p class="small muted">الوحدات المكتملة والكلمات التي تحتاج مراجعة</p></div><span aria-hidden="true">←</span></a>
-    <section class="card"><h2 class="h3">📲 تثبيت التطبيق</h2>
-      ${standalone ? `<p>التطبيق مثبّت على جهازك ✔</p>`
+    <a class="card link" href="#report"><span class="ic" aria-hidden="true">${icon("clipboard-text")}</span><div><b>تقرير ولي الأمر والمعلم</b><p class="small muted">الوحدات المكتملة والكلمات التي تحتاج مراجعة</p></div><span aria-hidden="true">←</span></a>
+    <section class="card"><h2 class="h3">${icon("cellphone-arrow-down")} تثبيت التطبيق</h2>
+      ${standalone ? `<p>التطبيق مثبّت على جهازك ${icon("check-bold")}</p>`
         : installPrompt ? `<p class="small">${T("ثبّت", "ثبّتي")} نجوم الإنجليزي على الشاشة الرئيسية ${T("ليفتح", "ليفتح")} كتطبيق ويعمل دون اتصال.</p><button class="btn primary" id="install">تثبيت التطبيق</button>`
         : isIOS ? `<p class="small">في Safari: ${T("اضغط", "اضغطي")} زر المشاركة ثم «إضافة إلى الشاشة الرئيسية».</p>`
         : `<p class="small">من قائمة المتصفح ${T("اختر", "اختاري")} «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».</p>`}</section>
-    <section class="card note-card"><h2 class="h3">🔒 أين يُحفظ تقدمك؟</h2>
+    <section class="card note-card"><h2 class="h3">${icon("lock")} أين يُحفظ تقدمك؟</h2>
       <p class="small">على هذا الجهاز فقط، داخل المتصفح. لا يوجد حساب ولا تُرسل أي بيانات. إذا ${T("مسحت", "مسحتِ")} بيانات المتصفح أو ${T("استخدمت", "استخدمتِ")} التصفح الخاص قد يضيع التقدم. المزامنة بين الأجهزة غير متاحة حالياً.</p>
       <div id="delZone"><button class="btn danger sm" id="del">حذف بيانات هذا الطالب</button></div></section>
   </div>`;
@@ -892,7 +893,7 @@ function renderReport() {
   const last = p.last ? new Date(p.last.at) : null;
   const lastDays = Object.keys(p.days).filter(k => p.days[k].w || p.days[k].a.length).sort().slice(-14);
   app.innerHTML = `<div class="stack">
-    <h1 class="h2">📋 تقرير ${esc(p.name || (p.gender === "f" ? "الطالبة" : "الطالب"))}</h1>
+    <h1 class="h2">${icon("clipboard-text")} تقرير ${esc(p.name || (p.gender === "f" ? "الطالبة" : "الطالب"))}</h1>
     <p class="small muted">آخر نشاط: ${last ? last.toLocaleDateString("ar-SA-u-nu-latn", { weekday: "long", day: "numeric", month: "long" }) : "لا يوجد"} · أيام التعلّم (آخر أسبوعين): ${lastDays.length}</p>
     ${touched.map(g => {
       const gp = gradeProgress(g);
@@ -904,7 +905,7 @@ function renderReport() {
     }).join("")}
     <section class="card"><h2 class="h3">كلمات تحتاج مراجعة (${reviewItems.length})</h2>
       ${reviewItems.length ? `<ul class="weak">${reviewItems.slice(0, 40).map(o => `<li>${en(o.x.w[0])}<span class="tr">${o.x.w[1]}</span><span class="small muted">${o.x.g.ar} · وحدة ${esc(o.x.u.num)} · أخطاء: ${o.r.misses}</span></li>`).join("")}</ul>` : `<p class="muted">لا توجد.</p>`}</section>
-    <section class="card note-card"><h2 class="h3">ℹ️ عن هذا التقرير</h2>
+    <section class="card note-card"><h2 class="h3">${icon("information")} عن هذا التقرير</h2>
       <p class="small">يعرض التقرير بيانات هذا الجهاز فقط. متابعة المعلم عن بُعد، وتقارير الفصل، ومزامنة التقدم بين الأجهزة تحتاج خادماً وحسابات، وهي غير متوفرة حالياً.</p></section>
   </div>`;
   focusMain();
@@ -914,20 +915,20 @@ function renderReport() {
    الشبكة، التخزين، والتحديثات
    ============================================================ */
 function netStatus() {
-  banner("offline", navigator.onLine ? "" : "📴 أنت غير متصل بالإنترنت. الوحدات المحفوظة على جهازك تعمل كالمعتاد.", "warn");
+  banner("offline", navigator.onLine ? "" : icon("wifi-off") + " أنت غير متصل بالإنترنت. الوحدات المحفوظة على جهازك تعمل كالمعتاد.", "warn");
 }
 window.addEventListener("online", netStatus);
 window.addEventListener("offline", netStatus);
 Store.on(type => {
-  if (type === "storage-failed") banner("storage", "⚠️ تعذّر حفظ التقدم على هذا الجهاز (قد يكون التصفح الخاص مفعّلاً أو المساحة ممتلئة). يمكنك المتابعة، لكن النجوم قد لا تبقى بعد إغلاق الصفحة.", "warn");
+  if (type === "storage-failed") banner("storage", icon("alert") + " تعذّر حفظ التقدم على هذا الجهاز (قد يكون التصفح الخاص مفعّلاً أو المساحة ممتلئة). يمكنك المتابعة، لكن النجوم قد لا تبقى بعد إغلاق الصفحة.", "warn");
   if (type === "storage-ok") banner("storage", "");
 });
-if (!Store.healthy) banner("storage", "⚠️ لا يمكن الحفظ على هذا الجهاز (قد يكون التصفح الخاص مفعّلاً). التقدم لن يبقى بعد إغلاق الصفحة.", "warn");
+if (!Store.healthy) banner("storage", icon("alert") + " لا يمكن الحفظ على هذا الجهاز (قد يكون التصفح الخاص مفعّلاً). التقدم لن يبقى بعد إغلاق الصفحة.", "warn");
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   navigator.serviceWorker.register("sw.js").then(reg => {
     const offer = w => {
-      const b = banner("update", `✨ يوجد تحديث جديد للتطبيق. <button class="btn sm" id="doUpdate">تحديث الآن</button>`);
+      const b = banner("update", `${icon("update")} يوجد تحديث جديد للتطبيق. <button class="btn sm" id="doUpdate">تحديث الآن</button>`);
       b.querySelector("#doUpdate").onclick = () => w.postMessage("skipWaiting");
     };
     if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
