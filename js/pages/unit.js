@@ -14,7 +14,7 @@ function renderUnit(g, u) {
       <span class="end">${scored ? starsHtml(Store.getStars(u.key, step), 3) : ""}${step === next ? `<span class="pill">${T("التالي", "التالي")}</span>` : done ? '<span class="sr">منجزة</span>' : ""}</span></a></li>`;
   };
   app.innerHTML = `<div class="stack" style="--c:var(--c${u.c});--t:var(--t${u.c})">
-    <header class="uhead"><span class="unum lg">${esc(u.num)}</span><div><h1>${en(u.en)}</h1><p>${u.ar}</p><p class="small muted">${u.words.length} كلمة · ${starsHtml(Store.unitStars(u.key), 9)}</p></div></header>
+    <header class="uhead"><span class="unum lg">${esc(u.num)}</span><div><h1>${en(u.en)}</h1><p>${u.ar}</p><p class="small muted">${u.words.length} كلمة${lessonsOf(u).length > 1 ? ` في ${lessonsOf(u).length} دروس` : ""} · ${starsHtml(Store.unitStars(u.key), 9)}</p></div></header>
     <ol class="steps">
       <li class="grp"><span class="n">1</span><ul>${item("words")}</ul></li>
       <li class="grp"><span class="n">2</span><ul>${item("listen")}</ul></li>
@@ -62,46 +62,79 @@ function renderStep(g, u, step, token) {
   });
 }
 
-/* ---- الخطوة 1: الكلمات ---- */
+/* ---- الخطوة 1: الكلمات ----
+   الوحدات الطويلة تُقسَّم إلى دروس صغيرة (حوالي 12 كلمة) يظهر واحد منها في كل مرة. */
+const LESSON_SIZE = 12;
+function lessonsOf(u) {
+  const n = u.words.length;
+  if (n <= LESSON_SIZE + 4) return [[0, n]];
+  const count = Math.ceil(n / LESSON_SIZE), size = Math.ceil(n / count);   // دروس متقاربة الحجم
+  return Array.from({ length: count }, (_, k) => [k * size, Math.min(n, (k + 1) * size)]).filter(([a, b]) => b > a);
+}
+const lessonMemo = {};      // آخر درس فُتح في كل وحدة (لهذه الجلسة)
 function stepWords(g, u, shell) {
-  app.innerHTML = shell(`
-    <h1 class="h2">${icon("cards-outline")} تعلّم الكلمات</h1>
-    <p class="muted">${T("اضغط", "اضغطي")} على البطاقة ${T("لتسمع", "لتسمعي")} الكلمة، وزر السلحفاة للنطق البطيء.</p>
-    <div class="toolbar"><button class="btn ghost sm" id="toggleAr" aria-pressed="false">إخفاء المعنى</button><button class="btn sm" id="playAll">${T("اسمع", "اسمعي")} الكل</button>
-      <span class="small muted" id="heard" aria-live="polite"></span></div>
-    <ul class="cards" id="cards">${u.words.map((w, i) => `<li class="card wcard ${w[2] ? "" : "noe"}">
-      <button class="wbtn" data-i="${i}" aria-label="${esc(w[0])}، ${esc(w[1])}. اضغط للاستماع">${picHtml(w)}<span class="en w" lang="en" dir="ltr">${esc(w[0])}</span><span class="m">${w[1]}</span></button>
-      <button class="say slow mini" data-say="${esc(w[0])}" data-slow="1" aria-label="نطق بطيء: ${esc(w[0])}">${ICON.slow}</button></li>`).join("")}</ul>
-    ${!Speech.supported ? `<p class="note">الصوت غير متاح في هذا المتصفح، لكن ${T("تقدر", "تقدرين")} ${T("تتعلم", "تتعلمين")} الكلمات ومعانيها.</p>` : ""}
-    <div class="actions"><a class="btn ghost" href="#u/${g.id}/${u.id}">العودة للوحدة</a><button class="btn primary" id="doneWords">${T("أنهيت الكلمات", "أنهيتُ الكلمات")} ← التالي</button></div>`);
-  const heard = new Set(), cards = $("#cards");
-  const mark = i => {
-    heard.add(i); Store.learnWord(wordId(g, u, u.words[i]));
-    $("#heard").textContent = `${T("سمعت", "سمعتِ")} ${heard.size} من ${u.words.length}`;
-    if (heard.size === u.words.length && Store.markDone(u.key, "words")) toast(icon("check-circle") + " أنهيت خطوة الكلمات");
-  };
-  cards.querySelectorAll(".wbtn").forEach(b => b.onclick = () => {
-    cards.querySelectorAll(".playing").forEach(x => x.classList.remove("playing"));
-    b.parentElement.classList.add("playing"); Speech.say(u.words[b.dataset.i][0]); mark(+b.dataset.i);
-  });
-  wireSay(cards);
-  $("#toggleAr").onclick = e => { const h = cards.classList.toggle("hide-ar"); e.currentTarget.textContent = h ? "إظهار المعنى" : "إخفاء المعنى"; e.currentTarget.setAttribute("aria-pressed", h); };
-  let timer = null;
-  const label = T("اسمع", "اسمعي") + " الكل";
-  $("#playAll").onclick = e => {
-    const btn = e.currentTarget;
-    if (timer) { clearTimeout(timer); timer = null; Speech.stop(); btn.textContent = label; return; }
-    btn.textContent = "إيقاف"; let i = 0;
-    const step = () => {
-      const els = cards.querySelectorAll(".wcard"); els.forEach(x => x.classList.remove("playing"));
-      if (i >= u.words.length || !document.body.contains(cards)) { timer = null; btn.textContent = label; return; }
-      els[i].classList.add("playing"); els[i].scrollIntoView({ block: "nearest", behavior: "smooth" });
-      Speech.say(u.words[i][0]); mark(i); i++; timer = setTimeout(step, 1800);
+  const lessons = lessonsOf(u), multi = lessons.length > 1;
+  const learned = i => { const p = Store.profile(); return !!(p && p.learned && p.learned[wordId(g, u, u.words[i])]); };
+  const heard = new Set();
+  let cur = Math.min(lessonMemo[u.key] || 0, lessons.length - 1);
+  let timer = null, hideAr = false;
+  const label = T("اسمع", "اسمعي") + (multi ? " الدرس" : " الكل");
+  function stopAll() { if (timer) { clearTimeout(timer); timer = null; } Speech.stop(); }
+
+  function draw() {
+    lessonMemo[u.key] = cur;
+    const [a, b] = lessons[cur], last = cur === lessons.length - 1;
+    const lessonDone = ([x, y]) => { for (let i = x; i < y; i++) if (!heard.has(i) && !learned(i)) return false; return true; };
+    app.innerHTML = shell(`
+      <h1 class="h2">${icon("cards-outline")} تعلّم الكلمات</h1>
+      <p class="muted">${T("اضغط", "اضغطي")} على البطاقة ${T("لتسمع", "لتسمعي")} الكلمة، وزر السلحفاة للنطق البطيء.${multi ? ` كلمات هذه الوحدة مقسّمة على ${lessons.length} دروس.` : ""}</p>
+      ${multi ? `<nav class="lessons" aria-label="دروس الوحدة"><ol>${lessons.map((L, k) =>
+        `<li><button type="button" data-l="${k}" aria-current="${k === cur ? "step" : "false"}" class="${lessonDone(L) ? "done" : ""}"><b>الدرس ${k + 1}</b><small>${L[1] - L[0]} كلمة${lessonDone(L) ? " ✓" : ""}</small></button></li>`).join("")}</ol></nav>` : ""}
+      <div class="toolbar"><button class="btn ghost sm" id="toggleAr" aria-pressed="${hideAr}">${hideAr ? "إظهار المعنى" : "إخفاء المعنى"}</button><button class="btn sm" id="playAll">${label}</button>
+        <span class="small muted" id="heard" aria-live="polite"></span></div>
+      <ul class="cards ${hideAr ? "hide-ar" : ""}" id="cards">${u.words.slice(a, b).map((w, j) => `<li class="card wcard ${w[2] ? "" : "noe"}">
+        <button class="wbtn" data-i="${a + j}" aria-label="${esc(w[0])}، ${esc(w[1])}. اضغط للاستماع">${picHtml(w)}<span class="en w" lang="en" dir="ltr">${esc(w[0])}</span><span class="m">${w[1]}</span></button>
+        <button class="say slow mini" data-say="${esc(w[0])}" data-slow="1" aria-label="نطق بطيء: ${esc(w[0])}">${ICON.slow}</button></li>`).join("")}</ul>
+      ${!Speech.supported ? `<p class="note">الصوت غير متاح في هذا المتصفح، لكن ${T("تقدر", "تقدرين")} ${T("تتعلم", "تتعلمين")} الكلمات ومعانيها.</p>` : ""}
+      <div class="actions">
+        ${cur > 0 ? `<button class="btn ghost" id="prevL">→ الدرس ${cur}</button>` : `<a class="btn ghost" href="#u/${g.id}/${u.id}">العودة للوحدة</a>`}
+        ${last ? `<button class="btn primary" id="doneWords">${T("أنهيت الكلمات", "أنهيتُ الكلمات")} ← التالي</button>`
+               : `<button class="btn primary" id="nextL">الدرس ${cur + 2} ←</button>`}
+      </div>`);
+    const cards = $("#cards");
+    const paintHeard = () => { $("#heard").textContent = `${T("سمعت", "سمعتِ")} ${heard.size} من ${u.words.length}`; };
+    const mark = i => {
+      heard.add(i); Store.learnWord(wordId(g, u, u.words[i])); paintHeard();
+      if (heard.size === u.words.length && Store.markDone(u.key, "words")) toast(icon("check-circle") + " أنهيت خطوة الكلمات");
     };
-    step();
-  };
-  $("#doneWords").onclick = () => { Store.markDone(u.key, "words"); celebrateBadges(); go(stepRoute(g, u, "listen")); };
-  focusMain();
+    if (heard.size) paintHeard();
+    cards.querySelectorAll(".wbtn").forEach(btn => btn.onclick = () => {
+      cards.querySelectorAll(".playing").forEach(x => x.classList.remove("playing"));
+      btn.parentElement.classList.add("playing"); Speech.say(u.words[btn.dataset.i][0]); mark(+btn.dataset.i);
+    });
+    wireSay(cards);
+    $("#toggleAr").onclick = e => { hideAr = cards.classList.toggle("hide-ar"); e.currentTarget.textContent = hideAr ? "إظهار المعنى" : "إخفاء المعنى"; e.currentTarget.setAttribute("aria-pressed", hideAr); };
+    $("#playAll").onclick = e => {
+      const btn = e.currentTarget;
+      if (timer) { stopAll(); btn.textContent = label; return; }
+      btn.textContent = "إيقاف"; let i = a;
+      const step = () => {
+        const els = cards.querySelectorAll(".wcard"); els.forEach(x => x.classList.remove("playing"));
+        if (i >= b || !document.body.contains(cards)) { timer = null; btn.textContent = label; return; }
+        const el = els[i - a]; el.classList.add("playing"); el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        Speech.say(u.words[i][0]); mark(i); i++; timer = setTimeout(step, 1800);
+      };
+      step();
+    };
+    const goLesson = k => { stopAll(); cur = k; draw(); };
+    app.querySelectorAll("[data-l]").forEach(x => x.onclick = () => goLesson(+x.dataset.l));
+    const pv = $("#prevL"); if (pv) pv.onclick = () => goLesson(cur - 1);
+    const nx = $("#nextL"); if (nx) nx.onclick = () => goLesson(cur + 1);
+    const dn = $("#doneWords");
+    if (dn) dn.onclick = () => { Store.markDone(u.key, "words"); celebrateBadges(); go(stepRoute(g, u, "listen")); };
+    focusMain();
+  }
+  draw();
 }
 
 /* ---- الخطوة 3: القاعدة ---- */
