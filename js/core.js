@@ -38,6 +38,8 @@ const STEP_META = {
 const $ = s => document.querySelector(s);
 const app = $("#app");
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+/* عدد الكلمات بصيغة عربية صحيحة: كلمة، كلمتان، 3–10 كلمات، 11+ كلمة */
+const nWords = n => n === 1 ? "كلمة واحدة" : n === 2 ? "كلمتان" : (n % 100 >= 3 && n % 100 <= 10) ? `${n} كلمات` : `${n} كلمة`;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const en = (t, cls = "") => `<span class="en ${cls}" lang="en" dir="ltr">${esc(t)}</span>`;
 const T = (m, f) => (Store.profile() && Store.profile().gender === "f") ? f : m;

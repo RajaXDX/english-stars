@@ -7,6 +7,9 @@
      مع إظهار المعنى/الإجابة، والتنقل بالأسهم ولوحة المفاتيح.
    المسارات: #  ·  #g/<grade>  ·  #u/<grade>/<unit>  ·  #show/<grade>/<unit>/<all|words|grammar|quiz>
    ============================================================ */
+/* عدد الكلمات بصيغة عربية صحيحة: كلمة، كلمتان، 3–10 كلمات، 11+ كلمة */
+const nWords = n => n === 1 ? "كلمة واحدة" : n === 2 ? "كلمتان" : (n % 100 >= 3 && n % 100 <= 10) ? `${n} كلمات` : `${n} كلمة`;
+
 (() => {
   const STAGES = [
     { id: "p", ar: "المرحلة الابتدائية", short: "الابتدائي" },
@@ -119,7 +122,7 @@
       ${parts.map(x => `${partName(x) ? `<h2 class="part">${partName(x)}</h2>` : ""}
         <ul class="t-units">${g.units.filter(u => (u.part || 0) === x).map(u => `<li class="t-urow" style="--c:var(--c${u.c});--t:var(--t${u.c})">
           <span class="unum">${esc(u.num)}</span>
-          <div class="body"><span class="en t" lang="en" dir="ltr">${esc(u.en)}</span><span class="small">${u.ar}</span><span class="small muted">${u.words.length} كلمة · ${u.quiz.length} أسئلة قواعد</span></div>
+          <div class="body"><span class="en t" lang="en" dir="ltr">${esc(u.en)}</span><span class="small">${u.ar}</span><span class="small muted">${nWords(u.words.length)} · ${u.quiz.length} أسئلة قواعد</span></div>
           <div class="acts"><a class="btn sm" href="#show/${g.id}/${u.id}/all">${icon("presentation")} عرض</a><a class="btn ghost sm" href="#u/${g.id}/${u.id}">${icon("book-education")} الدليل</a></div>
         </li>`).join("")}</ul>`).join("")}
     </div>`;
@@ -178,7 +181,7 @@
     const S = [];
     S.push({ type: "title", g, u, mode });
     if (mode === "all" || mode === "words") {
-      S.push({ type: "section", t: "الكلمات", sub: `${u.words.length} كلمة`, ic: "cards-outline" });
+      S.push({ type: "section", t: "الكلمات", sub: nWords(u.words.length), ic: "cards-outline" });
       u.words.forEach((w, i) => S.push({ type: "word", w, i, n: u.words.length }));
     }
     if (mode === "all" || mode === "grammar") {

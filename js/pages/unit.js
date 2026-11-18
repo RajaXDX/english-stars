@@ -14,7 +14,7 @@ function renderUnit(g, u) {
       <span class="end">${scored ? starsHtml(Store.getStars(u.key, step), 3) : ""}${step === next ? `<span class="pill">${T("التالي", "التالي")}</span>` : done ? '<span class="sr">منجزة</span>' : ""}</span></a></li>`;
   };
   app.innerHTML = `<div class="stack" style="--c:var(--c${u.c});--t:var(--t${u.c})">
-    <header class="uhead"><span class="unum lg">${esc(u.num)}</span><div><h1>${en(u.en)}</h1><p>${u.ar}</p><p class="small muted">${u.words.length} كلمة${lessonsOf(u).length > 1 ? ` في ${lessonsOf(u).length} دروس` : ""} · ${starsHtml(Store.unitStars(u.key), 9)}</p></div></header>
+    <header class="uhead"><span class="unum lg">${esc(u.num)}</span><div><h1>${en(u.en)}</h1><p>${u.ar}</p><p class="small muted">${nWords(u.words.length)}${lessonsOf(u).length > 1 ? ` في ${lessonsOf(u).length} دروس` : ""} · ${starsHtml(Store.unitStars(u.key), 9)}</p></div></header>
     <ol class="steps">
       <li class="grp"><span class="n">1</span><ul>${item("words")}</ul></li>
       <li class="grp"><span class="n">2</span><ul>${item("listen")}</ul></li>
@@ -89,7 +89,7 @@ function stepWords(g, u, shell) {
       <h1 class="h2">${icon("cards-outline")} تعلّم الكلمات</h1>
       <p class="muted">${T("اضغط", "اضغطي")} على البطاقة ${T("لتسمع", "لتسمعي")} الكلمة، وزر السلحفاة للنطق البطيء.${multi ? ` كلمات هذه الوحدة مقسّمة على ${lessons.length} دروس.` : ""}</p>
       ${multi ? `<nav class="lessons" aria-label="دروس الوحدة"><ol>${lessons.map((L, k) =>
-        `<li><button type="button" data-l="${k}" aria-current="${k === cur ? "step" : "false"}" class="${lessonDone(L) ? "done" : ""}"><b>الدرس ${k + 1}</b><small>${L[1] - L[0]} كلمة${lessonDone(L) ? " ✓" : ""}</small></button></li>`).join("")}</ol></nav>` : ""}
+        `<li><button type="button" data-l="${k}" aria-current="${k === cur ? "step" : "false"}" class="${lessonDone(L) ? "done" : ""}"><b>الدرس ${k + 1}</b><small>${nWords(L[1] - L[0])}${lessonDone(L) ? " ✓" : ""}</small></button></li>`).join("")}</ol></nav>` : ""}
       <div class="toolbar"><button class="btn ghost sm" id="toggleAr" aria-pressed="${hideAr}">${hideAr ? "إظهار المعنى" : "إخفاء المعنى"}</button><button class="btn sm" id="playAll">${label}</button>
         <span class="small muted" id="heard" aria-live="polite"></span></div>
       <ul class="cards ${hideAr ? "hide-ar" : ""}" id="cards">${u.words.slice(a, b).map((w, j) => `<li class="card wcard ${w[2] ? "" : "noe"}">
