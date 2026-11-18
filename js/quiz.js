@@ -2,13 +2,17 @@
 /* ============================================================
    الأسئلة
    ============================================================ */
+/* أسئلة الصور للأشياء الملموسة فقط (حيوانات، أطعمة، أدوات، أماكن، ألوان).
+   الأيقونات المجردة (وجوه المشاعر، أسهم، أرقام، أشخاص عامّون) تُسأل بالاستماع أو المعنى. */
+const ABSTRACT_PIC = /^mdi:(emoticon|arrow|numeric|help|check|close|alert|thumb|hand-|gesture|repeat|sync|shuffle|plus|equal|cancel|skip|fast-forward|history|pause|star-four|shimmer|head-|sleep|chart|approximately|division|infinity|magnify|human|account|face-|heart|lightning|flash|weather-windy|arm-flex|incognito|domino|bullhorn|volume|new-box|tag|link|circle-multiple|clock|timer|calendar)/;
+const isConcretePic = v => !!v && (v[0] === "#" || !ABSTRACT_PIC.test(v));
 /* items: [{g,u,w}] */
 function makeWordQs(g, items, n) {
   return shuffle(items).slice(0, n).map((it, k) => {
-    const w = it.w, hasPic = !!w[2];
+    const w = it.w, hasPic = isConcretePic(w[2]);
     let type = hasPic ? ["pic", "listen", "meaning"][k % 3] : ["meaning", "listen", "reverse"][k % 3];
     let cands = items.filter(x => x.w[0] !== w[0] && x.w[1] !== w[1]);
-    if (type === "pic" || (type === "listen" && hasPic)) cands = cands.filter(x => x.w[2] && x.w[2] !== w[2]);
+    if (type === "pic" || (type === "listen" && hasPic)) cands = cands.filter(x => isConcretePic(x.w[2]) && x.w[2] !== w[2]);
     if (cands.length < 3) { type = "meaning"; cands = items.filter(x => x.w[0] !== w[0] && x.w[1] !== w[1]); }
     const opts = shuffle([it, ...shuffle(cands).slice(0, 3)]);
     return { type, it, id: wordId(it.g, it.u, w), opts, picListen: type === "listen" && hasPic };

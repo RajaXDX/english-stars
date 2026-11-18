@@ -26,6 +26,7 @@ function renderProfile() {
       <ul class="list">${Store.profiles().map(x => `<li class="row-between"><span>${icon(x.gender === "f" ? "human-female" : "human-male")} ${esc(x.name || (x.gender === "f" ? "طالبة" : "طالب"))} · <span class="small muted">${(gradeById(x.grade) || {}).ar || ""} · ★ ${countStars(x)}</span></span>
         ${x.id === p.id ? `<span class="pill">الحالي</span>` : `<button class="btn ghost sm" data-switch="${x.id}">تبديل</button>`}</li>`).join("")}</ul>
       <a class="btn ghost block" href="#welcome" id="addStudent">+ إضافة طالب آخر</a></section>
+    <a class="card link" href="teacher.html"><span class="ic" aria-hidden="true">${icon("human-male-board")}</span><div><b>صفحة المعلمين</b><p class="small muted">العرض في الفصل ودليل الوحدة بالكلمات والقواعد والإجابات</p></div><span aria-hidden="true">←</span></a>
     <a class="card link" href="#report"><span class="ic" aria-hidden="true">${icon("clipboard-text")}</span><div><b>تقرير ولي الأمر والمعلم</b><p class="small muted">الوحدات المكتملة والكلمات التي تحتاج مراجعة</p></div><span aria-hidden="true">←</span></a>
     <section class="card"><h2 class="h3">${icon("cellphone-arrow-down")} تثبيت التطبيق</h2>
       ${standalone ? `<p>التطبيق مثبّت على جهازك ${icon("check-bold")}</p>`
