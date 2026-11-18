@@ -21,14 +21,23 @@ const Store = (() => {
   /* الأسبوع الدراسي يبدأ الأحد */
   const weekStart = (d = new Date()) => { const s = new Date(d); s.setDate(d.getDate() - d.getDay()); return dayKey(s); };
   const uid = () => "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  /* رمز ولي الأمر: 6 خانات بلا حروف متشابهة (0/O، 1/I/L) */
+  const CODE_ABC = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  const cleanCode = c => String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  function newCode() {
+    let c;
+    do { c = Array.from({ length: 6 }, () => CODE_ABC[Math.floor(Math.random() * CODE_ABC.length)]).join(""); }
+    while (Object.values(data.profiles).some(p => p.code === c));
+    return c;
+  }
 
-  let data = { version: 3, active: null, profiles: {}, settings: { rate: 0.85 } };
+  let data = { version: 3, active: null, profiles: {}, settings: { rate: 0.85 }, mode: "student", parent: { name: "", links: [] } };
   let healthy = true;
   const listeners = new Set();
 
   function blankProfile(extra = {}) {
     return Object.assign({
-      id: uid(), name: "", gender: "", grade: "", created: Date.now(),
+      id: uid(), code: newCode(), name: "", gender: "", grade: "", created: Date.now(),
       last: null,          // {grade, unit, step, at}
       stars: {},           // {"g7-u3": {wquiz: 2, ...}}
       done: {},            // {"g7-u3": {words: 1, listen: 1, ...}}
@@ -51,6 +60,12 @@ const Store = (() => {
     }
     if (!data.settings) data.settings = { rate: 0.85 };
     if (data.active && !data.profiles[data.active]) data.active = Object.keys(data.profiles)[0] || null;
+    if (!data.parent) data.parent = { name: "", links: [] };
+    if (data.mode !== "parent") data.mode = "student";
+    let fixed = false;
+    for (const p of Object.values(data.profiles)) if (!p.code) { p.code = newCode(); fixed = true; }
+    data.parent.links = data.parent.links.filter(id => data.profiles[id]);
+    if (fixed) save();
   }
 
   /* نقل التقدم من النسخة السابقة (nujoom-v2) دون فقد النجوم */
@@ -95,10 +110,36 @@ const Store = (() => {
   function switchProfile(id) { if (data.profiles[id]) { data.active = id; save(); } }
   function removeProfile(id) {
     delete data.profiles[id];
+    data.parent.links = data.parent.links.filter(x => x !== id);
     if (data.active === id) data.active = Object.keys(data.profiles)[0] || null;
     save();
   }
   function updateProfile(fields) { Object.assign(P(), fields); save(); }
+
+  /* ---------------- ولي الأمر ----------------
+     يربط ولي الأمر ملف الطالب برمزه الظاهر في «ملفي». */
+  function setMode(m) { data.mode = m === "parent" ? "parent" : "student"; save(); }
+  function setParentName(n) { data.parent.name = n; save(); }
+  function linkByCode(code) {
+    const c = cleanCode(code);
+    if (c.length !== 6) return { error: "short" };
+    const p = Object.values(data.profiles).find(x => x.code === c);
+    if (!p) return { error: "notfound" };
+    if (data.parent.links.includes(p.id)) return { error: "already", profile: p };
+    data.parent.links.push(p.id); save();
+    return { profile: p };
+  }
+  /* تقارير طلاب على أجهزة أخرى (من رابط التقرير)، مفتاحها رمز الطالب */
+  function saveSnap(snap) {
+    const S = data.parent.snaps = data.parent.snaps || {};
+    if (!S[snap.c] || S[snap.c].at <= snap.at) S[snap.c] = snap;
+    save();
+  }
+  function removeSnap(code) { if (data.parent.snaps) delete data.parent.snaps[code]; save(); }
+  function unlink(id) { data.parent.links = data.parent.links.filter(x => x !== id); save(); }
+  function newProfileCode() { P().code = newCode(); data.parent.links = data.parent.links.filter(x => x !== data.active); save(); return P().code; }
+  /* عرض بيانات طالب آخر مؤقتاً (للتقارير) دون تغيير الطالب الحالي */
+  function viewAs(id, fn) { const prev = data.active; data.active = id; try { return fn(); } finally { data.active = prev; } }
 
   /* ---------------- التقدم ---------------- */
   /* تُحفظ أفضل نتيجة فقط، فلا تُحتسب النجوم مرتين عند الإعادة */
@@ -218,6 +259,9 @@ const Store = (() => {
     get data() { return data; }, get healthy() { return healthy; },
     profile: P, profiles: () => Object.values(data.profiles),
     createProfile, switchProfile, removeProfile, updateProfile,
+    get mode() { return data.mode; }, setMode, get parent() { return data.parent; }, setParentName,
+    linkByCode, unlink, newProfileCode, viewAs, saveSnap, removeSnap,
+    linked: () => data.parent.links.map(id => data.profiles[id]).filter(Boolean),
     setStars, getStars, unitStars, totalStars,
     markDone, isDone, unitComplete, nextStep, setLast, learnWord,
     addMistake, reviewResult, dueReviews, allReviews, recordAnswer,

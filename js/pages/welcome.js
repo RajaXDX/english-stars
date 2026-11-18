@@ -1,5 +1,6 @@
 /* ============================================================
-   البداية: 4 خطوات — (1) اللغة (2) الصف (3) طالب/طالبة + اسم (4) الإعدادات
+   البداية: (1) طالب/طالبة أو ولي أمر، ثم للطالب: (2) اللغة (3) الصف (4) طالب/طالبة + اسم (5) الإعدادات.
+   ولي الأمر: يكتب رمز الطالب (من «ملفي» في جهاز الطالب) ثم ينتقل لصفحته
    ============================================================ */
 const LANGS = [
   { id: "en", name: "الإنجليزية", native: "English", mark: "En", ready: true },
@@ -12,17 +13,63 @@ function renderWelcome(editing) {
   const p = Store.profile();
   const st = {
     lang: (p && p.lang) || "en", gender: (p && p.gender) || "", grade: (p && p.grade) || "", name: (p && p.name) || "",
-    step: (p && p.grade && editing === true) ? 3 : 1
+    step: (p && p.grade && editing === true) ? 4 : editing === "new" ? 2 : 1
   };
-  const TOTAL = 4;
-  const draw = () => [null, stepLang, stepGrade, stepMe, stepSettings][st.step]();
+  const TOTAL = 5;
+  const draw = () => [null, stepRole, stepLang, stepGrade, stepMe, stepSettings, stepParent][st.step]();
   const progress = () => `<div class="ob-progress" role="progressbar" aria-label="خطوات البداية" aria-valuemin="1" aria-valuemax="${TOTAL}" aria-valuenow="${st.step}">
       ${st.step > 1 ? `<button type="button" class="iconbtn ob-back" id="obBack" aria-label="الخطوة السابقة"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.3 5.3 8 6.7l5.3 5.3L8 17.3l1.3 1.4L16 12z"/></svg></button>` : ""}
       <ol>${Array.from({ length: TOTAL }, (_, i) => `<li class="${i + 1 < st.step ? "done" : i + 1 === st.step ? "now" : ""}"></li>`).join("")}</ol>
       <span class="small muted">الخطوة ${st.step} من ${TOTAL}</span></div>`;
   const wireBack = () => { const b = $("#obBack"); if (b) b.onclick = () => { st.step--; draw(); }; };
 
-  /* (1) اللغة */
+  /* (1) من أنت؟ */
+  function stepRole() {
+    applyStage(null);
+    app.innerHTML = `<section class="welcome">${progress()}
+      <div class="hero">${MASCOT}<h1>أهلاً بك في نجوم الإنجليزي</h1><p>من أنت؟</p></div>
+      <div class="ob-roles">
+        <button type="button" class="ob-lang ob-role" data-role="student"><span class="mark" aria-hidden="true">${icon("human-male")}${icon("human-female")}</span>
+          <span class="txt"><b>طالب / طالبة</b><small>أتعلّم الكلمات والقواعد وأجمع النجوم</small></span></button>
+        <button type="button" class="ob-lang ob-role parent" data-role="parent"><span class="mark" aria-hidden="true">${icon("human-male-female-child")}</span>
+          <span class="txt"><b>ولي أمر</b><small>أتابع تقدم ابني أو بنتي برمز الطالب</small></span></button>
+      </div></section>`;
+    app.querySelector('[data-role="student"]').onclick = () => { Store.setMode("student"); st.step = 2; draw(); };
+    app.querySelector('[data-role="parent"]').onclick = () => { st.step = 6; draw(); };
+    focusMain();
+  }
+
+  /* ولي الأمر: الاسم ورمز الطالب */
+  function stepParent() {
+    applyStage(null);
+    app.innerHTML = `<section class="welcome">
+      <div class="ob-progress"><button type="button" class="iconbtn ob-back" id="obBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.3 5.3 8 6.7l5.3 5.3L8 17.3l1.3 1.4L16 12z"/></svg></button><span class="small muted">ولي الأمر</span></div>
+      <div class="hero"><span class="ic big" aria-hidden="true">${icon("human-male-female-child")}</span><h1>ربط حساب الطالب</h1>
+        <p>اكتب رمز الطالب. تجده في جهاز الطالب: «ملفي» ← «رمز ولي الأمر».</p></div>
+      <form id="paForm" class="card form" novalidate>
+        <label class="field" for="paName">اسمك <small>(اختياري)</small><input id="paName" maxlength="20" autocomplete="off" value="${esc(Store.parent.name)}"></label>
+        <label class="field" for="paCode">رمز الطالب<input id="paCode" class="code-input" maxlength="7" autocomplete="off" autocapitalize="characters" spellcheck="false" dir="ltr" placeholder="ABC-123"></label>
+        <p class="small" id="paMsg" aria-live="polite"></p>
+        <button class="btn primary block" type="submit">ربط ومتابعة</button>
+        <p class="small muted">الطالب على جهاز آخر؟ اطلب منه من «ملفي» ← «إرسال التقرير لولي الأمر»، وافتح الرابط على جهازك.</p>
+        <button type="button" class="btn ghost block" id="paSkip">متابعة بدون ربط</button>
+      </form></section>`;
+    $("#obBack").onclick = () => { st.step = 1; draw(); };
+    $("#paCode").oninput = e => { const c = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6); e.target.value = c.length > 3 ? c.slice(0, 3) + "-" + c.slice(3) : c; };
+    const enter = () => { Store.setParentName($("#paName").value.trim()); Store.setMode("parent"); go("parent"); };
+    $("#paSkip").onclick = enter;
+    $("#paForm").onsubmit = e => {
+      e.preventDefault();
+      const r = Store.linkByCode($("#paCode").value), msg = $("#paMsg");
+      if (!r.error || r.error === "already") { toast(`تم الربط: ${r.profile.name || (r.profile.gender === "f" ? "الطالبة" : "الطالب")}`); return enter(); }
+      msg.className = "small bad-text";
+      msg.textContent = r.error === "short" ? "الرمز 6 خانات، مثل ABC-123."
+        : "ما لقينا طالباً بهذا الرمز على هذا الجهاز. إذا كان الطالب على جهاز آخر، اطلب منه «رابط التقرير»، أو اضغط «متابعة بدون ربط».";
+    };
+    focusMain();
+  }
+
+  /* (2) اللغة */
   function stepLang() {
     applyStage(null);
     app.innerHTML = `<section class="welcome">${progress()}
@@ -38,11 +85,12 @@ function renderWelcome(editing) {
     app.querySelectorAll(".ob-lang:not([disabled])").forEach(b => b.onclick = () => {
       st.lang = b.dataset.lang; app.querySelectorAll(".ob-lang").forEach(x => x.setAttribute("aria-checked", x === b));
     });
-    $("#obNext").onclick = () => { st.step = 2; draw(); };
+    wireBack();
+    $("#obNext").onclick = () => { st.step = 3; draw(); };
     focusMain();
   }
 
-  /* (2) الصف */
+  /* (3) الصف */
   function stepGrade() {
     applyStage(null);
     app.innerHTML = `<section class="pick-grade">${progress()}
@@ -53,11 +101,11 @@ function renderWelcome(editing) {
       </section>`).join("")}
     </section>`;
     wireBack();
-    app.querySelectorAll("[data-grade]").forEach(b => b.onclick = () => { st.grade = b.dataset.grade; st.step = 3; draw(); });
+    app.querySelectorAll("[data-grade]").forEach(b => b.onclick = () => { st.grade = b.dataset.grade; st.step = 4; draw(); });
     focusMain();
   }
 
-  /* (3) طالب/طالبة + الاسم */
+  /* (4) طالب/طالبة + الاسم */
   function stepMe() {
     const g = gradeById(st.grade);
     applyStage(g.stage);
@@ -87,17 +135,17 @@ function renderWelcome(editing) {
     };
     app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { st.gender = b.dataset.g; paint(); });
     $("#wName").oninput = e => { st.name = e.target.value; };
-    $("#wChange").onclick = () => { st.step = 2; draw(); };
+    $("#wChange").onclick = () => { st.step = 3; draw(); };
     paint();
     $("#wForm").onsubmit = e => {
       e.preventDefault();
       if (!(st.gender && st.grade)) return;
-      st.name = $("#wName").value.trim(); st.step = 4; draw();
+      st.name = $("#wName").value.trim(); st.step = 5; draw();
     };
     focusMain();
   }
 
-  /* (4) الإعدادات: سرعة الصوت والمظهر — تُطبَّق فوراً */
+  /* (5) الإعدادات: سرعة الصوت والمظهر — تُطبَّق فوراً */
   function stepSettings() {
     const g = gradeById(st.grade);
     applyStage(g.stage);
@@ -130,6 +178,7 @@ function renderWelcome(editing) {
       const fields = { gender: st.gender, grade: st.grade, name: st.name, lang: st.lang };
       if (p && editing !== "new") Store.updateProfile(fields); else Store.createProfile(fields);
       delete Speech.genderHint;
+      Store.setMode("student");
       go("home");
     };
     focusMain();

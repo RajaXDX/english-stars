@@ -26,8 +26,15 @@ function renderProfile() {
       <ul class="list">${Store.profiles().map(x => `<li class="row-between"><span>${icon(x.gender === "f" ? "human-female" : "human-male")} ${esc(x.name || (x.gender === "f" ? "طالبة" : "طالب"))} · <span class="small muted">${(gradeById(x.grade) || {}).ar || ""} · ★ ${countStars(x)}</span></span>
         ${x.id === p.id ? `<span class="pill">الحالي</span>` : `<button class="btn ghost sm" data-switch="${x.id}">تبديل</button>`}</li>`).join("")}</ul>
       <a class="btn ghost block" href="#welcome" id="addStudent">+ إضافة طالب آخر</a></section>
-    <a class="card link" href="teacher.html"><span class="ic" aria-hidden="true">${icon("human-male-board")}</span><div><b>صفحة المعلمين</b><p class="small muted">العرض في الفصل ودليل الوحدة بالكلمات والقواعد والإجابات</p></div><span aria-hidden="true">←</span></a>
-    <a class="card link" href="#report"><span class="ic" aria-hidden="true">${icon("clipboard-text")}</span><div><b>تقرير ولي الأمر والمعلم</b><p class="small muted">الوحدات المكتملة والكلمات التي تحتاج مراجعة</p></div><span aria-hidden="true">←</span></a>
+    <section class="card" aria-labelledby="pcH"><h2 class="h3" id="pcH">${icon("human-male-female-child")} رمز ولي الأمر</h2>
+      <p class="small">${T("أعطِ", "أعطي")} هذا الرمز لولي أمرك ليتابع تقدمك من «ولي أمر» في شاشة البداية.</p>
+      <div class="code-box"><span class="code" lang="en" aria-label="الرمز: ${p.code.split("").join(" ")}">${showCode(p.code)}</span>
+        <button class="btn ghost sm" id="newCode">رمز جديد</button></div>
+      <p class="small muted">ولي أمرك على جهاز آخر؟ ${T("أرسل", "أرسلي")} له رابط التقرير، ${T("وأرسله", "وأرسليه")} مرة أخرى متى ${T("تبي", "تبين")} تحديثه.</p>
+      <button class="btn primary block" id="sendParent">${icon("send")} إرسال التقرير لولي الأمر</button>
+      <div id="newCodeZone"></div></section>
+    <a class="card link" href="#report"><span class="ic" aria-hidden="true">${icon("clipboard-text")}</span><div><b>تقريري</b><p class="small muted">الوحدات المكتملة والكلمات التي تحتاج مراجعة</p></div><span aria-hidden="true">←</span></a>
+    <button class="card link" id="toParent" type="button"><span class="ic" aria-hidden="true">${icon("account-tie")}</span><div><b>وضع ولي الأمر</b><p class="small muted">لولي الأمر على هذا الجهاز: متابعة الطلاب المرتبطين</p></div><span aria-hidden="true">←</span></button>
     <section class="card"><h2 class="h3">${icon("cellphone-arrow-down")} تثبيت التطبيق</h2>
       ${standalone ? `<p>التطبيق مثبّت على جهازك ${icon("check-bold")}</p>`
         : installPrompt ? `<p class="small">${T("ثبّت", "ثبّتي")} نجوم الإنجليزي على الشاشة الرئيسية ${T("ليفتح", "ليفتح")} كتطبيق ويعمل دون اتصال.</p><button class="btn primary" id="install">تثبيت التطبيق</button>`
@@ -45,6 +52,19 @@ function renderProfile() {
   wireSay(app);
   app.querySelectorAll("[data-switch]").forEach(b => b.onclick = () => { Store.switchProfile(b.dataset.switch); toast("تم التبديل"); go("home"); });
   $("#addStudent").onclick = e => { e.preventDefault(); history.pushState(null, "", "#welcome"); renderWelcome("new"); };
+  $("#toParent").onclick = () => { Store.setMode("parent"); go("parent"); };
+  $("#sendParent").onclick = async () => {
+    const url = parentLink(p), title = `تقرير ${p.name || T("الطالب", "الطالبة")} في نجوم الإنجليزي`;
+    try { if (navigator.share) { await navigator.share({ title, text: title, url }); return; } } catch (e) { if (e && e.name === "AbortError") return; }
+    try { await navigator.clipboard.writeText(url); toast("تم نسخ الرابط. أرسله لولي أمرك"); }
+    catch (e) { $("#newCodeZone").innerHTML = `<label class="field" for="plink">انسخ الرابط<input id="plink" dir="ltr" readonly value="${esc(url)}"></label>`; $("#plink").select(); }
+  };
+  $("#newCode").onclick = () => {
+    $("#newCodeZone").innerHTML = `<p class="small"><b>رمز جديد؟</b> الرمز القديم يتوقف، و${T("تحتاج", "تحتاجين")} تعطي ولي أمرك الرمز الجديد.</p>
+      <div class="actions tight"><button class="btn primary sm" id="ncYes">نعم، رمز جديد</button><button class="btn ghost sm" id="ncNo">إلغاء</button></div>`;
+    $("#ncNo").onclick = renderProfile;
+    $("#ncYes").onclick = () => { Store.newProfileCode(); toast("تم إنشاء رمز جديد"); renderProfile(); };
+  };
   const ins = $("#install"); if (ins) ins.onclick = async () => { installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; renderProfile(); };
   $("#del").onclick = () => {
     $("#delZone").innerHTML = `<p class="small"><b>متأكد؟</b> سيُحذف تقدم ${esc(p.name || "هذا الطالب")} ونجومه من هذا الجهاز نهائياً.</p>
@@ -57,7 +77,7 @@ function renderProfile() {
 function countStars(prof) { let t = 0; for (const k in prof.stars) for (const a in prof.stars[k]) t += prof.stars[k][a]; return t; }
 
 /* ============================================================
-   تقرير ولي الأمر / المعلم (من بيانات هذا الجهاز فقط)
+   تقرير الطالب (من بيانات هذا الجهاز)
    ============================================================ */
 function renderReport() {
   const p = Store.profile();
@@ -80,7 +100,7 @@ function renderReport() {
     <section class="card"><h2 class="h3">كلمات تحتاج مراجعة (${reviewItems.length})</h2>
       ${reviewItems.length ? `<ul class="weak">${reviewItems.slice(0, 40).map(o => `<li>${en(o.x.w[0])}<span class="tr">${o.x.w[1]}</span><span class="small muted">${o.x.g.ar} · وحدة ${esc(o.x.u.num)} · أخطاء: ${o.r.misses}</span></li>`).join("")}</ul>` : `<p class="muted">لا توجد.</p>`}</section>
     <section class="card note-card"><h2 class="h3">${icon("information")} عن هذا التقرير</h2>
-      <p class="small">يعرض التقرير بيانات هذا الجهاز فقط. متابعة المعلم عن بُعد، وتقارير الفصل، ومزامنة التقدم بين الأجهزة تحتاج خادماً وحسابات، وهي غير متوفرة حالياً.</p></section>
+      <p class="small">يعرض التقرير بيانات هذا الجهاز. ولي الأمر يتابعه برمز الطالب أو برابط التقرير من «ملفي».</p></section>
   </div>`;
   focusMain();
 }
