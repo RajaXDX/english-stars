@@ -22,10 +22,6 @@ function renderProfile() {
       <button class="btn ghost sm" data-say="Hello! Welcome to English Stars.">جرّب الصوت</button></section>
     <section class="card"><h2 class="h3">المظهر</h2>
       <div class="seg wide" role="group" aria-label="المظهر">${[["light", "فاتح"], ["dark", "ليلي"], ["auto", "حسب الجهاز"]].map(([v, l]) => `<button data-theme-set="${v}" aria-pressed="${Store.theme === v}">${l}</button>`).join("")}</div></section>
-    <section class="card"><h2 class="h3">${icon("account-group")} طلاب هذا الجهاز</h2>
-      <ul class="list">${Store.profiles().map(x => `<li class="row-between"><span>${icon(x.gender === "f" ? "human-female" : "human-male")} ${esc(x.name || (x.gender === "f" ? "طالبة" : "طالب"))} · <span class="small muted">${(gradeById(x.grade) || {}).ar || ""} · ★ ${countStars(x)}</span></span>
-        ${x.id === p.id ? `<span class="pill">الحالي</span>` : `<button class="btn ghost sm" data-switch="${x.id}">تبديل</button>`}</li>`).join("")}</ul>
-      <a class="btn ghost block" href="#welcome" id="addStudent">+ إضافة طالب آخر</a></section>
     <section class="card" aria-labelledby="pcH"><h2 class="h3" id="pcH">${icon("human-male-female-child")} رمز ولي الأمر</h2>
       <p class="small">${T("أعطِ", "أعطي")} هذا الرمز لولي أمرك ليتابع تقدمك من «ولي أمر» في شاشة البداية.</p>
       <div class="code-box"><span class="code" lang="en" aria-label="الرمز: ${p.code.split("").join(" ")}">${showCode(p.code)}</span>
@@ -33,8 +29,6 @@ function renderProfile() {
       <p class="small muted">ولي أمرك على جهاز آخر؟ ${T("أرسل", "أرسلي")} له رابط التقرير، ${T("وأرسله", "وأرسليه")} مرة أخرى متى ${T("تبي", "تبين")} تحديثه.</p>
       <button class="btn primary block" id="sendParent">${icon("send")} إرسال التقرير لولي الأمر</button>
       <div id="newCodeZone"></div></section>
-    <a class="card link" href="#report"><span class="ic" aria-hidden="true">${icon("clipboard-text")}</span><div><b>تقريري</b><p class="small muted">الوحدات المكتملة والكلمات التي تحتاج مراجعة</p></div><span aria-hidden="true">←</span></a>
-    <button class="card link" id="toParent" type="button"><span class="ic" aria-hidden="true">${icon("account-tie")}</span><div><b>وضع ولي الأمر</b><p class="small muted">لولي الأمر على هذا الجهاز: متابعة الطلاب المرتبطين</p></div><span aria-hidden="true">←</span></button>
     <section class="card"><h2 class="h3">${icon("cellphone-arrow-down")} تثبيت التطبيق</h2>
       ${standalone ? `<p>التطبيق مثبّت على جهازك ${icon("check-bold")}</p>`
         : installPrompt ? `<p class="small">${T("ثبّت", "ثبّتي")} نجوم الإنجليزي على الشاشة الرئيسية ${T("ليفتح", "ليفتح")} كتطبيق ويعمل دون اتصال.</p><button class="btn primary" id="install">تثبيت التطبيق</button>`
@@ -50,9 +44,6 @@ function renderProfile() {
   app.querySelectorAll("[data-rate]").forEach(b => b.onclick = () => { Store.setRate(+b.dataset.rate); renderProfile(); });
   app.querySelectorAll("[data-theme-set]").forEach(b => b.onclick = () => { Store.setTheme(b.dataset.themeSet); renderProfile(); });
   wireSay(app);
-  app.querySelectorAll("[data-switch]").forEach(b => b.onclick = () => { Store.switchProfile(b.dataset.switch); toast("تم التبديل"); go("home"); });
-  $("#addStudent").onclick = e => { e.preventDefault(); history.pushState(null, "", "#welcome"); renderWelcome("new"); };
-  $("#toParent").onclick = () => { Store.setMode("parent"); go("parent"); };
   $("#sendParent").onclick = async () => {
     const url = parentLink(p), title = `تقرير ${p.name || T("الطالب", "الطالبة")} في نجوم الإنجليزي`;
     try { if (navigator.share) { await navigator.share({ title, text: title, url }); return; } } catch (e) { if (e && e.name === "AbortError") return; }

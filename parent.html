@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ولي الأمر · نجوم الإنجليزي</title>
+<meta name="description" content="صفحة ولي الأمر في نجوم الإنجليزي: تابع تقدم أبنائك وبناتك برمز الطالب أو برابط التقرير.">
+<meta name="theme-color" content="#FFC21A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/logo.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="نجوم الإنجليزي">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Lalezar&family=Changa:wght@500;700&family=Readex+Pro:wght@400;500;700&family=Fredoka:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/welcome.css">
+</head>
+<body class="no-nav parent-page">
+<a class="sr" href="#app">تخطَّ إلى المحتوى</a>
+<canvas id="confetti" hidden aria-hidden="true"></canvas>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <button class="iconbtn" id="barBack" hidden aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.3 5.3 8 6.7l5.3 5.3L8 17.3l1.3 1.4L16 12z"/></svg></button>
+    <button class="brand" id="brandHome" aria-label="صفحة ولي الأمر، الرئيسية">
+      <svg viewBox="0 0 100 100" class="mascot logo-mark" aria-hidden="true"><path d="M28 14h40a18 18 0 0 1 18 18v26a18 18 0 0 1-18 18H44l-20 14 4-14a18 18 0 0 1-14-17.6V32a18 18 0 0 1 18-18z" fill="#3D6BFF" stroke="#1E2A6E" stroke-width="4" stroke-linejoin="round"/><path d="M30 20h36a13 13 0 0 1 13 13v6" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="4" stroke-linecap="round"/><path d="M34 64L48 30L62 64" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 53h16" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M80 4l5.3 10.8 11.9 1.7-8.6 8.4 2 11.8L80 31.1l-10.6 5.6 2-11.8-8.6-8.4 11.9-1.7z" fill="#FFC21A" stroke="#1E2A6E" stroke-width="3.5" stroke-linejoin="round"/></svg>
+      <b>نجوم الإنجليزي</b>
+    </button>
+    <span id="barTitle" aria-hidden="true"></span>
+    <span id="totalStars" hidden></span>
+    <a class="btn ghost sm" href="index.html" id="toApp">صفحة الطالب</a>
+  </div>
+</header>
+
+<div id="banners" aria-live="polite"></div>
+<main id="app" tabindex="-1"></main>
+
+<nav class="bottomnav" id="bottomNav" hidden aria-hidden="true"><ul></ul></nav>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script>
+const GRADES = [];
+function GRADE(g){ GRADES.push(g); }
+const MASCOT = '<svg viewBox="0 0 100 100" class="mascot" aria-hidden="true"><path fill="#FFC21A" stroke="#E09A00" stroke-width="4" stroke-linejoin="round" d="M50 6l12.6 26.4 28.9 3.6-21.2 20 5.5 28.6L50 70.6 24.2 84.6l5.5-28.6-21.2-20 28.9-3.6z"/><ellipse cx="40" cy="45" rx="4.5" ry="6" fill="#2A2152"/><ellipse cx="60" cy="45" rx="4.5" ry="6" fill="#2A2152"/><circle cx="41.5" cy="43" r="1.6" fill="#fff"/><circle cx="61.5" cy="43" r="1.6" fill="#fff"/><circle cx="32" cy="55" r="4" fill="#FF7FA6" opacity=".7"/><circle cx="68" cy="55" r="4" fill="#FF7FA6" opacity=".7"/><path d="M41 56q9 9 18 0" fill="none" stroke="#2A2152" stroke-width="3.5" stroke-linecap="round"/></svg>';
+</script>
+<script src="data/g1.js"></script>
+<script src="data/g2.js"></script>
+<script src="data/g3.js"></script>
+<script src="data/g4.js"></script>
+<script src="data/g5.js"></script>
+<script src="data/g6.js"></script>
+<script src="data/g7.js"></script>
+<script src="data/g8.js"></script>
+<script src="data/g9.js"></script>
+<script src="data/g10.js"></script>
+<script src="data/g11.js"></script>
+<script src="data/g12.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/store.js"></script>
+<script src="js/core.js"></script>
+<script src="js/shell.js"></script>
+<script src="js/pages/parent.js"></script>
+<script src="js/parent-main.js"></script>
+</body>
+</html>

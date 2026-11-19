@@ -35,7 +35,7 @@ function renderWelcome(editing) {
           <span class="txt"><b>ولي أمر</b><small>أتابع تقدم ابني أو بنتي برمز الطالب</small></span></button>
       </div></section>`;
     app.querySelector('[data-role="student"]').onclick = () => { Store.setMode("student"); st.step = 2; draw(); };
-    app.querySelector('[data-role="parent"]').onclick = () => { st.step = 6; draw(); };
+    app.querySelector('[data-role="parent"]').onclick = () => { Store.setMode("parent"); location.href = "parent.html#parent"; };
     focusMain();
   }
 

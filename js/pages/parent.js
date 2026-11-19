@@ -31,7 +31,7 @@ function parentSnap(p) {
 }
 const b64e = s => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 const b64d = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0)));
-function parentLink(p) { return location.origin + location.pathname + "#parent/add/" + b64e(JSON.stringify(parentSnap(p))); }
+function parentLink(p) { return new URL("parent.html", location.href).href.split("#")[0] + "#parent/add/" + b64e(JSON.stringify(parentSnap(p))); }
 function readSnap(str) {
   try {
     const s = JSON.parse(b64d(str));
@@ -75,7 +75,7 @@ function renderParent() {
     <section class="card"><h2 class="h3">${icon("account")} بياناتي</h2>
       <label class="field" for="pnName">اسمك <small>(اختياري)</small><input id="pnName" maxlength="20" autocomplete="off" value="${esc(name)}"></label>
       <div class="actions tight"><button class="btn ghost sm" id="pnSave">حفظ</button></div></section>
-    <button class="btn ghost block" id="toStudent">${icon("swap-horizontal")} الدخول كطالب / طالبة</button>
+    <a class="btn ghost block" href="index.html" id="toStudent">${icon("swap-horizontal")} الدخول كطالب / طالبة</a>
     <section class="card note-card"><h2 class="h3">${icon("lock")} الخصوصية</h2>
       <p class="small">لا يوجد حساب ولا خادم. بيانات الطلاب تبقى على أجهزتكم، ولا تنتقل إلا عبر الرابط الذي يرسله الطالب بنفسه.</p></section>
   </div>`;
@@ -91,7 +91,7 @@ function renderParent() {
   };
   $("#lkCode").oninput = e => { const c = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6); e.target.value = c.length > 3 ? c.slice(0, 3) + "-" + c.slice(3) : c; };
   $("#pnSave").onclick = () => { Store.setParentName($("#pnName").value.trim()); toast("تم الحفظ"); renderParent(); };
-  $("#toStudent").onclick = () => { Store.setMode("student"); go(Store.profile() ? "home" : "welcome"); };
+  $("#toStudent").onclick = () => { Store.setMode("student"); };
   app.querySelectorAll("[data-unlink]").forEach(b => b.onclick = () => {
     const k = kids.find(x => x.id === b.dataset.unlink); if (!k) return;
     const zone = b.closest(".kid").querySelector(".unzone");

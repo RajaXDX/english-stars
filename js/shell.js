@@ -32,12 +32,7 @@ function route() {
   /* ولي الأمر: رابط التقرير يعمل دائماً، ووضع ولي الأمر له صفحاته */
   const hp = h.split("/");
   document.body.classList.toggle("parent-mode", Store.mode === "parent");
-  if (hp[0] === "parent" && hp[1] === "add" && hp[2]) { document.body.classList.add("parent-mode"); return receiveParentLink(hp[2]); }
-  if (Store.mode === "parent" && h !== "welcome") {
-    if (hp[0] === "parent" && hp[1] === "r") return renderParentReport(hp[2] || "");
-    if (h !== "parent") history.replaceState(null, "", "#parent");
-    return renderParent();
-  }
+  if (hp[0] === "parent" || (Store.mode === "parent" && h !== "welcome")) { location.replace("parent.html#" + (hp[0] === "parent" ? h : "parent")); return; }
   const p = Store.profile();
   if (!p || !p.gender || !p.grade) { if (h !== "welcome") { history.replaceState(null, "", "#welcome"); } return renderWelcome(); }
   const parts = h.split("/");
