@@ -81,8 +81,8 @@ const Speech = {
   recorded: true,
   genderHint: null,                       // اختيار طالب/طالبة قبل حفظ الملف (شاشات البداية)
   get slowPref() { try { return Store.rate < 0.8; } catch (e) { return false; } },
-  say(text, slow, meaning) { return Narration.speak(text, { slow: !!slow || Speech.slowPref, meaning }); },
-  stop() { Narration.stop(); },
+  say(text, slow, meaning) { return typeof Narration === "undefined" ? Promise.resolve(false) : Narration.speak(text, { slow: !!slow || Speech.slowPref, meaning }); },
+  stop() { if (typeof Narration !== "undefined") Narration.stop(); },
   hasEnglish: () => true
 };
 /* زر استماع + زر نطق بطيء. meaning: المعنى العربي للكلمات متعددة النطق (close: أغلق/قريب) */
