@@ -1,1 +1,4 @@
 .eleven/
+entries.json
+*.onnx
+voices-v1.0.bin

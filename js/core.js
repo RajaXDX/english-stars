@@ -72,36 +72,32 @@ function banner(id, html, kind = "") {
   return b;
 }
 
-/* ---------------- الصوت ---------------- */
-const Speech = (() => {
-  const supported = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
-  let voice = null, checked = false;
-  function pick() {
-    if (!supported) return;
-    const vs = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang));
-    const pref = ["Samantha", "Google US English", "Microsoft Aria", "Microsoft Jenny", "Microsoft Guy", "Zira", "Karen", "Daniel", "Alex"];
-    voice = vs.find(v => pref.some(p => v.name.includes(p))) || vs.find(v => /en[-_]US/i.test(v.lang)) || vs[0] || null;
-    if (vs.length) checked = true;
-  }
-  if (supported) { pick(); speechSynthesis.onvoiceschanged = pick; }
-  function say(text, slow) {
-    if (!supported) { toast("الصوت غير متاح في هذا المتصفح. جرّب Chrome أو Safari."); return false; }
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(String(text).replace(/___/g, " ").replace(/\(.*?\)/g, ""));
-    u.lang = "en-US"; u.rate = slow ? 0.55 : Store.rate; if (voice) u.voice = voice;
-    speechSynthesis.speak(u);
-    return true;
-  }
-  const stop = () => { if (supported) speechSynthesis.cancel(); };
-  const hasEnglish = () => !supported ? false : (checked ? !!voice : true);
-  return { supported, say, stop, hasEnglish };
-})();
-/* زر استماع + زر نطق بطيء */
-function sayButtons(text, label = "استماع") {
-  return `<span class="saygroup"><button class="say" data-say="${esc(text)}" aria-label="${label}: ${esc(text)}">${ICON.speaker}</button><button class="say slow" data-say="${esc(text)}" data-slow="1" aria-label="نطق بطيء: ${esc(text)}" title="نطق بطيء">${ICON.slow}</button></span>`;
+/* ---------------- الصوت ----------------
+   Speech واجهة ثابتة للصفحات فوق Narration (js/narration.js):
+   say(text, slow, meaning) → Promise<boolean> تُحل عند انتهاء النطق فعلاً. stop() يلغي أي نطق.
+   «أبطأ» في الإعدادات يجعل كل الاستماع أبطأ، وزر السلحفاة أبطأ دائماً. */
+const Speech = {
+  supported: true,
+  recorded: true,
+  genderHint: null,                       // اختيار طالب/طالبة قبل حفظ الملف (شاشات البداية)
+  get slowPref() { try { return Store.rate < 0.8; } catch (e) { return false; } },
+  say(text, slow, meaning) { return Narration.speak(text, { slow: !!slow || Speech.slowPref, meaning }); },
+  stop() { Narration.stop(); },
+  hasEnglish: () => true
+};
+/* زر استماع + زر نطق بطيء. meaning: المعنى العربي للكلمات متعددة النطق (close: أغلق/قريب) */
+function sayButtons(text, label = "استماع", meaning = "") {
+  const m = meaning ? ` data-mean="${esc(meaning)}"` : "";
+  return `<span class="saygroup"><button type="button" class="say" data-say="${esc(text)}"${m} aria-label="${label}: ${esc(text)}">${ICON.speaker}</button><button type="button" class="say slow" data-say="${esc(text)}"${m} data-slow="1" aria-label="نطق بطيء: ${esc(text)}" title="نطق بطيء">${ICON.slow}</button></span>`;
 }
+/* أزرار الاستماع: الزر النشط يُعلَّم أثناء النطق ثم يُزال التعليم عند انتهائه */
 function wireSay(root) {
-  root.querySelectorAll("[data-say]").forEach(b => b.onclick = e => { e.stopPropagation(); Speech.say(b.dataset.say, !!b.dataset.slow); });
+  root.querySelectorAll("[data-say]").forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    document.querySelectorAll(".say.speaking").forEach(x => x.classList.remove("speaking"));
+    b.classList.add("speaking"); b.setAttribute("aria-pressed", "true");
+    Speech.say(b.dataset.say, !!b.dataset.slow, b.dataset.mean).finally(() => { b.classList.remove("speaking"); b.removeAttribute("aria-pressed"); });
+  });
 }
 
 /* ---------------- مؤثرات ---------------- */

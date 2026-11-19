@@ -580,3 +580,10 @@ body.no-nav::before{bottom:0!important}
 :root:not([data-stage="m"]):not([data-stage="s"]) body::after{inset-inline-start:auto; inset-inline-end:12px; width:64px; height:64px; opacity:.6}
 /* روابط نصية صغيرة بجانب العناوين (مثل «عرض الكل»): مساحة لمس 44px على الأقل */
 .row-between > a.small{display:inline-flex; align-items:center; min-height:44px; padding-inline:8px}
+
+/* ---------- النطق: الزر النشط أثناء الكلام ---------- */
+.say.speaking, .bigsay.speaking{outline:3px solid var(--sun); outline-offset:2px; animation:speakpulse 1s ease-in-out infinite}
+@keyframes speakpulse{50%{transform:scale(1.08)}}
+#qNext[disabled]{opacity:.55; cursor:progress}
+.seg .small.muted{align-self:center; padding-inline:6px}
+@media (prefers-reduced-motion: reduce){ .say.speaking, .bigsay.speaking, .wcard.playing .pic{animation:none} }

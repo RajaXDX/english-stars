@@ -45,19 +45,23 @@ function runQuiz(pane, token, cfg) {
   $("#qStart").onclick = () => play();
   focusMain();
 
-  let i = 0, score = 0, finished = false;
+  let i = 0, score = 0, finished = false, turn = 0;
   const misses = [];
   function play() {
     if (!alive(token)) return;
+    Speech.stop();
     if (i >= qs.length) return finish();
-    const q = qs[i];
+    const q = qs[i], myTurn = ++turn;
+    /* يتأكد أن استدعاءً مؤجلاً ما زال يخص هذا السؤال (لا صوت قديم بعد الانتقال) */
+    const current = () => alive(token) && myTurn === turn && document.body.contains(pane);
     pane.innerHTML = `<section class="card playc">
       <div class="prog"><span>${i + 1} / ${qs.length}</span><div class="bar"><i style="width:${i / qs.length * 100}%"></i></div><span class="star" aria-label="${score} إجابات صحيحة">★ ${score}</span></div>
       <div id="qbody" class="qbody"></div>
       <div class="feedback" id="fb" aria-live="assertive"></div>
       <button class="btn primary block" id="qNext" hidden>${i + 1 < qs.length ? "التالي" : "النتيجة"} ←</button></section>`;
     let answered = false;
-    const answer = (ok, rightText) => {
+    /* speech: وعد النطق بعد الإجابة؛ زر «التالي» ينتظر انتهاءه (بحد أقصى) حتى لا يتداخل الصوت */
+    const answer = (ok, rightText, speech) => {
       if (answered) return; answered = true;          // يمنع احتساب الإجابة مرتين
       if (ok) score++; else misses.push(q);
       Store.recordAnswer(ok);
@@ -71,10 +75,12 @@ function runQuiz(pane, token, cfg) {
       fb.className = "feedback " + (ok ? "ok" : "no");
       fb.innerHTML = ok ? icon("check-bold") + " " + shuffle([T("أحسنت!", "أحسنتِ!"), "إجابة صحيحة!", "ممتاز!", "رائع!"])[0]
                         : `${icon("close-thick")} الإجابة الصحيحة: ${en(rightText)}`;
-      const nb = $("#qNext"); nb.hidden = false; nb.focus({ preventScroll: true });
-      nb.onclick = () => { i++; play(); };
+      const nb = $("#qNext"); nb.hidden = false; nb.disabled = true; nb.setAttribute("aria-busy", "true");
+      const ready = () => { if (!current() || !nb.disabled) return; nb.disabled = false; nb.removeAttribute("aria-busy"); nb.focus({ preventScroll: true }); };
+      Promise.race([Promise.resolve(speech), new Promise(r => setTimeout(r, 9000))]).then(ready, ready);
+      nb.onclick = () => { if (nb.disabled) return; i++; play(); };
     };
-    renderQuestion(q, $("#qbody"), answer);
+    renderQuestion(q, $("#qbody"), answer, current);
   }
   function finish() {
     if (finished) return; finished = true;
@@ -87,7 +93,7 @@ function runQuiz(pane, token, cfg) {
     const name = Store.profile().name;
     const missList = misses.map(q => q.type === "gram"
       ? `<li><span class="en" lang="en" dir="ltr">${esc(q.s.replace("___", "[" + q.right + "]"))}</span></li>`
-      : `<li>${sayButtons(q.it.w[0])}${en(q.it.w[0])}<span class="tr">${q.it.w[1]}</span></li>`).join("");
+      : `<li>${sayButtons(q.it.w[0], "استماع", q.it.w[1])}${en(q.it.w[0])}<span class="tr">${q.it.w[1]}</span></li>`).join("");
     const { g, u } = cfg.unit || {};
     pane.innerHTML = `<section class="card result center">${st >= 2 ? STAGE_LOGO[document.documentElement.dataset.stage || "p"] : ""}
       <h1 class="h2">${msg}${name ? "، " + esc(name) : ""}</h1>
@@ -117,9 +123,10 @@ function nextLink(g, u, step) {
   return nx ? `<a class="btn primary" href="#${stepRoute(g, u, nx)}">التالي: ${STEP_META[nx].t} ←</a>` : "";
 }
 
-function renderQuestion(q, box, answer) {
+/* current(): هل ما زال هذا السؤال معروضاً؟ يمنع الاستدعاءات المؤجلة القديمة من تشغيل صوت */
+function renderQuestion(q, box, answer, current = () => true) {
   if (q.type === "gram") return qGram(q, box, answer);
-  if (q.type === "spell") return qSpell(q, box, answer);
+  if (q.type === "spell") return qSpell(q, box, answer, current);
   const w = q.it.w;
   let head = "", labelOf;
   if (q.type === "pic") {
@@ -127,10 +134,10 @@ function renderQuestion(q, box, answer) {
     labelOf = o => en(o.w[0]);
   } else if (q.type === "listen") {
     head = `<p class="ask">${T("استمع واختر", "استمعي واختاري")} ${q.picListen ? "الصورة" : "الكلمة"} الصحيحة</p>
-      <div class="listen"><button class="bigsay" id="hear" aria-label="استمع للكلمة">${ICON.speaker}</button><button class="say slow" id="hearSlow" aria-label="استمع ببطء">${ICON.slow}</button></div>`;
+      <div class="listen"><button type="button" class="bigsay" id="hear" aria-label="استمع للكلمة">${ICON.speaker}</button><button type="button" class="say slow" id="hearSlow" aria-label="استمع ببطء">${ICON.slow}</button></div>`;
     labelOf = o => q.picListen ? picHtml(o.w, "opt-pic") : en(o.w[0]);
   } else if (q.type === "meaning") {
-    head = `<p class="ask">ما معنى هذه الكلمة؟</p><div class="qword">${en(w[0])} ${sayButtons(w[0])}</div>`;
+    head = `<p class="ask">ما معنى هذه الكلمة؟</p><div class="qword">${en(w[0])} ${sayButtons(w[0], "استماع", w[1])}</div>`;
     labelOf = o => esc(o.w[1]);
   } else {
     head = `<p class="ask">كيف نقولها بالإنجليزي؟</p><p class="qar">${w[1]}</p>`;
@@ -139,15 +146,23 @@ function renderQuestion(q, box, answer) {
   box.innerHTML = head + `<div class="opts" role="group" aria-label="الخيارات">${q.opts.map((o, j) => `<button class="opt" data-j="${j}">${labelOf(o)}</button>`).join("")}</div>`;
   wireSay(box);
   const h = box.querySelector("#hear"), hs = box.querySelector("#hearSlow");
-  if (h) { h.onclick = () => Speech.say(w[0]); hs.onclick = () => Speech.say(w[0], true); setTimeout(() => Speech.say(w[0]), 300); }
   const btns = [...box.querySelectorAll(".opt")], right = q.opts.findIndex(o => o.w[0] === w[0]);
+  if (h) {
+    /* سؤال الاستماع: الخيارات تُفتح بعد انتهاء أول استماع (أو فوراً إذا حُجب التشغيل) */
+    let unlocked = false;
+    const unlock = () => { if (unlocked || !current()) return; unlocked = true; btns.forEach(x => { if (!x.classList.contains("right") && !x.classList.contains("wrong")) x.disabled = false; }); };
+    btns.forEach(x => { x.disabled = true; });
+    const hear = slow => { h.classList.add("speaking"); return Speech.say(w[0], slow, w[1]).finally(() => { h.classList.remove("speaking"); unlock(); }); };
+    h.onclick = () => hear(false); hs.onclick = () => hear(true);
+    setTimeout(() => { if (current()) hear(false); else unlock(); }, 400);
+    setTimeout(unlock, 8000);                                  // أمان: لا تبقى الخيارات مقفلة
+  }
   btns.forEach(b => b.onclick = () => {
     const ok = +b.dataset.j === right;
     btns.forEach(x => { x.disabled = true; });
     b.classList.add(ok ? "right" : "wrong"); btns[right].classList.add("right");
     b.setAttribute("aria-label", (ok ? "صحيح: " : "خطأ: ") + b.textContent);
-    Speech.say(w[0]);
-    answer(ok, w[0]);
+    answer(ok, w[0], Speech.say(w[0], false, w[1]));
   });
 }
 function qGram(q, box, answer) {
@@ -161,30 +176,29 @@ function qGram(q, box, answer) {
     btns.forEach(x => x.disabled = true);
     b.classList.add(ok ? "right" : "wrong"); btns[right].classList.add("right");
     box.querySelector(".blank").textContent = q.right;
-    Speech.say(q.s.replace("___", q.right));
-    answer(ok, q.right);
+    answer(ok, q.right, Speech.say(q.s.replace("___", q.right)));      // الجملة كاملة قبل «التالي»
   });
 }
-function qSpell(q, box, answer) {
+function qSpell(q, box, answer, current = () => true) {
   const word = q.it.w[0], target = word.replace(/[^a-z]/gi, "").toLowerCase(), letters = target.split("");
   let mix; do { mix = shuffle(letters); } while (mix.join("") === target && new Set(letters).size > 1);
   let typed = [], tries = 0, over = false;
   const slots = [...word].map(ch => /[a-z]/i.test(ch) ? `<span class="slot"></span>` : `<span class="gap"></span>`).join("");
   box.innerHTML = `<p class="ask">${T("رتّب", "رتّبي")} الحروف ${T("لتكتب", "لتكتبي")} الكلمة</p>
     ${q.it.w[2] ? `<div class="qpic">${picHtml(q.it.w, "lg")}</div>` : ""}
-    <div class="qline"><span class="qar">${q.it.w[1]}</span>${sayButtons(word)}</div>
+    <div class="qline"><span class="qar">${q.it.w[1]}</span>${sayButtons(word, "استماع", q.it.w[1])}</div>
     <div class="slots" id="slots" dir="ltr" aria-label="الحروف المختارة" aria-live="polite">${slots}</div>
     <div class="tiles" id="tiles" dir="ltr" role="group" aria-label="الحروف">${mix.map((l, j) => `<button class="tile" data-j="${j}" aria-label="حرف ${l}">${l}</button>`).join("")}</div>
     <div class="actions tight"><button class="btn ghost sm" id="undo">مسح حرف</button><button class="btn ghost sm" id="hint">${T("ساعدني", "ساعديني")}</button></div>
     <p class="small muted" id="tries" aria-live="polite"></p>`;
   wireSay(box);
-  setTimeout(() => Speech.say(word), 300);
+  setTimeout(() => { if (current()) Speech.say(word, false, q.it.w[1]); }, 400);
   const slotsEl = box.querySelector("#slots"), slotEls = [...slotsEl.querySelectorAll(".slot")], tiles = [...box.querySelectorAll(".tile")];
   const paint = () => slotEls.forEach((s, k) => { s.textContent = typed[k] != null ? mix[typed[k]] : ""; s.classList.toggle("full", typed[k] != null); });
   function end(ok) {
     over = true; tiles.forEach(t => t.disabled = true);
     if (ok) slotsEl.classList.add("ok"); else slotEls.forEach((s, k) => { s.textContent = target[k]; s.classList.add("full"); });
-    Speech.say(word); answer(ok, word);
+    answer(ok, word, Speech.say(word, false, q.it.w[1]));
   }
   function check() {
     if (typed.map(j => mix[j]).join("") === target) return end(tries < 2);

@@ -17,9 +17,11 @@ function renderProfile() {
       <button class="btn primary" type="submit">حفظ</button>
     </form>
     <section class="card"><h2 class="h3">${icon("volume-high")} الصوت</h2>
-      <div class="seg" role="group" aria-label="سرعة النطق"><button data-rate="0.85" aria-pressed="${Store.rate >= 0.8}">سرعة عادية</button><button data-rate="0.65" aria-pressed="${Store.rate < 0.8}">أبطأ</button></div>
-      <p class="small muted">${Speech.recorded ? "النطق بصوت بشري مسجّل: رجالي للطلاب ونسائي للطالبات. كل مقطع يُحفظ بعد أول استماع ويعمل بعدها دون اتصال." : Speech.supported ? "يُستخدم صوت جهازك للنطق، ويعمل غالباً دون اتصال." : "الصوت غير متاح في هذا المتصفح. جرّب Chrome أو Safari."}</p>
-      <button class="btn ghost sm" data-say="Hello! Welcome to English Stars.">جرّب الصوت</button></section>
+      <div class="seg" role="group" aria-label="سرعة النطق"><button type="button" data-rate="0.85" aria-pressed="${Store.rate >= 0.8}">عادية</button><button type="button" data-rate="0.65" aria-pressed="${Store.rate < 0.8}">أبطأ</button></div>
+      <p class="small muted">«أبطأ» يبطّئ التسجيل نفسه مع الحفاظ على طبقة الصوت.</p>
+      <div class="seg" role="group" aria-label="وقفة التكرار في «اسمع الكل»"><span class="small muted">وقفة للتكرار بعد كل كلمة:</span>${[[1, "قصيرة"], [2, "متوسطة"], [3, "طويلة"]].map(([v, t]) => `<button type="button" data-gap="${v}" aria-pressed="${Math.round(Store.data.settings.gap ?? 1.5) === v || (v === 2 && (Store.data.settings.gap ?? 1.5) === 1.5)}">${t}</button>`).join("")}</div>
+      <p class="small muted">النطق تسجيلات بصوت مولَّد بالذكاء الاصطناعي بلهجة أمريكية واضحة (وليست تسجيلات لأشخاص)، وتُحفظ بعد أول استماع لتعمل دون اتصال. إذا لم يتوفر تسجيل لعبارة، يُستخدم صوت إنجليزي من جهازك.</p>
+      <button type="button" class="btn ghost sm" data-say="Hello! Welcome to English Stars.">جرّب الصوت</button></section>
     <section class="card"><h2 class="h3">المظهر</h2>
       <div class="seg wide" role="group" aria-label="المظهر">${[["light", "فاتح"], ["dark", "ليلي"], ["auto", "حسب الجهاز"]].map(([v, l]) => `<button data-theme-set="${v}" aria-pressed="${Store.theme === v}">${l}</button>`).join("")}</div></section>
     <section class="card" aria-labelledby="pcH"><h2 class="h3" id="pcH">${icon("human-male-female-child")} رمز ولي الأمر</h2>
@@ -42,6 +44,7 @@ function renderProfile() {
   app.querySelectorAll("#pForm [data-g]").forEach(b => b.onclick = () => { gender = b.dataset.g; app.querySelectorAll("#pForm [data-g]").forEach(x => x.setAttribute("aria-pressed", x === b)); });
   $("#pForm").onsubmit = e => { e.preventDefault(); Store.updateProfile({ name: $("#pName").value.trim(), gender, grade: $("#pGrade").value }); toast("تم الحفظ"); renderProfile(); };
   app.querySelectorAll("[data-rate]").forEach(b => b.onclick = () => { Store.setRate(+b.dataset.rate); renderProfile(); });
+  app.querySelectorAll("[data-gap]").forEach(b => b.onclick = () => { Store.data.settings.gap = +b.dataset.gap; Store.save(); renderProfile(); });
   app.querySelectorAll("[data-theme-set]").forEach(b => b.onclick = () => { Store.setTheme(b.dataset.themeSet); renderProfile(); });
   wireSay(app);
   $("#sendParent").onclick = async () => {
