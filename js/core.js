@@ -1,6 +1,11 @@
 /* نجوم الإنجليزي — الأساسيات: تجهيز البيانات، أدوات عامة، الصوت، المؤثرات.
    يُحمَّل بعد data/*.js و js/icons.js و js/store.js */
 
+/* داخل تطبيق iOS (Capacitor): لا عامل خدمة ولا «إضافة للشاشة الرئيسية»، وروابط المشاركة تشير للموقع المنشور */
+const IS_APP = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+const SITE_URL = "https://rajaxdx.github.io/english-stars/";
+if (IS_APP) document.documentElement.classList.add("native-app");
+
 /* ---------------- البيانات ---------------- */
 const STAGES = [
   { id: "p", ar: "الابتدائي", long: "المرحلة الابتدائية", c: 2 },

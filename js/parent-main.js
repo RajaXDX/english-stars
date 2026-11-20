@@ -14,7 +14,7 @@ route = function parentRoute() {
 };
 
 if (!Store.healthy) banner("storage", icon("alert") + " لا يمكن الحفظ على هذا الجهاز (قد يكون التصفح الخاص مفعّلاً).", "warn");
-if ("serviceWorker" in navigator && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
+if ("serviceWorker" in navigator && location.protocol !== "file:" && !IS_APP) navigator.serviceWorker.register("sw.js").catch(() => {});
 $("#brandHome").onclick = () => go("parent");
 window.addEventListener("hashchange", route);
 route();

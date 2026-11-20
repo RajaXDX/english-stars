@@ -31,7 +31,7 @@ function parentSnap(p) {
 }
 const b64e = s => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 const b64d = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0)));
-function parentLink(p) { return new URL("parent.html", location.href).href.split("#")[0] + "#parent/add/" + b64e(JSON.stringify(parentSnap(p))); }
+function parentLink(p) { return new URL("parent.html", IS_APP ? SITE_URL : location.href).href.split("#")[0] + "#parent/add/" + b64e(JSON.stringify(parentSnap(p))); }
 function readSnap(str) {
   try {
     const s = JSON.parse(b64d(str));

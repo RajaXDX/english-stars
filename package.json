@@ -1,0 +1,21 @@
+{
+  "name": "english-stars",
+  "version": "1.0.0",
+  "description": "نجوم الإنجليزي — تعلّم منهج الإنجليزي السعودي من الأول الابتدائي إلى الثالث الثانوي",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build-www.cjs",
+    "icons": "python tools/make-icons.py",
+    "sync": "npm run build && cap sync ios",
+    "test": "node --test tests/narration.test.cjs"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  }
+}

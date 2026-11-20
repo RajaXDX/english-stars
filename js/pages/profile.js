@@ -31,13 +31,14 @@ function renderProfile() {
       <p class="small muted">ولي أمرك على جهاز آخر؟ ${T("أرسل", "أرسلي")} له رابط التقرير، ${T("وأرسله", "وأرسليه")} مرة أخرى متى ${T("تبي", "تبين")} تحديثه.</p>
       <button class="btn primary block" id="sendParent">${icon("send")} إرسال التقرير لولي الأمر</button>
       <div id="newCodeZone"></div></section>
-    <section class="card"><h2 class="h3">${icon("cellphone-arrow-down")} تثبيت التطبيق</h2>
+    ${IS_APP ? "" : `<section class="card"><h2 class="h3">${icon("cellphone-arrow-down")} تثبيت التطبيق</h2>
       ${standalone ? `<p>التطبيق مثبّت على جهازك ${icon("check-bold")}</p>`
         : installPrompt ? `<p class="small">${T("ثبّت", "ثبّتي")} نجوم الإنجليزي على الشاشة الرئيسية ${T("ليفتح", "ليفتح")} كتطبيق ويعمل دون اتصال.</p><button class="btn primary" id="install">تثبيت التطبيق</button>`
         : isIOS ? `<p class="small">في Safari: ${T("اضغط", "اضغطي")} زر المشاركة ثم «إضافة إلى الشاشة الرئيسية».</p>`
-        : `<p class="small">من قائمة المتصفح ${T("اختر", "اختاري")} «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».</p>`}</section>
+        : `<p class="small">من قائمة المتصفح ${T("اختر", "اختاري")} «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».</p>`}</section>`}
     <section class="card note-card"><h2 class="h3">${icon("lock")} أين يُحفظ تقدمك؟</h2>
-      <p class="small">على هذا الجهاز فقط، داخل المتصفح. لا يوجد حساب ولا تُرسل أي بيانات. إذا ${T("مسحت", "مسحتِ")} بيانات المتصفح أو ${T("استخدمت", "استخدمتِ")} التصفح الخاص قد يضيع التقدم. المزامنة بين الأجهزة غير متاحة حالياً.</p>
+      <p class="small">على هذا الجهاز فقط، ${IS_APP ? "داخل التطبيق" : "داخل المتصفح"}. لا يوجد حساب ولا تُرسل أي بيانات. ${IS_APP ? `إذا ${T("حذفت", "حذفتِ")} التطبيق يضيع التقدم.` : `إذا ${T("مسحت", "مسحتِ")} بيانات المتصفح أو ${T("استخدمت", "استخدمتِ")} التصفح الخاص قد يضيع التقدم.`} المزامنة بين الأجهزة غير متاحة حالياً.</p>
+      <p class="small"><a href="privacy.html">سياسة الخصوصية</a></p>
       <div id="delZone"><button class="btn danger sm" id="del">حذف بيانات هذا الطالب</button></div></section>
   </div>`;
   let gender = p.gender;

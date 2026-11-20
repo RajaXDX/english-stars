@@ -3,7 +3,7 @@
    الشبكة، التخزين، والتحديثات
    ============================================================ */
 function netStatus() {
-  banner("offline", navigator.onLine ? "" : icon("wifi-off") + " أنت غير متصل بالإنترنت. الوحدات المحفوظة على جهازك تعمل كالمعتاد.", "warn");
+  banner("offline", IS_APP || navigator.onLine ? "" : icon("wifi-off") + " أنت غير متصل بالإنترنت. الوحدات المحفوظة على جهازك تعمل كالمعتاد.", "warn");
 }
 window.addEventListener("online", netStatus);
 window.addEventListener("offline", netStatus);
@@ -13,7 +13,7 @@ Store.on(type => {
 });
 if (!Store.healthy) banner("storage", icon("alert") + " لا يمكن الحفظ على هذا الجهاز (قد يكون التصفح الخاص مفعّلاً). التقدم لن يبقى بعد إغلاق الصفحة.", "warn");
 
-if ("serviceWorker" in navigator && location.protocol !== "file:") {
+if ("serviceWorker" in navigator && location.protocol !== "file:" && !IS_APP) {
   navigator.serviceWorker.register("sw.js").then(reg => {
     const offer = w => {
       const b = banner("update", `${icon("update")} يوجد تحديث جديد للتطبيق. <button class="btn sm" id="doUpdate">تحديث الآن</button>`);

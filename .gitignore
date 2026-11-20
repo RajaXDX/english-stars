@@ -2,3 +2,16 @@
 entries.json
 *.onnx
 voices-v1.0.bin
+
+# تطبيق iOS
+node_modules/
+www/
+ios/App/Pods/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+*.p12
+*.p8
+*.mobileprovision
+*.cer
+*.certSigningRequest
